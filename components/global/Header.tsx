@@ -6,12 +6,14 @@ const Header: FC<OwnProps> = ({}) => {
 
 
   return <header className='border-b w-full bg-slate-100 shadow-md sticky top-0 z-10'>
-    <section className='flex flex-row justify-between items-center p-4 text-2xl'>
-      <h1 className='text-slate-800 font-extrabold'>TechTogether</h1>
+    <section className='flex flex-row justify-between items-center p-4 text-2xl text-slate-800 '>
+      <h1 className='font-extrabold'>TechTogether</h1>
 
+      {/* Burger Menu */}
+      <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+      </svg>
 
-      <section className='border-slate-600 rounded-md w-10 h-10 flex flex-col justify-center items-center duration-300 hover:cursor-pointer hover:bg-slate-200'>
-      </section>
     </section>
   </header>
 }
