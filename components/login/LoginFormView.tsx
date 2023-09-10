@@ -1,13 +1,14 @@
+"use client"
 import React, { FC, useRef, useState } from 'react'
 import { LoginCredentials } from '@/types/person'
 import LoginFormHeader from './LoginFormHeader'
 import { defaultLoginForm } from './defaultLoginFormValues'
 import { loginPerson } from '@/rtk/person/personState'
 import { useDispatch } from 'react-redux'
+import { VContainer } from '../global/Containers'
+import TextInput from '../global/TextInput'
 
-
-
-const LoginForm: FC = () => {
+const LoginFormView: FC = () => {
 
     // Hooks
     const dispatch = useDispatch()
@@ -41,7 +42,7 @@ const LoginForm: FC = () => {
     return <section className='flex flex-col gap-4 max-w-lg my-1 m-auto'>
         <LoginFormHeader />
 
-        {/* <VContainer className='gap-4'>
+        <VContainer className='gap-4'>
             <form className='flex flex-col gap-4'>
                 <TextInput 
                     id="loginEmail" label='Email' inputType='text' value={email} 
@@ -58,27 +59,28 @@ const LoginForm: FC = () => {
                 />
                 
 
-                <Button 
+                <button 
                     type='button'
-                    rounded='lg'
+                    // rounded='lg'
                     onClick={handleClickLogin}
                 >
-                    {!isError ? (isLoading ? "..." : "Login") : "Something went wrong :("}
-                </Button>
+                    {/* {!isError ? (isLoading ? "..." : "Login") : "Something went wrong :("} */}
+                    button
+                </button>
             </form>
 
             <span 
                 className='text-center -mt-1 text-slate-500 underline hover:cursor-pointer'
                 onClick={handleToggleModal}
             >
-                I don't have a login yet...
+                I don&apos;t have a login yet...
             </span>
         </VContainer>
 
-        <Modal isVisible={openModal} toggleVisibility={handleToggleModal} showCloseTab>
+        {/* <Modal isVisible={openModal} toggleVisibility={handleToggleModal} showCloseTab>
             <SignupFormView />
         </Modal> */}
     </section>
 }
 
-export default LoginForm
+export default LoginFormView

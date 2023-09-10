@@ -1,15 +1,25 @@
-import React from 'react'
+import React, { FC, PropsWithChildren } from 'react'
 
-const VBox = () => {
-  return (
-    <div>Containers</div>
-  )
+type OwnProps = PropsWithChildren & {
+    alignItems?: string;
+    justifyContent?: string;
+    className?: string;
 }
 
-const HBox = () => {
-  return (
-    <div>Containers</div>
-  )
+const VContainer: FC<OwnProps> = ({children, className}) => {
+
+    return <section className={`flex flex-col ${className}`}>
+        {children}
+    </section>
 }
 
-export {VBox}
+const HContainer: FC<OwnProps> = ({children, className}) => {
+
+    return <section className={`flex flex-row ${className}`}>
+        {children}
+    </section>
+}
+
+export {
+    VContainer, HContainer
+}
