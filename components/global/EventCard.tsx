@@ -3,6 +3,7 @@ import Image from 'next/image'
 import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
 import { HContainer, VContainer } from './Containers'
 import { bookmark, bookmarkFilled, share } from '@/utils/icons'
+import Link from 'next/link'
 
 const EventCard = () => {
   return <article className="card w-[350px] bg-base-100 shadow-lg">
@@ -32,9 +33,28 @@ const EventCard = () => {
         <div className='divider my-0 py-0'></div>
 
         <HContainer className='justify-between'>
-            <HContainer>
-                <button className='btn btn-square glass'>{false ? bookmarkFilled : bookmark}</button>
-                <button className='btn btn-square glass'>{share}</button>
+            <HContainer className=''>
+                <button className='btn btn-ghost btn-square'>{false ? bookmarkFilled : bookmark}</button>
+
+                <section className='dropdown dropdown-top'>
+                    <button className='btn btn-square btn-ghost' tabIndex={0}>{share}</button>
+        
+                    <ul tabIndex={0} className='dropdown-content menu bg-base-100 z-10 rounded-box border-[0.5px] shadow'>
+                        <h3 className='menu-title'>Share</h3>
+
+                        <li>
+                            <Link href='/'>LinkedIn</Link>
+                        </li>
+
+                        <li>
+                            <Link href='/'>Twitter</Link>
+                        </li>
+
+                        <li>
+                            <Link href='/auth'>Whatsapp</Link>
+                        </li>
+                    </ul>
+                </section>
             </HContainer>
 
             <button className='btn'>Attend</button>
