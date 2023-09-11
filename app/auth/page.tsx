@@ -1,4 +1,4 @@
-import Header from '@/components/global/Header'
+import Header from '@/components/global/header/Header'
 import LoginFormView from '@/components/login/LoginFormView'
 import React from 'react'
 
