@@ -1,53 +1,47 @@
-/* eslint-disable @next/next/no-img-element */
-import React, {FC} from 'react'
-// import EventCardDefault from '@/assets/EventCardDefault.jpg'
-// import {Event} from '@/types/event'
-// import {SmallDashOutlined, LinkOutlined, BookOutlined} from "@ant-design/icons"
-import Link from 'next/link'
+import React from 'react'
+import Image from 'next/image'
+import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
+import { HContainer, VContainer } from './Containers'
+import { bookmark, bookmarkFilled, share } from '@/utils/icons'
 
-type OwnProps = {
-    event?: Event;
+const EventCard = () => {
+  return <article className="card w-[350px] bg-base-100 shadow-lg">
+    <figure className='max-h-56'>
+        <Image 
+        src={TECHDEFAULT.src} 
+        alt="Shoes"
+        width='350'
+        height='350'
+        />
+    </figure>
+    
+    <VContainer className='p-5 gap-2'>
+        <VContainer className='gap-1'>
+            <h2 className='text-lg font-bold'>Next.JS is super cool</h2>
+
+            <p className='text-sm'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum fugiat fuga nulla dolor minima necessitatibus...</p>
+        </VContainer>
+
+        <div className='divider my-0 py-0'></div>
+
+        <VContainer className='text-sm'>
+            <span>London, UK</span>
+            <span>12 People Attending</span>
+        </VContainer>
+
+        <div className='divider my-0 py-0'></div>
+
+        <HContainer className='justify-between'>
+            <HContainer>
+                <button className='btn btn-square glass'>{false ? bookmarkFilled : bookmark}</button>
+                <button className='btn btn-square glass'>{share}</button>
+            </HContainer>
+
+            <button className='btn'>Attend</button>
+        </HContainer>
+    </VContainer>
+
+    </article>
 }
 
-const EventCard: FC<OwnProps> = ({event}) => {
-
-    return (
-        <section 
-            className="flex flex-col bg-slate-100 rounded-xl border-[1px] shadow-md min-w-[300px] max-w-[350px] hover:bg-slate-200 hover:cursor-pointer"
-            // href={`/event/${encodeURIComponent(event.eventId)}`}
-        >
-            
-            <img 
-                alt='friends'
-                className='rounded-t-xl overflow-hidden' 
-                // src={EventCardDefault.src}
-            />
-
-            <section className="flex flex-col gap-3 p-3 md:justify-between">
-                <section>
-                    {/* <h2 className='text-xl text-slate-600 font-extrabold'>{event.name ?? "Typescript for beginners"}</h2> */}
-                    <section className='flex flex-col text-sm font-semibold text-slate-600'>
-                        {/* <span className=''>{event.startDateTime ?? "Sunday 9th June, 19:00PM"}</span>  */}
-                        {/* <span>{event.startDateTime ?? "London, UK"}</span> */}
-                    </section>
-                </section>
-
-                <section className='flex flex-row justify-between items-center'>
-                    <section className="flex flex-col">
-                        {/* <h3 className='text-sm text-slate-600'>{event.community?.name ?? "React FE Education"}</h3> */}
-                        {/* <h4 className='text-xs text-slate-400'>{event.attendance.attendeesInPerson ?? "23"} people are attending</h4> */}
-                    </section>
-
-                    <section className='self-end flex flex-row gap-3 p-2 text-xl'>
-                        {/* <LinkOutlined className='w-5' /> */}
-
-                        {/* <BookOutlined className='w-5' /> */}
-                    </section>
-                </section>
-
-            </section>
-        </section>
-    )
-}
-
-export default EventCard;
+export default EventCard
