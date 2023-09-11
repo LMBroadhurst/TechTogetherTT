@@ -7,6 +7,7 @@ import { loginPerson } from '@/rtk/person/personState'
 import { useDispatch } from 'react-redux'
 import { VContainer } from '../global/Containers'
 import TextInput from '../global/TextInput'
+import SignupFormView from '../signup/SignupFormView'
 
 const LoginFormView: FC = () => {
 
@@ -22,8 +23,8 @@ const LoginFormView: FC = () => {
     }
 
     // Toggle Modal Related Code
-    const [openModal, setOpenModal] = useState<boolean>(false)
-    const handleToggleModal = () => setOpenModal(!openModal)
+    // @ts-ignore
+    const handleOpenModal = () => document.getElementById('signupModal').showModal()
 
     // Form Related Code
     // TODO: Think how I can further abstract forms. Think password code can easily be moved to TextInput
@@ -60,26 +61,31 @@ const LoginFormView: FC = () => {
                 
 
                 <button 
+                    className='btn'
                     type='button'
-                    // rounded='lg'
                     onClick={handleClickLogin}
                 >
                     {/* {!isError ? (isLoading ? "..." : "Login") : "Something went wrong :("} */}
-                    button
+                    Login
                 </button>
             </form>
 
-            <span 
-                className='text-center -mt-1 text-slate-500 underline hover:cursor-pointer'
-                onClick={handleToggleModal}
+            <button 
+                className='btn btn-link text-center -mt-1 text-neutral'
+                onClick={handleOpenModal}
             >
                 I don&apos;t have a login yet...
-            </span>
+            </button>
         </VContainer>
 
-        {/* <Modal isVisible={openModal} toggleVisibility={handleToggleModal} showCloseTab>
-            <SignupFormView />
-        </Modal> */}
+        <dialog id="signupModal" className="modal">
+            <div className="modal-box">
+                <SignupFormView />
+            </div>
+            <form method="dialog" className="modal-backdrop">
+                <button>close</button>
+            </form>
+        </dialog>
     </section>
 }
 

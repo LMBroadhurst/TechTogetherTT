@@ -3,6 +3,8 @@ import {defaultSignupForm} from './defaultSignupFormValues'
 import {Person} from '@/types/person'
 import SignupFormHeader from './SignupFormHeader'
 import { usePostPersonMutation } from '@/rtk/person/personAPI'
+import { VContainer } from '../global/Containers'
+import TextInput from '../global/TextInput'
 
 const SignupFormView: FC = ({}) => {
 
@@ -35,10 +37,10 @@ const SignupFormView: FC = ({}) => {
     <section className='flex flex-col gap-4 max-w-lg my-1 m-auto'>
         <SignupFormHeader />
 
-        {/* <VContainer className='gap-4'>
+        <VContainer className='gap-4'>
             <form className='flex flex-col gap-2 items-stretch' onSubmit={handleClickSignup}>
 
-                <TextInput 
+                <TextInput
                     id="signupFirstName" label='First Name' inputType='text' value={firstName} 
                     apiProperty='firstName'
                     onChange={handleSignupFormChange}
@@ -65,11 +67,11 @@ const SignupFormView: FC = ({}) => {
                     onPasswordTextToggle={handlePasswordToggleClick}
                 />
 
-                <Button type="submit" rounded='md' onClick={handleClickSignup}>
+                <button type="submit" className='btn' onClick={handleClickSignup}>
                     {!isError ? (isLoading ? "..." : "Join TechTogether") : "Something went wrong :("}
-                </Button>
+                </button>
             </form>
-        </VContainer> */}
+        </VContainer>
     </section>
   )
 }
