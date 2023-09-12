@@ -19,10 +19,11 @@ const Header: FC<OwnProps> = ({}) => {
       {/* Burger Menu */}
       <BurgerMenu className='md:hidden' />
 
-      <HContainer className='items-center gap-5'>
+
+      <HContainer className='items-center gap-5 hidden md:flex'>
         <section className='join'>
           <input type="text" placeholder="Search for Events" className="input input-bordered w-full max-w-xs input-sm join-item" />
-          <button className='btn btn-sm btn-square join-item'>{smallMagnifyingGlass}</button>
+          <button className='btn btn-sm btn-square join-item p-1'>{smallMagnifyingGlass}</button>
         </section>
 
         <section className='avatar w-8 h-8 rounded border'>

@@ -6,7 +6,7 @@ import { bookmark, bookmarkFilled, share } from '@/utils/icons'
 import Link from 'next/link'
 
 const EventCard = () => {
-  return <article className="card w-[350px] bg-base-100 shadow-lg">
+  return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 hover:scale-[1.01] hover:cursor-pointer">
     <figure className='max-h-56'>
         <Image 
         src={TECHDEFAULT.src} 
@@ -34,10 +34,10 @@ const EventCard = () => {
 
         <HContainer className='justify-between'>
             <HContainer className=''>
-                <button className='btn btn-ghost btn-square'>{false ? bookmarkFilled : bookmark}</button>
+                <button className='btn btn-ghost btn-square p-2'>{false ? bookmarkFilled : bookmark}</button>
 
                 <section className='dropdown dropdown-top'>
-                    <button className='btn btn-square btn-ghost' tabIndex={0}>{share}</button>
+                    <button className='btn btn-square btn-ghost p-2' tabIndex={0}>{share}</button>
         
                     <ul tabIndex={0} className='dropdown-content menu bg-base-100 z-10 rounded-box border-[0.5px] shadow'>
                         <h3 className='menu-title'>Share</h3>
