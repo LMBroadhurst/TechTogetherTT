@@ -38,8 +38,8 @@ model PersonEvent {
 }
 
 model Event {
-  id              String        @id @default(uuid()) @map("_id") @db.ObjectId
-  name            String        @unique
+  id              String          @id @default(uuid()) @map("_id") @db.ObjectId
+  name            String          @unique
   localDateTime   DateTime
   location        String 
   maxAttendance   Int
