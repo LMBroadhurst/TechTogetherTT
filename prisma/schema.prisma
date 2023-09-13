@@ -16,7 +16,7 @@ model Person {
   lastName      String
   email         String          @unique
   password      String
-  joinDate      DateTime
+  joinDate      DateTime        @default(now())
 
   events        PersonEvent[]     
 
@@ -26,20 +26,20 @@ model Person {
 }
 
 model PersonEvent {
-  @@id([personId, eventId])
+  id        String       @id @default(uuid()) @map("_id") @db.ObjectId
 
-  person    Person    @relation(fields: [personId], references: [id])
-  personId  String    @db.ObjectId
+  person    Person       @relation(fields: [personId], references: [id])
+  personId  String       @db.ObjectId
 
-  event     Event     @relation(fields: [eventId], references: [id])
-  eventId   String    @db.ObjectId
+  event     Event        @relation(fields: [eventId], references: [id])
+  eventId   String       @db.ObjectId
   rating    String? 
   review    String?
 }
 
 model Event {
-  id              String    @id @default(uuid()) @map("_id") @db.ObjectId
-  name            String    @unique
+  id              String        @id @default(uuid()) @map("_id") @db.ObjectId
+  name            String        @unique
   localDateTime   DateTime
   location        String 
   maxAttendance   Int
