@@ -6,11 +6,11 @@ import { PersistGate } from 'redux-persist/integration/react'
 const Providers: React.FC<PropsWithChildren> = ({children}) => {
 
     return <React.StrictMode>
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
+        {/* <Provider store={store}> */}
+            {/* <PersistGate persistor={persistor}> */}
                 {children}
-            </PersistGate>
-        </Provider>
+            {/* </PersistGate> */}
+        {/* </Provider> */}
     </React.StrictMode>
 }
 
