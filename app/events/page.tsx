@@ -35,12 +35,12 @@ const Events = () => {
 
             <div className='divider'></div>
 
-            <section className='flex flex-row gap-2'>
+            <section className='flex flex-row items-center gap-2 text-sm'>
                 <input type="checkbox" defaultChecked={false} className="checkbox" />
                 <label>Tickets Available</label>
             </section>
 
-            <section className='flex flex-row gap-2'>
+            <section className='flex flex-row gap-2 items-center text-sm'>
                 <input type="checkbox" defaultChecked={false} className="checkbox" />
                 <label>Order by date</label>
             </section>

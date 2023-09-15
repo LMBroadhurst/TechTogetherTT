@@ -8,10 +8,13 @@ import { useDispatch } from 'react-redux'
 import { VContainer } from '../global/Containers'
 import TextInput from '../global/TextInput'
 import SignupFormView from '../signup/SignupFormView'
+import { useSession, signIn, signOut } from 'next-auth/react'
+
 
 const LoginFormView: FC = () => {
 
     // Hooks
+    const {} = useSession()
     const dispatch = useDispatch()
 
     // LoginForm API Code

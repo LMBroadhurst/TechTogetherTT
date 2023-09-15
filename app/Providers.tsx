@@ -1,17 +1,19 @@
+'use client'
 import React, {PropsWithChildren} from 'react'
-import { Provider } from 'react-redux'
-import { persistor, store } from '@/rtk/store'
-import { PersistGate } from 'redux-persist/integration/react'
+import { SessionProvider } from 'next-auth/react'
 
-const Providers: React.FC<PropsWithChildren> = ({children}) => {
 
-    return <React.StrictMode>
-        {/* <Provider store={store}> */}
-            {/* <PersistGate persistor={persistor}> */}
-                {children}
-            {/* </PersistGate> */}
-        {/* </Provider> */}
-    </React.StrictMode>
+export default function Providers ({
+  children,
+  session
+}: {
+  children: React.ReactNode
+  session: any
+}): React.ReactNode {
+
+  return <React.StrictMode>
+    <SessionProvider session={session}>
+        {children}
+    </SessionProvider>
+  </React.StrictMode>
 }
-
-export default Providers
