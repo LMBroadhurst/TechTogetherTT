@@ -2,20 +2,20 @@ import React, {FC, useState} from 'react'
 import {defaultSignupForm} from './defaultSignupFormValues'
 import {Person} from '@/types/person'
 import SignupFormHeader from './SignupFormHeader'
-import { usePostPersonMutation } from '@/rtk/person/personAPI'
+// import { usePostPersonMutation } from '@/rtk/person/personAPI'
 import { VContainer } from '../global/Containers'
 import TextInput from '../global/TextInput'
 
 const SignupFormView: FC = ({}) => {
 
     // SignupFrom API Code
-    const [signupTrigger, {data, isLoading, isSuccess, isError}] = usePostPersonMutation()
+    // const [signupTrigger, {data, isLoading, isSuccess, isError}] = usePostPersonMutation()
 
     const handleClickSignup = async () => {
-        const response = await signupTrigger(signupDetails).unwrap()
-        console.log(response)
+        // const response = await signupTrigger(signupDetails).unwrap()
+        // console.log(response)
 
-        console.log(data)
+        // console.log(data)
     }
 
     // Form Related Code
@@ -68,7 +68,9 @@ const SignupFormView: FC = ({}) => {
                 />
 
                 <button type="submit" className='btn' onClick={handleClickSignup}>
-                    {!isError ? (isLoading ? "..." : "Join TechTogether") : "Something went wrong :("}
+                    {/* {!isError ? (isLoading ? "..." :  */}
+                    Join TechTogether
+                    {/* ) : "Something went wrong :("} */}
                 </button>
             </form>
         </VContainer>

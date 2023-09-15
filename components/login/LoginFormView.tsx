@@ -3,8 +3,6 @@ import React, { FC, useRef, useState } from 'react'
 import { LoginCredentials } from '@/types/person'
 import LoginFormHeader from './LoginFormHeader'
 import { defaultLoginForm } from './defaultLoginFormValues'
-import { loginPerson } from '@/rtk/person/personState'
-import { useDispatch } from 'react-redux'
 import { VContainer } from '../global/Containers'
 import TextInput from '../global/TextInput'
 import SignupFormView from '../signup/SignupFormView'
@@ -15,7 +13,7 @@ const LoginFormView: FC = () => {
 
     // Hooks
     const {} = useSession()
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     // LoginForm API Code
     // const [loginTrigger, {isSuccess, isLoading, isError, data}] = useLoginMutation()
