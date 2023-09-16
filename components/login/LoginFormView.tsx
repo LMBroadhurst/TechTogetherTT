@@ -1,37 +1,47 @@
-"use client"
-import React, { FC, useRef, useState } from 'react'
+'use client'
+import React, { FC, useState } from 'react'
 import { LoginCredentials } from '@/types/person'
 import LoginFormHeader from './LoginFormHeader'
 import { defaultLoginForm } from './defaultLoginFormValues'
 import { VContainer } from '../global/Containers'
 import TextInput from '../global/TextInput'
 import SignupFormView from '../signup/SignupFormView'
-import { useSession, signIn, signOut } from 'next-auth/react'
-import Google from 'next-auth/providers/google'
+import { useSession, signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 
 const LoginFormView: FC = () => {
 
     // Hooks
-    const {} = useSession()
+    const router = useRouter()
+    const {data: session} = useSession()
 
     // LoginForm API Code
-    const handleClickEmailLogin = async () => {
+    const handleClickEmailLogin: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
+        event.preventDefault()
         console.log("Email Login...")
+
+        // TODO: Sort out a callback after authentication
+        await signIn("google")
     }
 
-    const handleClickGoogleLogin = async () => {
+    const handleClickGoogleLogin: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
+        event.preventDefault()
         console.log("Google Login...")
-        signIn()
+
+        await signIn("google")
     }
 
-    const handleClickGithubLogin = async () => {
+    const handleClickGithubLogin: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
+        event.preventDefault()
         console.log("GitHub Login...")
+
+        await signIn("google")
     }
 
     // Toggle Modal Related Code
     // @ts-ignore
-    const handleOpenModal = () => document.getElementById('signupModal').showModal()
+    const handleOpenModal: React.MouseEventHandler<HTMLButtonElement> = () => document.getElementById('signupModal').showModal()
 
     // Form Related Code
     // TODO: Think how I can further abstract forms. Think password code can easily be moved to TextInput

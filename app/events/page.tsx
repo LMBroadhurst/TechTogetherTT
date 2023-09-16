@@ -5,7 +5,6 @@ import React from 'react'
 
 const Events = () => {
 
-    const x = fetch('/api/hello').then(res => console.log(res))
   
   return <main className='flex flex-col gap-16 px-5 py-20 md:p-20 lg:flex-row lg:mx-auto xl:w-[1300px]'>
     <section className='flex flex-col gap-1 border shadow-md rounded-lg p-5 sticky self-start lg:w-1/4'>

@@ -2,18 +2,19 @@ import NextAuth, { AuthOptions } from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google";
   
+
 export const authOptions: AuthOptions = {
   session: {
     strategy: 'jwt'
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET as string,
   providers: [
 
     GoogleProvider({
       // @ts-ignore
-      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
       // @ts-ignore
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
 
     // GithubProvider({
