@@ -7,6 +7,7 @@ import { VContainer } from '../global/Containers'
 import TextInput from '../global/TextInput'
 import SignupFormView from '../signup/SignupFormView'
 import { useSession, signIn, signOut } from 'next-auth/react'
+import Google from 'next-auth/providers/google'
 
 
 const LoginFormView: FC = () => {
@@ -21,6 +22,7 @@ const LoginFormView: FC = () => {
 
     const handleClickGoogleLogin = async () => {
         console.log("Google Login...")
+        signIn()
     }
 
     const handleClickGithubLogin = async () => {

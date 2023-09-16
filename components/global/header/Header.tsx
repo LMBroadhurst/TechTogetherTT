@@ -10,7 +10,6 @@ type OwnProps = {};
 
 const Header: FC<OwnProps> = ({}) => {
 
-
   return <header className='border-b w-full shadow-md sticky top-0 z-10 bg-base-100'>
     <section className='flex flex-row justify-between items-center p-4 text-2xl text-slate-800 '>
       
@@ -22,6 +21,8 @@ const Header: FC<OwnProps> = ({}) => {
       <BurgerMenu className='md:hidden' />
 
       <HContainer className='items-center gap-5 hidden md:flex'>
+        <Link href='/auth' className='btn btn-ghost'>Login</Link>
+
         <section className='join'>
           <input type="text" placeholder="Search for Events" className="input input-bordered w-full max-w-xs input-sm join-item" />
           <button className='btn btn-sm btn-square join-item p-1'>{smallMagnifyingGlass}</button>

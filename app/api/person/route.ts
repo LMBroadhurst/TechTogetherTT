@@ -35,7 +35,7 @@ export async function putPerson(request: NextRequest, response: NextResponse) {
 
     const newPerson = await prisma.person.update({
         where: {
-            id: 'string'
+            id: 1
         },
         data: {
             firstName: 'New Name'
@@ -49,7 +49,7 @@ export async function deletePerson(request: NextRequest, response: NextResponse)
 
     const newPerson = await prisma.person.delete({
         where: {
-            id: 'string'
+            id: 1
         }
     })
 

@@ -5,6 +5,7 @@ import Header from '@/components/global/header/Header'
 import Providers from './Providers'
 import { getServerSession } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]/route'
+import { SessionProvider } from 'next-auth/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,16 +16,14 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
 
-  const session = await getServerSession(authOptions)
+  const session = getServerSession(authOptions)
   
   return <html lang="en">
     <body className={inter.className}>
-    
-    <Providers session={session}>
-      <Header />
-      {children}
-    </Providers>
-
+      <Providers session={session}>
+        <Header />
+        {children}
+      </Providers>
     </body>
   </html>
 }

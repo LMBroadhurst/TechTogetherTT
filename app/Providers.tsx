@@ -1,5 +1,5 @@
 'use client'
-import React, {PropsWithChildren} from 'react'
+import React, { PropsWithChildren } from 'react'
 import { SessionProvider } from 'next-auth/react'
 
 
@@ -13,7 +13,7 @@ export default function Providers ({
 
   return <React.StrictMode>
     <SessionProvider session={session}>
-        {children}
+      {children}
     </SessionProvider>
   </React.StrictMode>
 }
