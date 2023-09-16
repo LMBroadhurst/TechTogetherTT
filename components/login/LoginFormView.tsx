@@ -13,14 +13,18 @@ const LoginFormView: FC = () => {
 
     // Hooks
     const {} = useSession()
-    // const dispatch = useDispatch()
 
     // LoginForm API Code
-    // const [loginTrigger, {isSuccess, isLoading, isError, data}] = useLoginMutation()
-    const handleClickLogin = async () => {
-        // const response = await loginTrigger(loginDetails).unwrap()
-        // dispatch(loginPerson(response))
-        // navigate({ to: "/home", params: data})
+    const handleClickEmailLogin = async () => {
+        console.log("Email Login...")
+    }
+
+    const handleClickGoogleLogin = async () => {
+        console.log("Google Login...")
+    }
+
+    const handleClickGithubLogin = async () => {
+        console.log("GitHub Login...")
     }
 
     // Toggle Modal Related Code
@@ -64,10 +68,25 @@ const LoginFormView: FC = () => {
                 <button 
                     className='btn'
                     type='button'
-                    onClick={handleClickLogin}
+                    onClick={handleClickEmailLogin}
                 >
                     {/* {!isError ? (isLoading ? "..." : "Login") : "Something went wrong :("} */}
                     Login
+                </button>
+                <div className='divider'></div>
+                <button 
+                    className='btn'
+                    type='button'
+                    onClick={handleClickGoogleLogin}
+                >
+                    Login with Google
+                </button>
+                <button 
+                    className='btn'
+                    type='button'
+                    onClick={handleClickGithubLogin}
+                >
+                    Login with GitHub
                 </button>
             </form>
 
