@@ -1,10 +1,19 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TextInput from '../global/TextInput'
 import { Event } from '@prisma/client'
 import { defaultCreateEventFormDetails } from './defaultCreateEventFormValues'
 
-const CreateEventForm = () => {
+const CreateEventForm = async () => {
+
+    // Get Events
+    useEffect(() => {
+        const events = fetch('/api/event')
+            .then(res => {
+                console.log(res.json())
+            })
+            .catch(err => console.log(err))
+    }, [])
 
     // Event Details Form
     const [createEventDetails, setCreateEventDetails] = useState(defaultCreateEventFormDetails)
@@ -20,6 +29,19 @@ const CreateEventForm = () => {
         const value = event.target.value
         setCreateEventDetails({...createEventDetails, [key]: value})
         console.log(createEventDetails)
+    }
+
+    const handleFormSubmit = async (event: any) => {
+        event.preventDefault()
+
+        setCreateEventDetails({...createEventDetails, localDateTime: new Date()})
+
+        await fetch('/api/event', {
+            // @ts-ignore
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(createEventDetails),
+        })
     }
 
 
@@ -64,7 +86,7 @@ const CreateEventForm = () => {
         <button 
             className='btn'
             type='button'
-            // onClick={handleClickGoogleLogin}
+            onClick={handleFormSubmit}
         >
             Create Event
         </button>

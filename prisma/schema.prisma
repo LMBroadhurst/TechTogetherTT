@@ -11,35 +11,35 @@ datasource db {
 }
 
 model Person {
-  id            Int             @id @default(autoincrement())
-  firstName     String
-  lastName      String
-  email         String          @unique
-  password      String
-  joinDate      DateTime        @default(now())
+  id              Int             @id @default(autoincrement())
+  firstName       String
+  lastName        String
+  email           String          @unique
+  password        String
+  joinDate        DateTime        @default(now())
 
-  events        PersonEvent[]     
+  events          PersonEvent[]     
 
-  location      String?
-  dob           DateTime?
+  location        String?
+  dob             String?
 }
 
 model PersonEvent {
-  id        Int          @id @default(autoincrement())
+  id              Int             @id @default(autoincrement())
 
-  person    Person       @relation(fields: [personId], references: [id])
-  personId  Int       
+  person          Person          @relation(fields: [personId], references: [id])
+  personId        Int       
 
-  event     Event        @relation(fields: [eventId], references: [id])
-  eventId   Int 
+  event           Event           @relation(fields: [eventId], references: [id])
+  eventId         Int 
 
-  rating    String? 
-  review    String?
+  rating          String? 
+  review          String?
 }
 
 model Event {
-  id              Int          @id @default(autoincrement())
-  name            String          @unique
+  id              Int             @id @default(autoincrement())
+  name            String          
   localDateTime   DateTime
   location        String 
   maxAttendance   Int

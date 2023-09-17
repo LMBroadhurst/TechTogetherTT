@@ -1,18 +1,21 @@
 import { Person } from "@/types/person";
+import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-// export async function getPersonFromId(request: NextRequest, response: NextResponse) {
+const prisma = new PrismaClient()
 
-//     const {body} = request
-//     return NextResponse.json({text: 'helloWorld'})
-// }
+export async function getPersonFromId(request: NextRequest, response: NextResponse) {
 
-// export async function getAllPeople(request: NextRequest, response: NextResponse) {
+    const {body} = request
+    return NextResponse.json({text: 'helloWorld'})
+}
 
-//     const getAllPeople = await prisma.person.findMany()
+export async function getAllPeople(request: NextRequest, response: NextResponse) {
 
-//     return NextResponse.json({people: getAllPeople})
-// }
+    const getAllPeople = await prisma.person.findMany()
+
+    return NextResponse.json({people: getAllPeople})
+}
 
 // export async function postPerson(request: NextRequest, response: NextResponse) {
 
