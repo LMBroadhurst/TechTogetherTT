@@ -1,6 +1,7 @@
 import NextAuth, { AuthOptions } from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google";
+import { useRouter } from "next/router";
   
 
 export const authOptions: AuthOptions = {
@@ -24,7 +25,13 @@ export const authOptions: AuthOptions = {
     //   clientSecret: process.env.GITHUB_SECRET
     // }),
   ],
-
+  callbacks: {
+    // async jwt({ token, account, profile }) {
+      
+      // const router = useRouter()
+      // router.push('/')
+    // }
+  }
 }
 
 const handler = NextAuth(authOptions)

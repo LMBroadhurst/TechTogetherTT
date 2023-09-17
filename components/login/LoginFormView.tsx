@@ -22,7 +22,7 @@ const LoginFormView: FC = () => {
         console.log("Email Login...")
 
         // TODO: Sort out a callback after authentication
-        await signIn("google")
+        await signIn("google", { callbackUrl: '/'})
     }
 
     const handleClickGoogleLogin: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
