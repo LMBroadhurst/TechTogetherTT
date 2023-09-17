@@ -13,28 +13,11 @@ import { useRouter } from 'next/navigation'
 const LoginFormView: FC = () => {
 
     // Hooks
-    const router = useRouter()
-    const {data: session} = useSession()
 
     // LoginForm API Code
-    const handleClickEmailLogin: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
-        event.preventDefault()
-        console.log("Email Login...")
-
-        // TODO: Sort out a callback after authentication
-        await signIn("google", { callbackUrl: '/'})
-    }
-
     const handleClickGoogleLogin: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
         event.preventDefault()
         console.log("Google Login...")
-
-        await signIn("google")
-    }
-
-    const handleClickGithubLogin: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
-        event.preventDefault()
-        console.log("GitHub Login...")
 
         await signIn("google")
     }
@@ -80,7 +63,7 @@ const LoginFormView: FC = () => {
                 <button 
                     className='btn'
                     type='button'
-                    onClick={handleClickEmailLogin}
+                    onClick={handleClickGoogleLogin}
                 >
                     {/* {!isError ? (isLoading ? "..." : "Login") : "Something went wrong :("} */}
                     Login
@@ -96,7 +79,7 @@ const LoginFormView: FC = () => {
                 <button 
                     className='btn'
                     type='button'
-                    onClick={handleClickGithubLogin}
+                    onClick={handleClickGoogleLogin}
                 >
                     Login with GitHub
                 </button>
@@ -110,14 +93,14 @@ const LoginFormView: FC = () => {
             </button>
         </VContainer>
 
-        <dialog id="signupModal" className="modal">
+        {/* <dialog id="signupModal" className="modal">
             <div className="modal-box">
                 <SignupFormView />
             </div>
             <form method="dialog" className="modal-backdrop">
                 <button>close</button>
             </form>
-        </dialog>
+        </dialog> */}
     </section>
 }
 

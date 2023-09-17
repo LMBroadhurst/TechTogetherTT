@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.profilePicture {
+    background: url('../assets/TECHDEFAULT.jpg') 50% 50% no-repeat;
+    width: 350px;
+    height: 350px;
+    display: block;
+}
