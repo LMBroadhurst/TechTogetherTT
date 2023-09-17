@@ -6,7 +6,9 @@ import { bookmark, bookmarkFilled, share } from '@/utils/icons'
 import Link from 'next/link'
 
 const EventCard = () => {
-  return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 hover:scale-[1.01] hover:cursor-pointer">
+  
+  
+  return <Link href={`/`} className="card w-[350px] bg-base-100 shadow-lg duration-500 hover:scale-[1.01] hover:cursor-pointer">
     <figure className='max-h-56'>
         <Image 
         src={TECHDEFAULT.src} 
@@ -61,7 +63,7 @@ const EventCard = () => {
         </HContainer>
     </VContainer>
 
-    </article>
+    </Link>
 }
 
 export default EventCard

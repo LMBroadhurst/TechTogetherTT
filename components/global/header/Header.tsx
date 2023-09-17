@@ -1,13 +1,14 @@
 'use client'
-import Link from 'next/link';
-import React, {FC} from 'react'
+import Link from 'next/link'
+import React, { FC } from 'react'
 import BurgerMenu from './BurgerMenu'
-import { smallMagnifyingGlass } from '@/utils/icons';
-import { HContainer } from '../Containers';
+import { smallMagnifyingGlass } from '@/utils/icons'
+import { HContainer } from '../Containers'
 import DEFAULT from '@/assets/TECHDEFAULT.jpg'
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useSession, signOut } from 'next-auth/react';
+import Image from 'next/image'
+import { useSession, signOut } from 'next-auth/react'
+import { BiCog } from 'react-icons/bi'
+
 
 type OwnProps = {};
 
@@ -29,7 +30,10 @@ const Header: FC<OwnProps> = ({}) => {
       <BurgerMenu className='md:hidden' />
 
       <HContainer className='items-center gap-5 hidden md:flex'>
-        {session ? <span className='text-xs'>{session?.user?.name}</span> : <Link href='/auth' className='btn btn-ghost'>Login</Link>}
+        {
+          session ? <Link href='/create-event' className='btn btn-sm'>Create Event</Link>
+          : <Link href='/auth' className='btn btn-ghost'>Login</Link>
+        }
 
         <section className='join'>
           <input type="text" placeholder="Search for Events" className="input input-bordered w-full max-w-xs input-sm join-item" />
@@ -47,7 +51,7 @@ const Header: FC<OwnProps> = ({}) => {
         </section>
 
         <details className="dropdown dropdown-bottom dropdown-end">
-          <summary className="m-1 btn btn-ghost">Settings</summary>
+          <summary className="btn btn-square btn-ghost text-2xl"><BiCog /></summary>
           <ul className="p-2 menu dropdown-content z-[1] bg-base-100 shadow w-52 rounded-md">
             <li>
               <Link href='/'>Home</Link>
