@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { HContainer, VContainer } from '@/components/global/Containers'
 import React from 'react'
 

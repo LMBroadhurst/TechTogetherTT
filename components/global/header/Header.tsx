@@ -58,6 +58,10 @@ const Header: FC<OwnProps> = ({}) => {
             </li>
 
             <li className='whitespace-nowrap'>
+              <Link href='/events' className='whitespace-nowrap'>Events</Link>
+            </li>
+
+            <li className='whitespace-nowrap'>
               <Link href='/profile' className='whitespace-nowrap'>Your Profile</Link>
             </li>
 

@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import Image from 'next/image'
 import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
@@ -11,10 +12,10 @@ const EventCard = () => {
   return <Link href={`/`} className="card w-[350px] bg-base-100 shadow-lg duration-500 hover:scale-[1.01] hover:cursor-pointer">
     <figure className='max-h-56'>
         <Image 
-        src={TECHDEFAULT.src} 
-        alt="Shoes"
-        width='350'
-        height='350'
+            src={TECHDEFAULT.src} 
+            alt="Shoes"
+            width='350'
+            height='350'
         />
     </figure>
     
@@ -44,17 +45,13 @@ const EventCard = () => {
                     <ul tabIndex={0} className='dropdown-content menu bg-base-100 z-10 rounded-box border-[0.5px] shadow'>
                         <h3 className='menu-title'>Share</h3>
 
-                        <li>
-                            <Link href='/'>LinkedIn</Link>
-                        </li>
+                        <li>LinkedIn</li>
 
-                        <li>
-                            <Link href='/'>Twitter</Link>
-                        </li>
+                        {/* <Link href='/'>LinkedIn</Link>
 
-                        <li>
-                            <Link href='/auth'>Whatsapp</Link>
-                        </li>
+                        <Link href='/'>Twitter</Link>
+
+                        <Link href='/'>Whatsapp</Link> */}
                     </ul>
                 </section>
             </HContainer>

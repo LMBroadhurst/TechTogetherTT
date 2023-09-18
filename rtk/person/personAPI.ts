@@ -3,28 +3,23 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const personApiSlice = createApi({
     reducerPath: "personApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/person" }),
     tagTypes: ["personAPI"],
     endpoints: (builder) => ({
 
-        getPerson: builder.query<Person, number>({
-            query: (id) => `person/getPerson/${id}`
-        }),
-
-        getAllPerson: builder.query<Person[], null>({
-            query: () => `person/getAllPerson`
-        }),
-
+        // POST
         postPerson: builder.mutation<Person, Person>({
             query: (person: Person) => ({ method: "POST", url: `person/postPerson`, body: person}),
             invalidatesTags: ["personAPI"],
             transformResponse: (returnValue: Person) => returnValue
         }),
 
-        login: builder.mutation<Person, LoginCredentials>({
-            query: (loginCredentials: LoginCredentials) => ({ method: "POST", url: `person/login`, body: loginCredentials}),
-            invalidatesTags: ["personAPI"]
+        // GET
+        getAllPerson: builder.query<Person[], null>({
+            query: () => `person/getAllPerson`
         }),
+
+        // DEPRECATED
 
         deletePerson: builder.mutation<void, number>({
             query: (id: number) => `person/deletePerson/${id}`
@@ -33,6 +28,12 @@ export const personApiSlice = createApi({
         putPerson: builder.mutation<Person, Person>({
             query: (person: Person) => ({ url: `person/putPerson`, body: person})
         }),
+
+        getPerson: builder.query<Person, number>({
+            query: (id) => `person/getPerson/${id}`
+        }),
+
+        
     }),
     
 });
@@ -41,7 +42,6 @@ export const {
     useGetPersonQuery,
     useGetAllPersonQuery,
     usePostPersonMutation,
-    useLoginMutation,
     useDeletePersonMutation,
     usePutPersonMutation
 } = personApiSlice;

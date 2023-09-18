@@ -1,12 +1,19 @@
-"use client"
+'use client'
 import { VContainer } from '@/components/global/Containers'
 import EventCard from '@/components/global/EventCard'
-import React from 'react'
+import { useGetAllEventsQuery } from '@/rtk/event/eventAPI'
+import React, { Suspense } from 'react'
 
 const Events = () => {
 
-  
+    const {data: events, isLoading, isError, isSuccess} = useGetAllEventsQuery(null)
+
   return <main className='flex flex-col gap-16 px-5 py-20 md:p-20 lg:flex-row lg:mx-auto xl:w-[1300px]'>
+    <Suspense fallback={'Loading Events...'}>
+        <ul>
+            {events ? events.map((event, i) => <li key={i}>{event.name}</li>) : <li></li>}
+        </ul>
+    </Suspense>
     <section className='flex flex-col gap-1 border shadow-md rounded-lg p-5 sticky self-start lg:w-1/4'>
         <VContainer className='flex flex-col gap-0'>
             <h2 className='text-lg font-semibold text-slate-500'>Lewis,</h2> 

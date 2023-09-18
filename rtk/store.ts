@@ -14,10 +14,15 @@ import {
     REGISTER, 
 } from "redux-persist";
 import persistStore from "redux-persist/es/persistStore";
+import { eventApiAlice } from "./event/eventAPI";
 
 const rootReducer = combineReducers({
+    // Person
     person: personStateSlice,
-    [personApiSlice.reducerPath]: personApiSlice.reducer
+    [personApiSlice.reducerPath]: personApiSlice.reducer,
+
+    // Event
+    [eventApiAlice.reducerPath]: eventApiAlice.reducer
 });
 
 const persistConfig = {
@@ -37,8 +42,9 @@ export const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
               },
         }).concat(
-            personApiSlice.middleware
-    ),
+            personApiSlice.middleware,
+            eventApiAlice.middleware
+        ),
     devTools: true
 })
 
