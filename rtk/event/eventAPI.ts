@@ -1,23 +1,29 @@
-import { Person, LoginCredentials } from "@/types/person";
 import { Event } from "@prisma/client";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const eventApiAlice = createApi({
-    reducerPath: "eventApi",
+    reducerPath: "eventAPI",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/event" }),
-    tagTypes: ["personAPI"],
+    tagTypes: ["eventAPI"],
     endpoints: (builder) => ({
 
-        // POST
+        // GET
         getAllEvents: builder.query<Event[], null>({
             query: () => ``,
         }),
+
+        // POST
+        postEvent: builder.mutation<Event, Event>({
+            query: (event: Event) => ({ method: 'POST', url: '', body: event}),
+            invalidatesTags: ['eventAPI']
+        })
 
     }),
     
 });
 
 export const {
-    useGetAllEventsQuery
+    useGetAllEventsQuery, 
+    usePostEventMutation
 } = eventApiAlice
 

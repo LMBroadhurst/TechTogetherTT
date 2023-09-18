@@ -1,12 +1,17 @@
 'use client'
-import React from 'react'
+import React, { FC } from 'react'
 import Image from 'next/image'
 import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
 import { HContainer, VContainer } from './Containers'
 import { bookmark, bookmarkFilled, share } from '@/utils/icons'
 import Link from 'next/link'
+import { Event } from '@prisma/client'
 
-const EventCard = () => {
+type OwnProps = {
+    event: Event;
+}
+
+const EventCard: FC<OwnProps> = ({event}) => {
   
   
   return <Link href={`/`} className="card w-[350px] bg-base-100 shadow-lg duration-500 hover:scale-[1.01] hover:cursor-pointer">
@@ -21,7 +26,7 @@ const EventCard = () => {
     
     <VContainer className='p-5 gap-2'>
         <VContainer className='gap-1'>
-            <h2 className='text-lg font-bold'>Next.JS is super cool</h2>
+            <h2 className='text-lg font-bold'>{event?.name ?? 'Next.JS is super cool'}</h2>
 
             <p className='text-sm'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum fugiat fuga nulla dolor minima necessitatibus...</p>
         </VContainer>

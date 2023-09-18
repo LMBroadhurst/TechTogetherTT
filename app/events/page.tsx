@@ -1,4 +1,5 @@
 'use client'
+import EventFilterForm from '@/components/forms/event-filters/EventFilterForm'
 import { VContainer } from '@/components/global/Containers'
 import EventCard from '@/components/global/EventCard'
 import { useGetAllEventsQuery } from '@/rtk/event/eventAPI'
@@ -9,11 +10,7 @@ const Events = () => {
     const {data: events, isLoading, isError, isSuccess} = useGetAllEventsQuery(null)
 
   return <main className='flex flex-col gap-16 px-5 py-20 md:p-20 lg:flex-row lg:mx-auto xl:w-[1300px]'>
-    <Suspense fallback={'Loading Events...'}>
-        <ul>
-            {events ? events.map((event, i) => <li key={i}>{event.name}</li>) : <li></li>}
-        </ul>
-    </Suspense>
+    
     <section className='flex flex-col gap-1 border shadow-md rounded-lg p-5 sticky self-start lg:w-1/4'>
         <VContainer className='flex flex-col gap-0'>
             <h2 className='text-lg font-semibold text-slate-500'>Lewis,</h2> 
@@ -22,46 +19,14 @@ const Events = () => {
 
         <div className='divider'></div>
 
-        <form className='flex flex-col gap-2' onChange={(e) => console.log('Stop poking me...', e)}>
-            <input type="text" placeholder='Location' className='input input-bordered'/>
-
-            <input type="number" placeholder='Attendees' className='input input-bordered'/>
-
-            <div className='divider'></div>
-            
-            <section className='flex flex-col gap-2'>
-                <input type="text" placeholder='Technology' className='input input-bordered'/>
-                
-                <section className='flex flex-row gap-1 flex-wrap'>
-                    <div className="badge badge-primary badge-outline">TypeScript</div>
-                    <div className="badge badge-primary badge-outline">Redux</div>
-                    <div className="badge badge-primary badge-outline">Next.JS</div>
-                </section>
-            </section>
-
-            <div className='divider'></div>
-
-            <section className='flex flex-row items-center gap-2 text-sm'>
-                <input type="checkbox" defaultChecked={false} className="checkbox" />
-                <label>Tickets Available</label>
-            </section>
-
-            <section className='flex flex-row gap-2 items-center text-sm'>
-                <input type="checkbox" defaultChecked={false} className="checkbox" />
-                <label>Order by date</label>
-            </section>
-
-        </form>
+        <EventFilterForm />
   </section>
 
-  <section className='flex flex-row flex-wrap gap-6 lg:w-3/4'>
-    <EventCard />
-    <EventCard />      
-    <EventCard />      
-    <EventCard />      
-    <EventCard />      
-    <EventCard />    
-  </section>
+    <section className='flex flex-row flex-wrap gap-6 lg:w-3/4'>
+        <Suspense fallback={'Loading Events...'} >
+            {events && events.map((event, i) => <EventCard key={event.id} event={event}/>)}
+        </Suspense>   
+    </section>
 </main>
 }
 

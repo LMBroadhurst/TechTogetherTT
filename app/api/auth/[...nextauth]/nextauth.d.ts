@@ -9,7 +9,7 @@ declare module "next-auth" {
     interface User {
         location?: string;
         role?: Role;
-        subscribed: boolean;
+        subscribed?: boolean;
     }
   
     interface Session extends DefaultSession {
@@ -21,6 +21,6 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
     interface JWT {
       role?: Role;
-      subscribed: boolean;
+      subscribed?: boolean;
     }
 }
