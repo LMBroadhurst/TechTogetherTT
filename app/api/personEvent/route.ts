@@ -1,22 +1,7 @@
-import { Event, PrismaClient } from "@prisma/client";
-import { redirect } from "next/navigation";
-import { NextResponse, NextRequest } from "next/server";
+import { PrismaClient, PersonEvent } from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient()
-
-// TODO: Zod form data type checking
-
-export async function GET(request: NextRequest) {
-
-    // can I add in some code here that will allow for multiple different GET requests?
-
-    // gets request pathname, bodyUsed
-    console.log(request.nextUrl.pathname, request.bodyUsed)
-
-    const allEvents = await prisma.event.findMany()
-
-    return NextResponse.json(allEvents)
-}
 
 export async function POST(request: NextRequest) {
 

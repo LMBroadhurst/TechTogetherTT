@@ -33,6 +33,7 @@ model PersonEvent {
   event           Event           @relation(fields: [eventId], references: [id])
   eventId         Int 
 
+  attending       Int
   rating          String? 
   review          String?
 }

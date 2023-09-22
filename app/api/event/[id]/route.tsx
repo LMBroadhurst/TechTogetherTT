@@ -14,6 +14,6 @@ export async function GET(request: NextRequest) {
         },
     })
 
-    console.log(event)
+    // console.log(event)
     return NextResponse.json(event)
 }

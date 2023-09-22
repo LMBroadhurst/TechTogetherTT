@@ -1,0 +1,9 @@
+enum ATTENDING_STATUS {
+    NOT_ATTENDING = 0,
+    ATTENDING = 1,
+    WAITING_LIST = 2,
+}
+
+export {
+    ATTENDING_STATUS
+}
