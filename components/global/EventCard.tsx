@@ -14,7 +14,7 @@ type OwnProps = {
 const EventCard: FC<OwnProps> = ({event}) => {
   
   
-  return <Link href={`/`} className="card w-[350px] bg-base-100 shadow-lg duration-500 hover:scale-[1.01] hover:cursor-pointer">
+  return <Link href={`/event/${event.id}`} className="card w-[350px] bg-base-100 shadow-lg duration-500 hover:scale-[1.01] hover:cursor-pointer">
     <figure className='max-h-56'>
         <Image 
             src={TECHDEFAULT.src} 
@@ -26,7 +26,7 @@ const EventCard: FC<OwnProps> = ({event}) => {
     
     <VContainer className='p-5 gap-2'>
         <VContainer className='gap-1'>
-            <h2 className='text-lg font-bold'>{event?.name ?? 'Next.JS is super cool'}</h2>
+            <h2 className='text-lg font-bold'>{event?.name ?? 'Next.JS is super cool'} id: {event.id ?? ''}</h2>
 
             <p className='text-sm'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum fugiat fuga nulla dolor minima necessitatibus...</p>
         </VContainer>
