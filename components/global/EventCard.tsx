@@ -34,7 +34,7 @@ const EventCard: FC<OwnProps> = ({event}) => {
         <div className='divider my-0 py-0'></div>
 
         <VContainer className='text-sm'>
-            <span>London, UK</span>
+            <span>{event?.location ?? 'London, UK'}</span>
             <span>12 People Attending</span>
         </VContainer>
 
