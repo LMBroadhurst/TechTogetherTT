@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
 
-    const getAllPeople = await prisma.person.findMany()
+    const getAllPeople = await prisma.user.findMany()
 
     return NextResponse.json({people: getAllPeople})
 }

@@ -20,6 +20,7 @@ declare module "next-auth" {
 // nextauth.d.ts
 declare module "next-auth/jwt" {
     interface JWT {
+      id: number;
       role?: Role;
       subscribed?: boolean;
     }

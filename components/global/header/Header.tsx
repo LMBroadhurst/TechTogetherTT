@@ -16,6 +16,7 @@ const Header: FC<OwnProps> = ({}) => {
 
   // Authentication
   const {data: session, status} = useSession()
+  console.log(session?.user?.id)
 
   const handleClickLogout = () => signOut()
 
