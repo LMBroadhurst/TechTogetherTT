@@ -2,12 +2,10 @@
 import EventFilterForm from '@/components/forms/event-filters/EventFilterForm'
 import { VContainer } from '@/components/global/Containers'
 import EventCard from '@/components/global/EventCard'
-import { useGetAllEventsQuery } from '@/rtk/event/eventAPI'
 import React, { Suspense } from 'react'
 
 const Events = () => {
 
-    const {data: events, isLoading, isError, isSuccess} = useGetAllEventsQuery(null)
 
   return <main className='flex flex-col gap-16 px-5 py-20 md:p-20 lg:flex-row lg:mx-auto xl:w-[1300px]'>
     
@@ -24,7 +22,7 @@ const Events = () => {
 
     <section className='flex flex-row flex-wrap gap-6 lg:w-3/4'>
         <Suspense fallback={'Loading Events...'} >
-            {events && events.map((event, i) => <EventCard key={event.id} event={event}/>)}
+            {/* {events && events.map((event, i) => <EventCard key={event.id} event={event}/>)} */}
         </Suspense>   
     </section>
 </main>

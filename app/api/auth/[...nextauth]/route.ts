@@ -30,11 +30,10 @@ export const authOptions: AuthOptions = {
     // }),
   ],
   callbacks: {
-    // async jwt({ token, account, profile }) {
-      
-      // const router = useRouter()
-      // router.push('/')
-    // }
+    async jwt({ token }) {
+      console.log(token)
+      return token
+    }
   }
 }
 

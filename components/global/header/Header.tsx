@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import BurgerMenu from './BurgerMenu'
 import { smallMagnifyingGlass } from '@/utils/icons'
 import { HContainer } from '../Containers'
@@ -16,7 +16,14 @@ const Header: FC<OwnProps> = ({}) => {
 
   // Authentication
   const {data: session, status} = useSession()
-  console.log(session?.user?.id)
+  console.log(session?.user)
+
+  // useEffect(() => {
+  //   if (session?.user?.email) {
+  //     const user = findUserByEmail(session?.user?.email)
+  //     console.log(user)
+  //   }
+  // }, [session])
 
   const handleClickLogout = () => signOut()
 

@@ -5,7 +5,7 @@ import { useSession, signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
 
-const Auth = () => {
+export default function Auth() {
 
   // Authentication Redirect
   const router = useRouter()
@@ -15,10 +15,7 @@ const Auth = () => {
     router.push('/')
   }
   
-
   return <main className='p-10 py-20'>
     <LoginFormView />
   </main>
 }
-
-export default Auth

@@ -18,12 +18,12 @@ model UserEvent {
 }
 
 model Event {
-  id            String           @id @default(cuid())
-  name          String
-  localDateTime DateTime
-  location      String
-  maxAttendance Int
-  users        UserEvent[]
+  id                  String           @id @default(cuid())
+  name                String
+  localDateTime       DateTime
+  location            String
+  maxAttendance       Int
+  users               UserEvent[]
 }
 
 // Prisma/NextAuth required
