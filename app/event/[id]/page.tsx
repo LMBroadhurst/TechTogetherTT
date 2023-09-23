@@ -1,21 +1,15 @@
 'use client'
 import { VContainer } from '@/components/global/Containers'
+import { useGetEventById } from '@/hooks/react-query/event'
 import { Event } from '@prisma/client'
 import React, { useEffect, useState, useCallback } from 'react'
+import { useQueryClient } from 'react-query'
 
-const Event = ({params} : {params: {id: number}}) => {
+const EventPage = ({params} : {params: {id: string}}) => {
 
-    const [event, setEvent] = useState<Event>()
-
-    const eventApiCall = useCallback(async () => {
-        const response = await fetch(`/api/event/${params.id}`).then(res => res.json())
-        setEvent(response)
-    }, [params])
-
-    useEffect(() => {
-        eventApiCall()
-    }, [eventApiCall])
-
+    const queryClient = useQueryClient()
+    const { status, data: event, error, isFetching } = useGetEventById(params.id)
+    console.log(status, event)
 
     if (!event) return 'Loading...'
 
@@ -31,4 +25,4 @@ const Event = ({params} : {params: {id: number}}) => {
     </main>
 }
 
-export default Event
+export default EventPage

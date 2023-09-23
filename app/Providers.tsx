@@ -1,8 +1,9 @@
 'use client'
 import React, { PropsWithChildren } from 'react'
 import { SessionProvider } from 'next-auth/react'
-import { Provider } from 'react-redux'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
+const queryClient = new QueryClient()
 
 export default function Providers ({
   children,
@@ -14,7 +15,9 @@ export default function Providers ({
 
   return <React.StrictMode>
     <SessionProvider session={session}>
-      {children}
+      <QueryClientProvider client={queryClient}>
+        {children}
+      </QueryClientProvider>
     </SessionProvider>
   </React.StrictMode>
 }
