@@ -8,19 +8,11 @@ import React, { Suspense, useEffect, useState } from 'react'
 import { useQueryClient, useQuery } from 'react-query'
 import { Event } from '@prisma/client'
 
-const Events = () => {
 
-    // hooks
+const EventsPage = () => {
+
     const queryClient = useQueryClient()
-
-    // Set Event
-    const response = async () => {
-        const x = await axios.get("/api/event").then(res => res)
-        return x
-    }
-    const x = response()
-    console.log(x)
-    const [events, setEvents] = useState<Event[]>()
+    const {data: events, isLoading } = useGetEvents()
 
     return <main className='flex flex-col gap-16 px-5 py-20 md:p-20 lg:flex-row lg:mx-auto xl:w-[1300px]'>
         
@@ -37,10 +29,10 @@ const Events = () => {
 
         <section className='flex flex-row flex-wrap gap-6 lg:w-3/4'>
             <Suspense fallback={'Loading Events...'}>
-                {/* {Boolean(events?.length) && events?.map((event: Event) => <EventCard key={event.id} event={event}/>)} */}
+                {Boolean(events?.length) ? events?.map((event: Event) => <EventCard key={event.id} event={event}/>) : 'Loading...'}
             </Suspense>   
         </section>
     </main>
 }
 
-export default Events
+export default EventsPage
