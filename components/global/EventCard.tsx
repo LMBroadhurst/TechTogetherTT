@@ -1,15 +1,12 @@
 'use client'
-import React, { ButtonHTMLAttributes, FC, MouseEventHandler } from 'react'
+import React, { FC } from 'react'
 import Image from 'next/image'
 import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
 import { HContainer, VContainer } from './Containers'
 import { bookmark, bookmarkFilled, share } from '@/utils/icons'
 import Link from 'next/link'
-import { Event, PrismaClient, User, UserEvent } from '@prisma/client'
+import { Event, User, UserEvent } from '@prisma/client'
 import { useSession } from 'next-auth/react'
-import { useQueryClient } from 'react-query'
-import { usePostUserEvent } from '@/hooks/react-query/userEvent'
-import { findUserByEmail } from '@/app/repository/user'
 import axios from 'axios'
 import { ATTENDING_STATUS } from '@/utils/enums'
 
@@ -115,7 +112,7 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
 
             <VContainer className='text-sm'>
                 <span>{event?.location ?? 'London, UK'}</span>
-                <span>{event?.maxAttendance} People Attending</span>
+                <span>{userEvents?.length} People Attending</span>
             </VContainer>
 
             <div className='divider my-0 py-0'></div>

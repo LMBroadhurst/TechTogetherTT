@@ -11,7 +11,7 @@ model UserEvent {
   id                  Int        @id @default(autoincrement())
   userId              String
   eventId             String
-  attendanceStatus    Int 
+  attendanceStatus    String 
   rating              String?
   review              String?
   event               Event      @relation(fields: [eventId], references: [id])
