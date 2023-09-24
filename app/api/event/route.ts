@@ -7,14 +7,9 @@ const prisma = new PrismaClient()
 // TODO: Zod form data type checking
 
 export async function GET(request: NextRequest) {
-
     // can I add in some code here that will allow for multiple different GET requests?
-
-    // gets request pathname, bodyUsed
-    console.log(request.nextUrl.pathname, request.bodyUsed)
-
+    
     const allEvents = await prisma.event.findMany()
-
     return NextResponse.json(allEvents)
 }
 

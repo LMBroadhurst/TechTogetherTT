@@ -16,15 +16,6 @@ const Header: FC<OwnProps> = ({}) => {
 
   // Authentication
   const {data: session, status} = useSession()
-  console.log(session?.user)
-
-  // useEffect(() => {
-  //   if (session?.user?.email) {
-  //     const user = findUserByEmail(session?.user?.email)
-  //     console.log(user)
-  //   }
-  // }, [session])
-
   const handleClickLogout = () => signOut()
 
   return <header className='border-b w-full shadow-md sticky top-0 z-10 bg-base-100'>

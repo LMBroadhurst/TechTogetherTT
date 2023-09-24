@@ -9,6 +9,8 @@ import { Event, PrismaClient, User } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { usePostUserEvent } from '@/hooks/react-query/userEvent'
+import { findUserByEmail } from '@/app/repository/user'
+import axios from 'axios'
 
 type OwnProps = {
     event: Event;
@@ -18,24 +20,24 @@ const EventCard: FC<OwnProps> = ({event}) => {
 
     // hooks
     const prisma = new PrismaClient()
-    const queryClient = useQueryClient()
     const { data } = useSession()
-    // const [trigger, {}] = usePostUserEvent('x', 'y')
     
     async function handleAttendEvent(e: any) {
         e.stopPropagation()
         
-        if (!data?.user) return null
+        if (!data?.user) throw new Error("No user found")
+        if (!data.user.email) throw new Error("No email found for user")
+        
+        // Need to perform api call to db for user
+        const {user}: {user: User} = await fetch(`/api/user/${data.user.email}`).then(res => res.json())
+        if (!user) throw new Error(`Could not find a user with the email ${data.user.email}`)
 
-        const user = await prisma.user.findFirst({
-            where: {
-                email: data?.user?.email
-            }
+        const response = await axios.post("/api/userEvent", {
+            userId: user.id,
+            eventId: event.id,
         })
 
-        if (!user) return null
-
-        
+        console.log(response)
     } 
   
     return <figure  className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:scale-[1.01] hover:cursor-pointer">
