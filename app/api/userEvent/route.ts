@@ -1,3 +1,4 @@
+import { ATTENDING_STATUS } from "@/utils/enums";
 import { PrismaClient, UserEvent } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -13,11 +14,38 @@ export async function POST(request: NextRequest) {
         data: {
             userId: userId,
             eventId: eventId,
+            attendanceStatus: ATTENDING_STATUS.ATTENDING
         }
     })
 
     return NextResponse.json({
         status: 200,
         userEvent: userEvent, 
+    })
+}
+
+export async function GET() {
+    const userEvents = await prisma.userEvent.findMany()
+    return NextResponse.json({
+        userEvents: userEvents
+    })
+}
+
+export async function DELETE(request: NextRequest) {
+
+    const {userId, eventId} = await request.json()
+
+    const userEvents = await prisma.userEvent.deleteMany({
+        where: {
+            userId: userId,
+            eventId: eventId
+        }
+    })
+
+    console.log(userEvents)
+
+    return NextResponse.json({
+        status: 200,
+        msg: 'Deleted userEvent'
     })
 }

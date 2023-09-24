@@ -8,13 +8,14 @@ datasource db {
 }
 
 model UserEvent {
-  id        Int        @id @default(autoincrement())
-  userId    String
-  eventId   String
-  rating    String?
-  review    String?
-  event     Event      @relation(fields: [eventId], references: [id])
-  user      User       @relation(fields: [userId], references: [id])
+  id                  Int        @id @default(autoincrement())
+  userId              String
+  eventId             String
+  attendanceStatus    Int 
+  rating              String?
+  review              String?
+  event               Event      @relation(fields: [eventId], references: [id])
+  user                User       @relation(fields: [userId], references: [id])
 }
 
 model Event {

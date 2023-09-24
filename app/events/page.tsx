@@ -1,18 +1,12 @@
 'use client'
 import EventFilterForm from '@/components/forms/event-filters/EventFilterForm'
 import { VContainer } from '@/components/global/Containers'
-import EventCard from '@/components/global/EventCard'
-import { useGetEvents } from '@/hooks/react-query/event'
-import axios from 'axios'
-import React, { Suspense, useEffect, useState } from 'react'
-import { useQueryClient, useQuery } from 'react-query'
-import { Event } from '@prisma/client'
+import React, { Suspense, useCallback, useEffect, useState } from 'react'
+import EventsSuspenseBoundary from '@/components/events/EventsSuspenseBoundary'
 
 
 const EventsPage = () => {
 
-    const queryClient = useQueryClient()
-    const {data: events, isLoading } = useGetEvents()
 
     return <main className='flex flex-col gap-16 px-5 py-20 md:p-20 lg:flex-row lg:mx-auto xl:w-[1300px]'>
         
@@ -25,12 +19,10 @@ const EventsPage = () => {
             <div className='divider'></div>
 
             <EventFilterForm />
-    </section>
+        </section>
 
         <section className='flex flex-row flex-wrap gap-6 lg:w-3/4'>
-            <Suspense fallback={'Loading Events...'}>
-                {Boolean(events?.length) ? events?.map((event: Event) => <EventCard key={event.id} event={event}/>) : 'Loading...'}
-            </Suspense>   
+            <EventsSuspenseBoundary />
         </section>
     </main>
 }

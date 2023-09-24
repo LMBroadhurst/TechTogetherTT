@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import TextInput from '../../global/TextInput'
 import { Event } from '@prisma/client'
 import { defaultCreateEventFormDetails } from './defaultCreateEventFormValues'
-import { usePostEventMutation } from '@/rtk/event/eventAPI'
 import axios from 'axios'
 
 const CreateEventForm = () => {
@@ -24,17 +23,15 @@ const CreateEventForm = () => {
     }
 
     // Form Submission
-    const [postEventTrigger, {isError, isLoading, isSuccess}] = usePostEventMutation()
 
     const handleFormSubmit = async (event: any) => {
         event.preventDefault()
 
-        // const response = await fetch('/api/event', {
-        //     method: 'POST',
-        //     body: JSON.stringify(createEventDetails),
-        // })
+        const response = await fetch('/api/event', {
+            method: 'POST',
+            body: JSON.stringify(createEventDetails),
+        })
 
-        const response = await postEventTrigger(createEventDetails)
         console.log(response)
     }
 

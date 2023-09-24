@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     const event = await request.json()
     const { name, location, maxAttendance } = event
 
-    // Need to validate this code...
+    // Need to validate this code with zod...
     const newEvent = await prisma.event.create({
         data: {
             name: name,
@@ -29,9 +29,9 @@ export async function POST(request: NextRequest) {
         }
     })
 
-    // console.log(newEvent)
-    return NextResponse.json(newEvent)
-
-    // or redirect to newly created event... ?
-    // redirect('/')
+    console.log(newEvent)
+    return NextResponse.json({
+        status: 200,
+        newEvent
+    })
 }
