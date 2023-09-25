@@ -1,5 +1,5 @@
 import { VContainer } from '@/components/global/Containers'
-import EventCard from '@/components/global/EventCard'
+import EventCard from '@/components/events/EventCard'
 import HomeTitle from '@/components/home/HomeTitle'
 import LocationEventsContainer from '@/components/home/LocationEventsContainer'
 import React from 'react'

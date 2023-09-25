@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import EventCard from '../global/EventCard'
+import EventCard from '../events/EventCard'
 
 const LocationEventsContainer = () => {
 

@@ -1,7 +1,7 @@
 import React, { Suspense, useCallback, useEffect, useState } from 'react'
 import { useQueryClient, useQuery } from 'react-query'
 import { useGetEvents } from '@/hooks/react-query/event'
-import EventCard from '@/components/global/EventCard'
+import EventCard from '@/components/events/EventCard'
 import { Event, UserEvent } from '@prisma/client'
 
 

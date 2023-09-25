@@ -1,14 +1,15 @@
 'use client'
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import Image from 'next/image'
 import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
-import { HContainer, VContainer } from './Containers'
+import { HContainer, VContainer } from '../global/Containers'
 import { bookmark, bookmarkFilled, share } from '@/utils/icons'
 import Link from 'next/link'
 import { Event, User, UserEvent } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import axios from 'axios'
 import { ATTENDING_STATUS } from '@/utils/enums'
+import { useGetAttendanceStatus, useHandleEventCardActionClick, useRenderAttendButton } from './hooks'
 
 type OwnProps = {
     event: Event
@@ -19,76 +20,21 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
 
     // hooks
     const { data } = useSession()
+    const { handleEventCardActionClick } = useHandleEventCardActionClick()
+    const { attendanceStatus, getAttendanceStatus } = useGetAttendanceStatus()
+    const { buttonContent } = useRenderAttendButton(attendanceStatus)
     
-    // userevents
-    async function getAttendanceStatus() {
 
-        if(data?.user) {
-            const {user}: {user: User} = await fetch(`/api/user/${data.user.email}`).then(res => res.json())
+    const handleOnActionButtonClick = (clickEvent: any) => {
+        clickEvent.preventDefault()
+        clickEvent.stopPropagation()
 
-            const userEvent: UserEvent | undefined = userEvents?.find(userEvent => userEvent.userId === user.id)
+        if (!data || !data?.user) throw new Error("No user found")
 
-            return userEvent?.attendanceStatus
-        }
-
-        return null
+        handleEventCardActionClick(data.user, attendanceStatus, event)
     }
 
-    async function handleAttendEvent(e: any) {
-        e.preventDefault()
-        e.stopPropagation()
-        
-        if (!data?.user) throw new Error("No user found")
-        const {user}: {user: User} = await fetch(`/api/user/${data.user.email}`).then(res => res.json())
-        if (!user) throw new Error(`Could not find a user with the email ${data.user.email}`)
-
-        // check attendance then follow down appropiate path
-
-        const attendanceStatus = await getAttendanceStatus()
-
-        // Already Attending
-        if (attendanceStatus === ATTENDING_STATUS.ATTENDING) {
-            const response = await fetch('/api/userEvent', {
-                method: 'DELETE',
-                body: JSON.stringify({
-                    eventId: event.id, 
-                    userId: user.id
-                })
-            })
-
-            return response
-        }
-
-        // Not Currently Attending
-        if (attendanceStatus === ATTENDING_STATUS.NOT_ATTENDING) {
-            
-            // create new userEvent
-            const response = await axios.post("/api/userEvent", {
-                userId: user.id,
-                eventId: event.id,
-            })
-
-            return response
-        }
-    } 
-
-    async function renderButtonContent() {
-        const attendanceStatus = await getAttendanceStatus()
-
-        switch(attendanceStatus) {
-            case (ATTENDING_STATUS.ATTENDING):
-                return 'Attending'
-
-            case (ATTENDING_STATUS.NOT_ATTENDING):
-                return 'Attend'
-                    
-            case (ATTENDING_STATUS.WAITING_LIST):
-                return 'On Waitlist'   
-
-            default:
-                return 'Attend'
-        }
-    }
+    
   
     return <figure  className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:scale-[1.01] hover:cursor-pointer">
         
@@ -135,9 +81,9 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
                 <button 
                     className='btn'
                     disabled={!data?.user ? true : false} 
-                    onClick={(event) => handleAttendEvent(event)}
+                    onClick={(event) => handleOnActionButtonClick(event)}
                 >   
-                    {renderButtonContent()}
+                    {loading ? <span className="loading loading-dots loading-lg"></span>: buttonContent}
                 </button>
             </HContainer>
         </VContainer>
