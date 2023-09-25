@@ -64,7 +64,7 @@ export function useGetAttendanceStatus() {
     const [status, setStatus] = useState('')
     const [attendanceStatus, setAttendanceStatus] = useState('')
 
-    async function getAttendanceStatus(currentUser: User, userEvents: UserEvent[]){
+    async function getAttendanceStatus(currentUser: any, userEvents: UserEvent[]){
 
         if(currentUser) {
             const {user}: {user: User} = await fetch(`/api/user/${currentUser.email}`).then(res => res.json())
@@ -73,7 +73,7 @@ export function useGetAttendanceStatus() {
 
             if (!userEvent) {
                 setStatus("ERROR")
-                throw new Error("No userevent found")
+                return null
             }
 
             setStatus("SUCCESS")
@@ -90,26 +90,4 @@ export function useGetAttendanceStatus() {
         attendanceStatus,
         getAttendanceStatus
     }
-}
-
-
-export function useRenderAttendButton(attendanceStatus: string) {
-
-    const [buttonContent, setButtonContent] = useState('')
-
-    switch(attendanceStatus) {
-        case (ATTENDING_STATUS.ATTENDING):
-            setButtonContent('Attending')
-
-        case (ATTENDING_STATUS.NOT_ATTENDING):
-            setButtonContent('Attend')
-                
-        case (ATTENDING_STATUS.WAITING_LIST):
-            setButtonContent('On Waitlist')   
-
-        default:
-            setButtonContent('Attend')
-    }
-
-    return {buttonContent}
 }
