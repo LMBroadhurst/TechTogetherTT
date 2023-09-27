@@ -10,6 +10,7 @@ export function useHandleEventCardActionClick() {
     async function handleEventCardActionClick(currentUser: any, attendanceStatus: string, event: Event) {
         // Setup
         setStatus('PENDING')
+        console.log(attendanceStatus)
 
         // Get User and check validity
         if (!currentUser) {
@@ -24,14 +25,15 @@ export function useHandleEventCardActionClick() {
             throw new Error(`Could not find a user with the email ${currentUser.email}`)
         }
 
-        // Not currently attending
-        if (attendanceStatus === ATTENDING_STATUS.NOT_ATTENDING) {
+        // Not currently attending OR no userEvent attendanceStatus
+        if (!attendanceStatus || attendanceStatus === ATTENDING_STATUS.NOT_ATTENDING) {
             
             const response = await axios.post("/api/userEvent", {
                 userId: user.id,
                 eventId: event.id,
             })
 
+            console.log(response)
             setStatus("SUCCESSFUL")
             return response
         }

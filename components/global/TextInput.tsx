@@ -5,8 +5,8 @@ import React, { FC } from 'react'
 type OwnProps = {
     id: string
     label: string
-    inputType: "text" | "password" | "email" | 'number' | 'date'
-    value?: string | number
+    inputType: "text" | "password" | "email" | 'number' | 'date' | 'datetime-local'
+    value?: string | number | Date
     icon?: any
     onChange?: any
     apiProperty?: string

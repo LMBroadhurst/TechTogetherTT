@@ -23,11 +23,13 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
     const { status, handleEventCardActionClick } = useHandleEventCardActionClick()
     const { attendanceStatus, getAttendanceStatus } = useGetAttendanceStatus()
 
+    // Works but the rendering is broken, needs debugging
     useEffect(() => {
         if (data && userEvents) {
+            console.log('Data & userEvents')
             getAttendanceStatus(data?.user, userEvents)
         }
-    }, [data, getAttendanceStatus, userEvents])
+    }, [attendanceStatus, data, getAttendanceStatus, userEvents])
     
     const buttonContent = useMemo(() => {
         switch(attendanceStatus) {
@@ -46,13 +48,11 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
     }, [attendanceStatus])
     
 
-    const handleOnActionButtonClick = (clickEvent: any) => {
-        clickEvent.preventDefault()
-        clickEvent.stopPropagation()
-
+    const handleOnActionButtonClick = async (clickEvent: any) => {
         if (!data || !data?.user) throw new Error("No user found")
 
-        handleEventCardActionClick(data.user, attendanceStatus, event)
+        await handleEventCardActionClick(data.user, attendanceStatus, event)
+        if (userEvents) await getAttendanceStatus(data.user, userEvents)
     }
 
     

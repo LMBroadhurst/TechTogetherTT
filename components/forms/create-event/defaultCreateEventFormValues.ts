@@ -1,7 +1,7 @@
 import { Event } from "@prisma/client";
 
 const defaultCreateEventFormDetails: Event = {
-    id: 0,
+    id: '',
     name: '',
     location: '',
     maxAttendance: 0,

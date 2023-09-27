@@ -16,13 +16,13 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
 
     const event = await request.json()
-    const { name, location, maxAttendance } = event
+    const { name, location, localDateTime, maxAttendance } = event
 
     // Need to validate this code with zod...
     const newEvent = await prisma.event.create({
         data: {
             name: name,
-            localDateTime: new Date(),
+            localDateTime: new Date(localDateTime),
             location: location,
             // @ts-ignore
             maxAttendance: parseInt(maxAttendance)

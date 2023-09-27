@@ -1,9 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import TextInput from '../../global/TextInput'
-import { Event } from '@prisma/client'
 import { defaultCreateEventFormDetails } from './defaultCreateEventFormValues'
-import axios from 'axios'
 
 const CreateEventForm = () => {
 
@@ -20,6 +18,7 @@ const CreateEventForm = () => {
         const key = event.target.name
         const value = event.target.value
         setCreateEventDetails({...createEventDetails, [key]: value})
+        console.log(createEventDetails)
     }
 
     // Form Submission
@@ -57,10 +56,10 @@ const CreateEventForm = () => {
 
         <TextInput 
             id="localDateTime" 
-            label='Time' 
-            inputType='text' 
-            // value={localDateTime}
-            apiProperty='location'
+            label='Local Date Time' 
+            inputType='datetime-local' 
+            value={localDateTime}
+            apiProperty='localDateTime'
             onChange={handleCreateEventFormChange}
         />
 
