@@ -34,41 +34,49 @@ const CreateEventForm = () => {
         console.log(response)
     }
 
+    // DateTime
+    const [dateTime, setDateTime] = useState<Date>(new Date())
+    const handleDateChange = (e: any) => {
+        const dateTime = new Date(e.target.value)
+        setDateTime(dateTime)
+    }
+
 
     return <form className='flex flex-col gap-4 max-w-2xl w-full'>
         <TextInput
             id="nameEvent" 
             label='Name' 
-            inputType='text' 
+            type='text'
             value={name} 
-            apiProperty='name' 
+            name='name' 
             onChange={handleCreateEventFormChange}
         />
 
         <TextInput 
             id="maxAttendanceEvent" 
             label='Max Attendance' 
-            inputType='number' 
+            type='number' 
             value={maxAttendance}
-            apiProperty='maxAttendance'
+            name='maxAttendance'
             onChange={handleCreateEventFormChange}
         />
 
         <TextInput 
             id="localDateTime" 
             label='Local Date Time' 
-            inputType='datetime-local' 
-            value={localDateTime}
-            apiProperty='localDateTime'
+            type='datetime-local' 
+            // TODO: Issues with date
+            value={localDateTime.toISOString()}
+            name='localDateTime'
             onChange={handleCreateEventFormChange}
         />
 
         <TextInput 
             id="locationEvent" 
             label='Location' 
-            inputType='text'
+            type='text'
             value={location}
-            apiProperty='location'
+            name='location'
             onChange={handleCreateEventFormChange}
         />          
                 

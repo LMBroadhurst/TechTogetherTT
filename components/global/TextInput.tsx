@@ -1,24 +1,20 @@
 import { eye, eyeWithSlash } from '@/utils/icons'
-import React, { FC } from 'react'
+import React, { FC, InputHTMLAttributes } from 'react'
 // import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
 
 type OwnProps = {
     id: string
     label: string
-    inputType: "text" | "password" | "email" | 'number' | 'date' | 'datetime-local'
-    value?: string | number | Date
     icon?: any
     onChange?: any
-    apiProperty?: string
 
     isPasswordInput?: boolean
     passwordStatus?: boolean
     onPasswordTextToggle?: any
 }
 
-const TextInput: FC<OwnProps> = ({
-    id, label, inputType, icon, 
-    apiProperty,
+const TextInput: FC<OwnProps & InputHTMLAttributes<HTMLInputElement>> = ({
+    id, label, icon, type, name, value,
     passwordStatus, isPasswordInput,
     onChange, onPasswordTextToggle
 }) => {
@@ -33,7 +29,16 @@ const TextInput: FC<OwnProps> = ({
             </label>
 
             <section className='flex flex-col'>
-                <input id={id} aria-labelledby={id} data-testid={id} name={apiProperty} type={inputType} className='border rounded-lg px-4 py-2' onChange={onChange} />
+                <input 
+                    id={id} 
+                    aria-labelledby={id} 
+                    data-testid={id} 
+                    name={name} 
+                    type={type} 
+                    className='border rounded-lg px-4 py-2' 
+                    value={value}
+                    onChange={onChange} 
+                />
 
                 <section 
                     className='flex items-center self-end -translate-x-4 -translate-y-8 hover:cursor-pointer'
