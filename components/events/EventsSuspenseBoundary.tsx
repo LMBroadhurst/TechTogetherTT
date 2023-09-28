@@ -16,8 +16,9 @@ const EventsSuspenseBoundary = () => {
     const [userEvents, setUserEvents] = useState<UserEvent[]>([])
 
     const getAllUserEvents = useCallback(async () => {
-        const response = await (await fetch('/api/userEvent')).json()
-        setUserEvents(response.userEvents)
+        const response = await (await fetch('/api/userEvent'))
+        console.log(response)
+        // setUserEvents(response.userEvents)
     }, [])
 
     useEffect(() => {

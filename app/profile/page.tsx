@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import DEFAULT from '@/assets/TECHDEFAULT.jpg'
 import React from 'react'
+import { UserEventsContainer } from '@/components/profile/UserEventsContainer'
 
 const Profile = () => {
 
@@ -17,6 +18,8 @@ const Profile = () => {
 
     
     return <main className='flex flex-col gap-14 px-5 py-20 md:p-20 lg:px-40 xl:px-96'>
+
+        <UserEventsContainer />
         
         <section>
           <h2 className='text-lg font-semibold text-slate-500'>{session?.user?.name},</h2> 

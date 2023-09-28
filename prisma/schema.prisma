@@ -8,42 +8,39 @@ datasource db {
 }
 
 model UserEvent {
-  id                  Int        @id @default(autoincrement())
-  userId              String
-  eventId             String
-  attendanceStatus    String 
-  rating              String?
-  review              String?
-  event               Event      @relation(fields: [eventId], references: [id])
-  user                User       @relation(fields: [userId], references: [id])
+  id               String     @id @default(cuid())
+  userId           String
+  eventId          String
+  attendanceStatus String
+  rating           String?
+  review           String?
+  user             User    @relation(fields: [userId], references: [id])
+  event            Event   @relation(fields: [eventId], references: [id])
 }
 
 model Event {
-  id                  String           @id @default(cuid())
-  name                String
-  localDateTime       DateTime
-  location            String
-  maxAttendance       Int
-  users               UserEvent[]
+  id            String      @id @default(cuid())
+  name          String
+  localDateTime DateTime
+  location      String
+  maxAttendance Int
+  users         UserEvent[]
 }
 
-// Prisma/NextAuth required
-
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  
-  access_token       String?  
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -57,18 +54,17 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String      @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?     @unique
   emailVerified DateTime?
   image         String?
+  joinDate      DateTime    @default(now())
+  location      String?
+  dob           DateTime?
   accounts      Account[]
   sessions      Session[]
-
-  joinDate  DateTime      @default(now())
-  events    UserEvent[]
-  location  String?
-  dob       DateTime?
+  events        UserEvent[]
 }
 
 model VerificationToken {

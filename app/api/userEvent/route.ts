@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
-    const userEvents = await prisma.userEvent.findMany()
+    const userEvents = await prisma.userEvent.findMany({})
     return NextResponse.json({
         userEvents: userEvents
     })
