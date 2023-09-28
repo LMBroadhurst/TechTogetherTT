@@ -3,10 +3,10 @@ import React from 'react'
 
 export function UserEventsContainer() {
 
-    const { runGetMethod } = useGetAllUserEvents()
-
+    const { userEvents } = useGetAllUserEvents()
+    console.log(userEvents)
     
     return <section>
-
+        {userEvents && userEvents?.map(ue => ue.attendanceStatus)}
     </section>
 }

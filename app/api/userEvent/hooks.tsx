@@ -5,22 +5,28 @@ export function useGetAllUserEvents() {
 
     const [userEvents, setUserEvents] = useState<UserEvent[]>([])
 
-    const runGetMethod = async () => {
-        const response = await fetch("/api/userEvent", {
+    const runGetMethod = () => {
+        fetch("/api/userEvent", {
             method: "GET"
-        })
-
-        const userEventsPromise = await response.json()
-        setUserEvents(userEventsPromise)
-        console.log(`set user events to: ${userEvents}`)
+        }).then(
+            async (response) => {
+                const resolvedResponse = await response.json()
+                setUserEvents(resolvedResponse.userEvents)
+                console.log(`set user events to: ${userEvents}`)
+            }
+        ).catch(
+            error => {
+                console.log(error)
+            }
+        )
     }
+
 
     useEffect(() => {
         runGetMethod()
     }, [])
 
-    return {
-        userEvents,
-        runGetMethod
-    }
+  return { userEvents }
+
+    
 }
