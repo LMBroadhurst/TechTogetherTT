@@ -1,9 +1,11 @@
-import { UserEvent } from "@prisma/client"
+import { User, UserEvent, Session } from "@prisma/client"
 import { useEffect, useState } from "react"
 
-export function useGetAllUserEvents() {
+export function useGetAllUserEvents(user?: any) {
 
+    const typedUser = user as User
     const [userEvents, setUserEvents] = useState<UserEvent[]>([])
+    const [events, setEvents] = useState<Event[]>([])
 
     const runGetMethod = () => {
         fetch("/api/userEvent", {
@@ -11,8 +13,14 @@ export function useGetAllUserEvents() {
         }).then(
             async (response) => {
                 const resolvedResponse = await response.json()
-                setUserEvents(resolvedResponse.userEvents)
-                console.log(`set user events to: ${userEvents}`)
+                const typedResponse = resolvedResponse.userEvents as UserEvent[]
+
+                if (user?.id) {
+                    typedResponse.filter(userEvent => userEvent.userId === typedUser.id)
+                }
+
+                setUserEvents(typedResponse)
+                console.log(`set user events to: ${typedResponse}`)
             }
         ).catch(
             error => {

@@ -10,7 +10,10 @@ export async function GET(request: NextRequest) {
     // can I add in some code here that will allow for multiple different GET requests?
     
     const allEvents = await prisma.event.findMany()
-    return NextResponse.json(allEvents)
+    return NextResponse.json({
+        status: 200,
+        events: allEvents
+    })
 }
 
 export async function POST(request: NextRequest) {
