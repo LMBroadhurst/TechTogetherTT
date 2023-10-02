@@ -13,18 +13,7 @@ export function UserEventsContainer() {
     console.log(events)
     
     return <section>
-        {/* {
-            userEvents && userEvents?.map(async (ue) => {
-                // const event = await fetch(`/api/userEvent/${ue.eventId}`, {
-                //     method: "GET"
-                // }).then(
-                //     async (response) => {
-                //     const resolvedResponse = await response.json()
-                //     return resolvedResponse as Event
-                // })
-
-                // return <EventCard event={event} userEvents={userEvents} />
-            })
-        } */}
+        {
+        }
     </section>
 }

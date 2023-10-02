@@ -1,5 +1,6 @@
-import { User, Event } from "@prisma/client"
+import { User, Event, UserEvent, PrismaClient } from "@prisma/client"
 import { useEffect, useState } from "react"
+import { useGetAllUserEvents } from "../userEvent/hooks"
 
 export function useGetAllEvents(user?: any) {
 
@@ -29,5 +30,5 @@ export function useGetAllEvents(user?: any) {
         runGetMethod()
     }, [])
 
-  return { events }
+    return { events }
 }

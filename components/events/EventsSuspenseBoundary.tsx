@@ -3,27 +3,18 @@ import { useQueryClient, useQuery } from 'react-query'
 import { useGetEvents } from '@/hooks/react-query/event'
 import EventCard from '@/components/events/EventCard'
 import { Event, UserEvent } from '@prisma/client'
+import { useGetAllEvents } from '@/app/api/event/hooks'
+import { useGetAllUserEvents } from '@/app/api/userEvent/hooks'
 
 
 
 const EventsSuspenseBoundary = () => {
 
     // events
-    const queryClient = useQueryClient()
-    const {data: events, isLoading } = useGetEvents()
+    const {events} = useGetAllEvents()
 
     // userevents
-    const [userEvents, setUserEvents] = useState<UserEvent[]>([])
-
-    const getAllUserEvents = useCallback(async () => {
-        const response = await (await fetch('/api/userEvent'))
-        console.log(response)
-        // setUserEvents(response.userEvents)
-    }, [])
-
-    useEffect(() => {
-        getAllUserEvents()
-    }, [getAllUserEvents])
+    const { userEvents } = useGetAllUserEvents()
 
     if (!userEvents) return <>Loading...</>
 
