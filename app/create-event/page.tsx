@@ -1,5 +1,5 @@
 'use client'
-import CreateEventForm from "@/components/forms/create-event/CreateEventForm"
+import CreateEventForm from "@/components/create-event/create-event-form/CreateEventForm"
 import CreateEventHero from "@/components/create-event/CreateEventHero"
 import React from "react"
 

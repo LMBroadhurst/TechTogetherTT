@@ -10,6 +10,7 @@ import { useSession } from 'next-auth/react'
 import axios from 'axios'
 import { ATTENDING_STATUS } from '@/utils/enums'
 import { useGetAttendanceStatus, useHandleEventCardActionClick } from './hooks'
+import { usePostUserEvent } from '@/hooks/react-query/userEvent'
 
 type OwnProps = {
     event: Event
@@ -20,43 +21,17 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
 
     // hooks
     const { data } = useSession()
-    const { status, handleEventCardActionClick } = useHandleEventCardActionClick()
-    const { attendanceStatus, getAttendanceStatus } = useGetAttendanceStatus()
+    const usePostUserEventMutation = usePostUserEvent()
 
-    // Works but the rendering is broken, needs debugging
-    useEffect(() => {
-        if (data && userEvents) {
-            console.log('Data & userEvents')
-            getAttendanceStatus(data?.user, userEvents)
-        }
-    }, [attendanceStatus, data, getAttendanceStatus, userEvents])
-    
-    const buttonContent = useMemo(() => {
-        switch(attendanceStatus) {
-            case (ATTENDING_STATUS.ATTENDING):
-                return 'Attending'
-    
-            case (ATTENDING_STATUS.NOT_ATTENDING):
-                return 'Attend'
-                    
-            case (ATTENDING_STATUS.WAITING_LIST):
-                return 'On Waitlist'
-    
-            default:
-                return 'Attend'
-        }
-    }, [attendanceStatus])
-    
+    const handleOnActionButtonClick = async () => {
+        const userEmail = data?.user?.email
+        const eventId = event.id
 
-    const handleOnActionButtonClick = async (clickEvent: any) => {
-        if (!data || !data?.user) throw new Error("No user found")
-
-        await handleEventCardActionClick(data.user, attendanceStatus, event)
-        if (userEvents) await getAttendanceStatus(data.user, userEvents)
+        const response = await usePostUserEventMutation.mutateAsync({userEmail, eventId}, {})
+        console.log(data?.user?.email, event.id)
+        console.log(response)
     }
-
     
-  
     return <figure  className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:scale-[1.01] hover:cursor-pointer">
         
         <figure className='max-h-56'>
@@ -102,9 +77,9 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
                 <button 
                     className='btn'
                     disabled={!data?.user ? true : false} 
-                    onClick={(event) => handleOnActionButtonClick(event)}
+                    onClick={handleOnActionButtonClick}
                 >   
-                    {buttonContent}
+                    Attend
                 </button>
             </HContainer>
         </VContainer>

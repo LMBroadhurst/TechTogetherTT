@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { User } from '@prisma/client'
+import { useSession } from 'next-auth/react'
 
 export function useGetUsers() {
     return useQuery("user", async () => {
@@ -9,10 +10,19 @@ export function useGetUsers() {
     })
 }
 
-export function useGetUserByEmail(email: string) {
-    return useQuery("user", async () => {
-        const { data } = await axios.get(`/api/user/${email}`)
-        console.log(data)
-        return data
-    })
+export function useGetUserByEmail() {
+
+    const {data: session} = useSession()
+
+    return useQuery(
+        "user", 
+        async () => {
+            const { data } = await axios.get(`/api/user/${session?.user?.email}`)
+            console.log(data)
+        },
+        {
+            enabled: !!session?.user?.email
+        }
+    )
+
 }

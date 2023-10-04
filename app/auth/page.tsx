@@ -1,5 +1,5 @@
 'use client'
-import LoginFormView from '@/components/forms/login/LoginFormView'
+import LoginFormView from '@/components/auth/login/LoginFormView'
 import React from 'react'
 import { useSession, signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
