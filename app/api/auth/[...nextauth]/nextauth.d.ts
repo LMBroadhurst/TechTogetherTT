@@ -1,27 +1,25 @@
-// // nextauth.d.ts
-// export enum Role {
-//     user = "user",
-//     admin = "admin",
-// }
+// nextauth.d.ts
+// Ref next.js module augmentation
 
-// // nextauth.d.ts
+import { DefaultSession, DefaultUser } from "next-auth"
+import { JWT, DefaultJWT } from "next-auth/jwt"
+
 // declare module "next-auth" {
-//     interface User {
-//         location?: string;
-//         role?: Role;
-//         subscribed?: boolean;
-//     }
   
-//     interface Session extends DefaultSession {
-//       user?: User;
+//     interface Session {
+//       user: {
+//         id: string
+//         role: string
+//       } & DefaultSession
+//     }
+
+//     interface User extends DefaultUser {
+//         role: string
 //     }
 // }
 
-// // nextauth.d.ts
 // declare module "next-auth/jwt" {
-//     interface JWT {
-//       id: number;
-//       role?: Role;
-//       subscribed?: boolean;
+//     interface JWT extends DefaultJWT{
+//       role: string;
 //     }
 // }

@@ -17,21 +17,30 @@ export const authOptions: AuthOptions = {
 
     GoogleProvider({
       // @ts-ignore
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientId: process.env.GOOGLE_CLIENT_ID,
       // @ts-ignore
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
 
-    // GithubProvider({
-    //   // @ts-ignore
-    //   clientId: process.env.GITHUB_ID,
-    //   // @ts-ignore
-    //   clientSecret: process.env.GITHUB_SECRET
-    // }),
+    
   ],
   callbacks: {
-    async jwt({ token }) {
+
+    async jwt({ token, user }) {
+      // if (user) {
+      //   token.role = user.role
+      // }
+
       return token
+    },
+
+    // For Client Components
+    async session({session, token}) {
+      // if (session.user) {
+        // session.user.role = token.role
+      // }
+
+      return session
     }
   }
 }

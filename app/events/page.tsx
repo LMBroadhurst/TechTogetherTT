@@ -9,22 +9,6 @@ import { useSession } from 'next-auth/react'
 const EventsPage = () => {
 
     const { data } = useSession()
-    const [user, setUser] = useState({})
-
-    async function run() {
-        const response = await fetch(`/api/user/${data?.user?.email}`)
-        const userResp = await response.json()
-        console.log(userResp.user)
-        setUser(user)
-    }
-
-    useEffect(() => {
-        run()
-        // fetch("/api/event/getAllEventsByUser", {
-        //     method: "GET",
-        //     body: {data.}
-        // })
-    }, [])
 
     return <main className='flex flex-col gap-16 px-5 py-20 md:p-20 lg:flex-row lg:mx-auto xl:w-[1300px]'>
         

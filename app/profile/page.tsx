@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import DEFAULT from '@/assets/TECHDEFAULT.jpg'
 import React from 'react'
 import { UserEventsContainer } from '@/components/profile/UserEventsContainer'
+import { useGetUserByEmail } from '@/hooks/react-query/user'
+import { useGetEventsRelatedToUser } from '@/hooks/react-query/event'
 
 const Profile = () => {
 
@@ -16,11 +18,8 @@ const Profile = () => {
         router.push('/auth')
     }
 
-    
     return <main className='flex flex-col gap-14 px-5 py-20 md:p-20 lg:px-40 xl:px-96'>
 
-        <UserEventsContainer />
-        
         <section>
           <h2 className='text-lg font-semibold text-slate-500'>{session?.user?.name},</h2> 
           <h3 className='text-xl font-medium text-slate-600'>This is your TechTogether profile. Cutomise it to your liking.</h3>
@@ -61,6 +60,7 @@ const Profile = () => {
         </section>
 
         <section className='flex flex-col gap-2'>
+            
             <section className='flex flex-row'>
                 <h2 className='text-lg font-bold'>Recently Attended Events</h2>
                 <></>
@@ -71,6 +71,8 @@ const Profile = () => {
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio placeat dolorum nostrum, minima quas cupiditate 
                     hic quia fugiat tempore? Similique qui eligendi consectetur pariatur ad minima veritatis, illo laudantium excepturi.
                 </p>
+            <UserEventsContainer />
+
         </section>
 
         <section className='flex flex-col gap-2'>
