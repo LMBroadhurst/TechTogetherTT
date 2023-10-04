@@ -21,15 +21,13 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
 
     // hooks
     const { data } = useSession()
-    const usePostUserEventMutation = usePostUserEvent()
+    const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
 
     const handleOnActionButtonClick = async () => {
         const userEmail = data?.user?.email
         const eventId = event.id
 
-        const response = await usePostUserEventMutation.mutateAsync({userEmail, eventId}, {})
-        console.log(data?.user?.email, event.id)
-        console.log(response)
+        await postUserEvent({userEmail, eventId}, {})
     }
     
     return <figure  className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:scale-[1.01] hover:cursor-pointer">
@@ -79,7 +77,7 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
                     disabled={!data?.user ? true : false} 
                     onClick={handleOnActionButtonClick}
                 >   
-                    Attend
+                    {postUserEventLoading ? "..." : "Attend"}
                 </button>
             </HContainer>
         </VContainer>

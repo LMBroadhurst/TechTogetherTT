@@ -14,13 +14,11 @@ export function UserEventsContainer() {
 
     return <section className='flex flex-row gap-10'>
         {/*  TODO: Add Suspense Boundary */}
-        {
+        {/* {
             isLoading && !isError ? "Loading" : (
                 // @ts-ignore
                 !isLoading && isError && !data ? "An error has occured" : data?.events.map((e: Event) => <EventCard key={e.id} event={e} />)
             )
-            
-            
-        }
+        } */}
     </section>
 }

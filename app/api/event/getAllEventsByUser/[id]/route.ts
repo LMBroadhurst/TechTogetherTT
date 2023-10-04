@@ -1,6 +1,6 @@
-import { NextRequest } from "next/server";
-import { useGetAllUserEvents } from "../../../userEvent/hooks";
-import { PrismaClient } from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient, UserEvent } from "@prisma/client";
+import axios from "axios";
 
 const prisma = new PrismaClient()
 
@@ -9,14 +9,19 @@ export async function GET(request: NextRequest) {
     const pathname = request.nextUrl.pathname
     const userId = pathname.split("/api/event/getAllEventsByUser")[1];
 
-    // const { userEvents } = useGetAllUserEvents()
-    // const filteredUserEventIdsByUserId: string[] = userEvents.filter(ue => ue.userId === userId).map(ue => ue.eventId);
+    const {data: userEvents, status} = await axios.get(`api/userEvent`)
+
+    if (status !== 200) throw new Error("Failed to retrieve User Events")
+    const filteredUserEventIdsByUserId: UserEvent[] = userEvents.filter((ue: UserEvent) => ue.userId === userId)
+    const resultingEventIds = filteredUserEventIdsByUserId.map((ue: UserEvent) => ue.eventId)
+
+    // console.log(resultingEventIds)
 
     const events = await prisma.event.findMany({
         where: {
-            // id: {in: filteredUserEventIdsByUserId}
+            // id: {in: resultingEventIds}
         }
     })
 
-    console.log(events)
+    return NextResponse.json({events})
 }
