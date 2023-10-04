@@ -8,7 +8,7 @@ export function useGetAllEvents(user?: any) {
     const typedUser = user as User
     const [events, setEvents] = useState<Event[]>([])
 
-    const runGetMethod = () => {
+    function runGetMethod() {
         fetch("/api/event", {
             method: "GET"
         }).then(
@@ -29,6 +29,34 @@ export function useGetAllEvents(user?: any) {
     useEffect(() => {
         runGetMethod()
     }, [])
+
+    return { events }
+}
+
+export function useGetAllEventsByUser(userEmail?: string) {
+
+    const [events, setEvents] = useState<Event[]>([])
+
+    async function getEvents() {
+
+        const {user}: {user: User} = await fetch(`/api/user/${userEmail}`).then(res => res.json())
+
+        fetch(`/api/event/getAllEventsByUser/${user.id}`, {
+            method: "GET",
+        }).then(
+            async (response) => {
+                const x = await response.json()
+                console.log(x)
+                setEvents(x)
+            }
+        ).catch(
+            error => console.log(error)
+        )
+    }
+
+    useEffect(() => {
+        getEvents()
+    }, [userEmail])
 
     return { events }
 }
