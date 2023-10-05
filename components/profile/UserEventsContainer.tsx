@@ -10,15 +10,15 @@ import { Event } from '@prisma/client'
 export function UserEventsContainer() {
 
     const { data, isLoading, isError } = useGetEventsRelatedToUser()
-    console.log(data)
+
+    if (!isLoading) {
+        console.log(data)
+    }
 
     return <section className='flex flex-row gap-10'>
         {/*  TODO: Add Suspense Boundary */}
-        {/* {
-            isLoading && !isError ? "Loading" : (
-                // @ts-ignore
-                !isLoading && isError && !data ? "An error has occured" : data?.events.map((e: Event) => <EventCard key={e.id} event={e} />)
-            )
-        } */}
+        {
+            data && data.map((event: Event) => <EventCard key={event.id} event={event} />)
+        }
     </section>
 }
