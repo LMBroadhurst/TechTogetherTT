@@ -7,19 +7,22 @@ const prisma = new PrismaClient()
 export async function GET(request: NextRequest) {
 
     const pathname = request.nextUrl.pathname
-    const userId = pathname.split("/api/event/getAllEventsByUser")[1];
+    const userEmail = pathname.split("/api/event/getAllEventsByUser")[1];
 
-    const {data: userEvents, status} = await axios.get(`api/userEvent`)
+    const userEventsFilteredByUserId = await prisma.userEvent.findMany({
+        where: {
+            user: {
+                email: userEmail
+            }
+        },
 
-    if (status !== 200) throw new Error("Failed to retrieve User Events")
-    const filteredUserEventIdsByUserId: UserEvent[] = userEvents.filter((ue: UserEvent) => ue.userId === userId)
-    const resultingEventIds = filteredUserEventIdsByUserId.map((ue: UserEvent) => ue.eventId)
+    })
 
-    // console.log(resultingEventIds)
+    const resultingEventIds = userEventsFilteredByUserId.map(ue => ue.eventId)
 
     const events = await prisma.event.findMany({
         where: {
-            // id: {in: resultingEventIds}
+            id: {in: resultingEventIds}
         }
     })
 

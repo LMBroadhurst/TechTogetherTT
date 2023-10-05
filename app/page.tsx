@@ -13,8 +13,6 @@ const Home = () => {
     <VContainer className='gap-52'>
 
       <LocationEventsContainer />
-      <LocationEventsContainer />
-      <LocationEventsContainer />
       
     </VContainer>
   </main>

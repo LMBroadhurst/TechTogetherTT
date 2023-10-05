@@ -62,9 +62,10 @@ model User {
   joinDate      DateTime    @default(now())
   location      String?
   dob           DateTime?
+  events        UserEvent[]
+
   accounts      Account[]
   sessions      Session[]
-  events        UserEvent[]
 }
 
 model VerificationToken {
