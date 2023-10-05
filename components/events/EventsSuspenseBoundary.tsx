@@ -6,24 +6,22 @@ import { Event, UserEvent } from '@prisma/client'
 
 
 
-const EventsSuspenseBoundary = () => {
+export default async function EventsSuspenseBoundaryEventsPage() {
 
-    // events
-    const {data } = useGetEvents()
+    const data = await fetch("http:/localhost:3000/api/event")
+    const resolvedData = await data.json()
+    const events = resolvedData.events
+    console.log(events)
 
-
-    if (!data) return <>Loading...</>
+    if (!events) return <>Loading...</>
 
     return <Suspense fallback={'Loading Events...'}>
         {
-            Boolean(data.events?.length) ? data.events?.map((event: Event) => {
+            events && events?.map((event: Event) => {
             
                 return <EventCard key={event.id} event={event} />
                 
-            }) : 'Loading...'
+            })
         }
     </Suspense>   
-    
 }
-
-export default EventsSuspenseBoundary

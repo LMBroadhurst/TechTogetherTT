@@ -1,14 +1,10 @@
-'use client'
 import EventFilterForm from '@/components/events/event-filters-form/EventFilterForm'
 import { VContainer } from '@/components/global/Containers'
 import React, { Suspense, useCallback, useEffect, useState } from 'react'
 import EventsSuspenseBoundary from '@/components/events/EventsSuspenseBoundary'
-import { useSession } from 'next-auth/react'
+import EventsSuspenseBoundaryEventsPage from '@/components/events/EventsSuspenseBoundary'
 
-
-const EventsPage = () => {
-
-    const { data } = useSession()
+export default async function EventsPage() {
 
     return <main className='flex flex-col gap-16 px-5 py-20 md:p-20 lg:flex-row lg:mx-auto xl:w-[1300px]'>
         
@@ -24,9 +20,7 @@ const EventsPage = () => {
         </section>
 
         <section className='flex flex-row flex-wrap gap-6 lg:w-3/4'>
-            <EventsSuspenseBoundary />
+            <EventsSuspenseBoundaryEventsPage />
         </section>
     </main>
 }
-
-export default EventsPage

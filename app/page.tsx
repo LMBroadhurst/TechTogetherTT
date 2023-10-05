@@ -3,9 +3,10 @@ import EventCard from '@/components/events/EventCard'
 import HomeTitle from '@/components/home/HomeTitle'
 import LocationEventsContainer from '@/components/home/LocationEventsContainer'
 import React from 'react'
+import { getEventsSSR } from '@/ssr-api/events'
 
 
-const Home = () => {
+export default function Home() {
   
   return <main className='flex flex-col gap-28 px-5 py-20 md:p-20 lg:px-40 xl:px-96'>
     <HomeTitle />
@@ -17,5 +18,3 @@ const Home = () => {
     </VContainer>
   </main>
 }
-
-export default Home
