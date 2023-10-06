@@ -27,7 +27,7 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
         const userEmail = data?.user?.email
         const eventId = event.id
 
-        await postUserEvent({userEmail, eventId}, {})
+        await postUserEvent({userEmail, eventId})
     }
     
     return <figure  className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:scale-[1.01] hover:cursor-pointer">

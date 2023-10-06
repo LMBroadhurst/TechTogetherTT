@@ -4,17 +4,23 @@ import { useSession } from 'next-auth/react'
 import { Event, User, UserEvent } from '@prisma/client'
 
 export function useGetEvents() {
-    return useQuery("event", async () => {
-        const { data } = await axios.get("/api/event")
-        console.log(data)
-        return data
+    return useQuery({
+        queryKey: "event", 
+        queryFn: async () => {
+            const { data } = await axios.get("/api/event")
+            console.log(data)
+            return data
+        }
     })
 }
 
 export function useGetEventById(id: string) {
-    return useQuery("event", async () => {
-        const { data } = await axios.get(`/api/event/${id}`)
-        return data
+    return useQuery({
+        queryKey: "event", 
+        queryFn: async () => {
+            const { data } = await axios.get(`/api/event/${id}`)
+            return data
+        }
     })
 }
 
@@ -23,6 +29,8 @@ export function useGetEventsRelatedToUser() {
     const {data: session} = useSession()
 
     return useQuery({
+        queryKey: "event",
+        enabled: !!session?.user?.email,
         queryFn: async () => {
 
             // User
@@ -54,6 +62,28 @@ export function useGetEventsRelatedToUser() {
 
             return filteredEvents
         },
-        enabled: !!session?.user?.email
+       
+    })
+}
+
+
+export function useGetRerenderableEventCards() {
+
+    const {data: session} = useSession()
+
+    return useQuery({
+        queryKey: "event",
+        enabled: !!session?.user?.email,
+        queryFn: async () => {
+            const {data: userEventData} = await axios.get(`/api/userEvent`)
+            if (!userEventData) throw new Error("Failed to find user events")
+            const typedUserEventData = userEventData.userEvents as UserEvent[]
+
+            const {data: eventData} = await axios.get(`/api/event`)
+            if (!eventData) throw new Error("Failed to find events")
+            const typedEventData = eventData.events as Event[]
+
+            
+        }
     })
 }

@@ -18,8 +18,6 @@ const Header: FC<OwnProps> = ({}) => {
   const {data: session, status} = useSession()
   const handleClickLogout = () => signOut()
 
-  console.log(session)
-
   return <header className='border-b w-full shadow-md sticky top-0 z-10 bg-base-100'>
     <section className='flex flex-row justify-between items-center p-4 text-2xl text-slate-800 '>
       

@@ -21,7 +21,7 @@ export function usePostUserEvent() {
             })
         },
         onSuccess: () => {
-            queryClient.invalidateQueries('event')
+            queryClient.invalidateQueries(["event", "userEvent"])
         }
     })
 }
