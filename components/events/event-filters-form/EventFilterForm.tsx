@@ -1,17 +1,44 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 
 const EventFilterForm = () => {
 
-    return <form className='flex flex-col gap-2' onChange={(e) => console.log('Stop poking me...', e)}>
-        <input type="text" placeholder='Location' className='input input-bordered'/>
+    // Complete form data...
+    // 1. Build an object that holds all values
+    // 2. Have a setState value that will update the state correctly
+    // 3. Move into hook to share between components easily
 
-        <input type="number" placeholder='Attendees' className='input input-bordered'/>
+    const [form, setForm] = useState({
+        location: '',
+        technologies: [],
+        ticketsAvailable: undefined
+    })
+
+    const handleFormChange = (formValue: any) => {
+        const input = formValue.target.name
+        const value = formValue.target.value
+        const checked = formValue.target.checked
+
+        if (input === "ticketsAvailable") {
+            setForm({
+                ...form, ticketsAvailable: checked
+            })
+        } else {
+            setForm({
+                ...form, [input]: value
+            })
+        }
+
+        console.log(form)
+    }
+
+    return <form className='flex flex-col gap-2' onChange={handleFormChange}>
+        <input type="text" placeholder='Location' name='location' className='input input-bordered'/>
 
         <div className='divider'></div>
         
         <section className='flex flex-col gap-2'>
-            <input type="text" placeholder='Technology' className='input input-bordered'/>
+            <input type="text" placeholder='Technology' name='technologies' className='input input-bordered'/>
             
             <section className='flex flex-row gap-1 flex-wrap'>
                 <div className="badge badge-primary badge-outline">TypeScript</div>
@@ -23,13 +50,8 @@ const EventFilterForm = () => {
         <div className='divider'></div>
 
         <section className='flex flex-row items-center gap-2 text-sm'>
-            <input type="checkbox" defaultChecked={false} className="checkbox" />
+            <input name='ticketsAvailable' type="checkbox" defaultChecked={false} className="checkbox"  />
             <label>Tickets Available</label>
-        </section>
-
-        <section className='flex flex-row gap-2 items-center text-sm'>
-            <input type="checkbox" defaultChecked={false} className="checkbox" />
-            <label>Order by date</label>
         </section>
 
     </form>
