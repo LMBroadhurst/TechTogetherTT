@@ -7,21 +7,25 @@ import { bookmark, bookmarkFilled, share } from '@/utils/icons'
 import Link from 'next/link'
 import { Event, User, UserEvent } from '@prisma/client'
 import { useSession } from 'next-auth/react'
-import axios from 'axios'
 import { ATTENDING_STATUS } from '@/utils/enums'
-import { useGetAttendanceStatus, useHandleEventCardActionClick } from './hooks'
-import { usePostUserEvent } from '@/hooks/react-query/userEvent'
+import { useGetUserEvents, usePostUserEvent } from '@/hooks/react-query/userEvent'
+import { useGetUserByEmail } from '@/hooks/react-query/user'
 
 type OwnProps = {
     event: Event
-    userEvents?: UserEvent[]
 }
 
-const EventCard: FC<OwnProps> = ({event, userEvents}) => {
+const EventCard: FC<OwnProps> = ({event}) => {
+
+    const {
+        id: eventId
+    } = event
 
     // hooks
     const { data } = useSession()
     const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
+    const { data: user } = useGetUserByEmail()
+    const { data: userEvents } = useGetUserEvents()
 
     const handleOnActionButtonClick = async () => {
         const userEmail = data?.user?.email
@@ -29,6 +33,28 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
 
         await postUserEvent({userEmail, eventId})
     }
+
+    const renderButtonWithAttendanceStatus = () => {
+        
+        const userId: string = user?.id 
+        if (!userId || !userEvents) return "Attend"
+
+        const userSpecificUserEvent = userEvents.find((userEvent) => (userEvent.userId === userId) && (userEvent.eventId === eventId))
+        const attendanceStatus = userSpecificUserEvent?.attendanceStatus
+
+        switch(attendanceStatus) {
+            case (ATTENDING_STATUS.ATTENDING):
+                return "Attending"
+
+            case (ATTENDING_STATUS.WAITING_LIST):
+                return "Waiting List"
+            
+            default:
+                return "Attend"
+        }
+    }
+
+    renderButtonWithAttendanceStatus()
     
     return <figure  className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:scale-[1.01] hover:cursor-pointer">
         
@@ -77,7 +103,7 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
                     disabled={!data?.user ? true : false} 
                     onClick={handleOnActionButtonClick}
                 >   
-                    {postUserEventLoading ? "..." : "Attend"}
+                    {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus()}
                 </button>
             </HContainer>
         </VContainer>

@@ -21,6 +21,7 @@ export function useGetUserByEmail() {
         enabled: !!session?.user?.email,
         queryFn: async () => {
             const { data, status } = await axios.get(`/api/user/${session?.user?.email}`)
+            return data
         },
     })
 

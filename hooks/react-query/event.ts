@@ -72,7 +72,7 @@ export function useGetRerenderableEventCards() {
     const {data: session} = useSession()
 
     return useQuery({
-        queryKey: "event",
+        queryKey: ["event", "userEvent"],
         enabled: !!session?.user?.email,
         queryFn: async () => {
             const {data: userEventData} = await axios.get(`/api/userEvent`)

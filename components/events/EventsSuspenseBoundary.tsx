@@ -13,13 +13,13 @@ export default async function EventsSuspenseBoundary() {
     console.log(events)
     if (!events) return <>Loading...</>
 
+
+
     return <Suspense fallback={'Loading Events...'}>
         <section className='flex flex-row flex-wrap gap-10'>
             {
                 events && events?.map((event: Event) => {
-                
                     return <EventCard key={event.id} event={event} />
-                    
                 })
             }
         </section>

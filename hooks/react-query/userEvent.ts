@@ -1,6 +1,23 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
-import { User } from '@prisma/client'
+import { User, UserEvent } from '@prisma/client'
+
+export function useGetUserEvents() {
+
+    const queryClient = useQueryClient()
+
+    return useQuery({
+        queryKey: ["userEvent"],
+        queryFn: async () => {
+            const { data, status } = await axios.get(`/api/userEvent`)
+            if (status !== 200) throw new Error("Failed to find userEvents")
+            const typedUserEvents = data.userEvents as UserEvent[]
+
+            return typedUserEvents
+        },
+    })
+}
+
 
 export function usePostUserEvent() {
 
@@ -21,7 +38,7 @@ export function usePostUserEvent() {
             })
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(["event", "userEvent"])
+            queryClient.invalidateQueries(["event", "userEvent", "user"])
         }
     })
 }
