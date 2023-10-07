@@ -1,10 +1,8 @@
-import { useQuery, useMutation, useQueryClient } from 'react-query'
+import { useQuery, useMutation, useQueryClient, UseQueryResult } from 'react-query'
 import axios from 'axios'
 import { User, UserEvent } from '@prisma/client'
 
-export function useGetUserEvents() {
-
-    const queryClient = useQueryClient()
+export function useGetUserEvents(): UseQueryResult<UserEvent[]> {
 
     return useQuery({
         queryKey: ["userEvent"],

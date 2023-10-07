@@ -1,12 +1,8 @@
 'use client'
 import { useSession } from 'next-auth/react'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import DEFAULT from '@/assets/TECHDEFAULT.jpg'
 import React from 'react'
-import { UserEventsContainer } from '@/components/profile/UserEventsContainer'
-import { useGetUserByEmail } from '@/hooks/react-query/user'
-import { useGetEventsRelatedToUser } from '@/hooks/react-query/event'
+import EventsSuspenseBoundary from '@/components/events/EventsSuspenseBoundary'
 
 const Profile = () => {
 
@@ -71,7 +67,7 @@ const Profile = () => {
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio placeat dolorum nostrum, minima quas cupiditate 
                     hic quia fugiat tempore? Similique qui eligendi consectetur pariatur ad minima veritatis, illo laudantium excepturi.
                 </p>
-            <UserEventsContainer />
+            <EventsSuspenseBoundary />
 
         </section>
 

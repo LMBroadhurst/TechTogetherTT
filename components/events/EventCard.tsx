@@ -8,15 +8,20 @@ import Link from 'next/link'
 import { Event, User, UserEvent } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { ATTENDING_STATUS } from '@/utils/enums'
-import { useGetUserEvents, usePostUserEvent } from '@/hooks/react-query/userEvent'
+import { usePostUserEvent } from '@/hooks/react-query/userEvent'
 import { useGetUserByEmail } from '@/hooks/react-query/user'
+import { useQueryClient } from 'react-query'
+import { useRouter } from 'next/navigation'
 
 type OwnProps = {
     event: Event
+    userEvents?: UserEvent[]
 }
 
-const EventCard: FC<OwnProps> = ({event}) => {
+const EventCard: FC<OwnProps> = ({event, userEvents}) => {
 
+    const queryClient = useQueryClient()
+    
     const {
         id: eventId
     } = event
@@ -25,16 +30,20 @@ const EventCard: FC<OwnProps> = ({event}) => {
     const { data } = useSession()
     const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
     const { data: user } = useGetUserByEmail()
-    const { data: userEvents } = useGetUserEvents()
+    const router = useRouter();
+    const refreshData = () => {
+        router.refresh()
+    }
 
     const handleOnActionButtonClick = async () => {
         const userEmail = data?.user?.email
         const eventId = event.id
 
         await postUserEvent({userEmail, eventId})
+        refreshData()
     }
 
-    const renderButtonWithAttendanceStatus = () => {
+    const renderButtonWithAttendanceStatus = useMemo(() => {
         
         const userId: string = user?.id 
         if (!userId || !userEvents) return "Attend"
@@ -52,9 +61,12 @@ const EventCard: FC<OwnProps> = ({event}) => {
             default:
                 return "Attend"
         }
-    }
+    }, [eventId, user?.id, userEvents]);
 
-    renderButtonWithAttendanceStatus()
+    const renderNumberOfAttendees = () => {
+        const eventSpecificUserEvents = userEvents?.filter((userEvent) => userEvent.eventId === eventId)
+        return eventSpecificUserEvents?.length
+    }
     
     return <figure  className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:scale-[1.01] hover:cursor-pointer">
         
@@ -77,8 +89,8 @@ const EventCard: FC<OwnProps> = ({event}) => {
             <div className='divider my-0 py-0'></div>
 
             <VContainer className='text-sm'>
-                <span>{event?.location ?? 'London, UK'}</span>
-                <span>{userEvents?.length} People Attending</span>
+                <span>{event?.location}</span>
+                <span>{renderNumberOfAttendees()} Attending</span>
             </VContainer>
 
             <div className='divider my-0 py-0'></div>
@@ -103,7 +115,7 @@ const EventCard: FC<OwnProps> = ({event}) => {
                     disabled={!data?.user ? true : false} 
                     onClick={handleOnActionButtonClick}
                 >   
-                    {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus()}
+                    {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus}
                 </button>
             </HContainer>
         </VContainer>
