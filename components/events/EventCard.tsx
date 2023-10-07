@@ -39,7 +39,12 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
         const userEmail = data?.user?.email
         const eventId = event.id
 
-        await postUserEvent({userEmail, eventId})
+        let attendanceStatus = undefined
+        if (userEvents) {
+            attendanceStatus = userEvents.find((ue) => ue.eventId === eventId && ue.userId === user?.id)?.attendanceStatus
+        }
+
+        await postUserEvent({attendanceStatus, userEmail, eventId})
         refreshData()
     }
 
