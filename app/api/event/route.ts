@@ -7,19 +7,13 @@ const prisma = new PrismaClient()
 // TODO: Zod form data type checking
 
 export async function GET(request: NextRequest) {
-
-    switch (request.bodyUsed) {
-        case false:
-            const allEvents = await prisma.event.findMany()
-            return NextResponse.json({
-                status: 200,
-                events: allEvents
-            })
-
-        case true:
-            console.log(true)
-    }
     
+    const allEvents = await prisma.event.findMany()
+    return NextResponse.json({
+        status: 200,
+        events: allEvents
+    })
+     
 }
 
 export async function POST(request: NextRequest) {

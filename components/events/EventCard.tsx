@@ -73,7 +73,10 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
         return eventSpecificUserEvents?.length
     }
     
-    return <figure  className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:scale-[1.01] hover:cursor-pointer">
+    return <article 
+        className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:scale-[1.01] hover:cursor-pointer"
+        onClick={() => router.push(`/event/${eventId}`)}
+    >
         
         <figure className='max-h-56'>
             <Image 
@@ -124,8 +127,7 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
                 </button>
             </HContainer>
         </VContainer>
-
-    </figure>
+    </article>
 }
 
 export default EventCard
