@@ -73,10 +73,7 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
         return eventSpecificUserEvents?.length
     }
     
-    return <article 
-        className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:scale-[1.01] hover:cursor-pointer"
-        onClick={() => router.push(`/event/${eventId}`)}
-    >
+    return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:-translate-y-2">
         
         <figure className='max-h-56'>
             <Image 
@@ -104,11 +101,11 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
             <div className='divider my-0 py-0'></div>
 
             <HContainer className='justify-between'>
-                <HContainer className=''>
-                    <button className='btn btn-ghost btn-square p-2'>{false ? bookmarkFilled : bookmark}</button>
+                <HContainer className='gap-2'>
+                    <button className='btn btn-ghost btn-square btn-sm m-0 p-0'>{false ? bookmarkFilled : bookmark}</button>
 
                     <section className='dropdown dropdown-top'>
-                        <button className='btn btn-square btn-ghost p-2' tabIndex={0}>{share}</button>
+                        <button className='btn btn-square btn-ghost btn-sm m-0 p-0' tabIndex={0}>{share}</button>
             
                         <ul tabIndex={0} className='dropdown-content menu bg-base-100 z-10 rounded-box border-[0.5px] shadow'>
                             <h3 className='menu-title'>Share</h3>
@@ -117,14 +114,16 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
                     </section>
                 </HContainer>
 
-                <Link className='btn' href={`/event/${event.id}`}>More</Link>
-                <button 
-                    className='btn'
-                    disabled={!data?.user ? true : false} 
-                    onClick={handleOnActionButtonClick}
-                >   
-                    {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus}
-                </button>
+                <HContainer className='gap-2'>
+                    <Link className='btn btn-sm' href={`/event/${event.id}`}>More</Link>
+                    <button 
+                        className='btn btn-sm'
+                        disabled={!data?.user ? true : false} 
+                        onClick={handleOnActionButtonClick}
+                    >   
+                        {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus}
+                    </button>
+                </HContainer>
             </HContainer>
         </VContainer>
     </article>
