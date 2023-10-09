@@ -1,7 +1,38 @@
+import { useState } from "react"
 import { ATTENDING_STATUS } from "@/utils/enums"
 import { User, UserEvent, Event } from "@prisma/client"
 import axios from "axios"
-import { useState } from "react"
+
+export function useFilterEventForm() {
+    const [form, setForm] = useState({
+        location: '',
+        technologies: [],
+        ticketsAvailable: undefined
+    })
+
+    const handleFormChange = (formValue: any) => {
+        const input = formValue.target.name
+        const value = formValue.target.value
+        const checked = formValue.target.checked
+
+        if (input === "ticketsAvailable") {
+            setForm({
+                ...form, ticketsAvailable: checked
+            })
+        } else {
+            setForm({
+                ...form, [input]: value
+            })
+        }
+
+        console.log(form)
+    }
+
+    return {
+        form, handleFormChange
+    }
+}
+
 
 export function useHandleEventCardActionClick() {
 

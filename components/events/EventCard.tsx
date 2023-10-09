@@ -1,73 +1,29 @@
 'use client'
-import React, { FC, useEffect, useMemo, useState } from 'react'
+import React, { FC } from 'react'
 import Image from 'next/image'
 import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
-import { HContainer, VContainer } from '../global/Containers'
-import { bookmark, bookmarkFilled, share } from '@/utils/icons'
-import Link from 'next/link'
-import { Event, User, UserEvent } from '@prisma/client'
-import { useSession } from 'next-auth/react'
-import { ATTENDING_STATUS } from '@/utils/enums'
-import { usePostUserEvent } from '@/hooks/react-query/userEvent'
-import { useGetUserByEmail } from '@/hooks/react-query/user'
+import { VContainer } from '../global/Containers'
+import { Event, UserEvent } from '@prisma/client'
 import { useQueryClient } from 'react-query'
-import { useRouter } from 'next/navigation'
+import EventCardFooter from './EventCardFooter'
 
 type OwnProps = {
     event: Event
     userEvents?: UserEvent[]
 }
 
-const EventCard: FC<OwnProps> = ({event, userEvents}) => {
+const EventCard: FC<OwnProps> = (props) => {
+
+    const {
+        event, userEvents
+    } = props
 
     const queryClient = useQueryClient()
-    
+
     const {
         id: eventId
     } = event
-
-    // hooks
-    const { data } = useSession()
-    const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
-    const { data: user } = useGetUserByEmail()
-    const router = useRouter();
-    const refreshData = () => {
-        router.refresh()
-    }
-
-    const handleOnActionButtonClick = async () => {
-        const userEmail = data?.user?.email
-        const eventId = event.id
-
-        let attendanceStatus = undefined
-        if (userEvents) {
-            attendanceStatus = userEvents.find((ue) => ue.eventId === eventId && ue.userId === user?.id)?.attendanceStatus
-        }
-
-        await postUserEvent({attendanceStatus, userEmail, eventId})
-        refreshData()
-    }
-
-    const renderButtonWithAttendanceStatus = useMemo(() => {
-        
-        const userId: string = user?.id 
-        if (!userId || !userEvents) return "Attend"
-
-        const userSpecificUserEvent = userEvents.find((userEvent) => (userEvent.userId === userId) && (userEvent.eventId === eventId))
-        const attendanceStatus = userSpecificUserEvent?.attendanceStatus
-
-        switch(attendanceStatus) {
-            case (ATTENDING_STATUS.ATTENDING):
-                return "Attending"
-
-            case (ATTENDING_STATUS.WAITING_LIST):
-                return "Waiting List"
-            
-            default:
-                return "Attend"
-        }
-    }, [eventId, user?.id, userEvents]);
-
+    
     const renderNumberOfAttendees = () => {
         const eventSpecificUserEvents = userEvents?.filter((userEvent) => userEvent.eventId === eventId)
         return eventSpecificUserEvents?.length
@@ -100,31 +56,8 @@ const EventCard: FC<OwnProps> = ({event, userEvents}) => {
 
             <div className='divider my-0 py-0'></div>
 
-            <HContainer className='justify-between'>
-                <HContainer className='gap-2'>
-                    <button className='btn btn-ghost btn-square btn-sm m-0 p-0'>{false ? bookmarkFilled : bookmark}</button>
-
-                    <section className='dropdown dropdown-top'>
-                        <button className='btn btn-square btn-ghost btn-sm m-0 p-0' tabIndex={0}>{share}</button>
             
-                        <ul tabIndex={0} className='dropdown-content menu bg-base-100 z-10 rounded-box border-[0.5px] shadow'>
-                            <h3 className='menu-title'>Share</h3>
-                            <li>LinkedIn</li>
-                        </ul>
-                    </section>
-                </HContainer>
-
-                <HContainer className='gap-2'>
-                    <Link className='btn btn-sm' href={`/event/${event.id}`}>More</Link>
-                    <button 
-                        className='btn btn-sm'
-                        disabled={!data?.user ? true : false} 
-                        onClick={handleOnActionButtonClick}
-                    >   
-                        {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus}
-                    </button>
-                </HContainer>
-            </HContainer>
+            <EventCardFooter {...props} />
         </VContainer>
     </article>
 }

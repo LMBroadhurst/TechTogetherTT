@@ -2,7 +2,7 @@
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import EventsSuspenseBoundary from '@/components/events/EventsSuspenseBoundary'
+import EventsSuspenseBoundary from '@/components/events/EventsSuspenseBoundarySSR'
 import RelevantEventsContainer from '@/components/profile/ProfileEventsContainer'
 import ProfileTechStack from '@/components/profile/ProfileTechStack'
 import ProfileHeader from '@/components/profile/ProfileHeader'
