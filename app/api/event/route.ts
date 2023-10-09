@@ -6,12 +6,35 @@ const prisma = new PrismaClient()
 
 // TODO: Zod form data type checking
 
-export async function GET(request: NextRequest) {
+// get requests inherently cannot accept a payload
+export async function GET() {
     
+    // no filtration
     const allEvents = await prisma.event.findMany()
     return NextResponse.json({
         status: 200,
         events: allEvents
+    })
+     
+}
+
+export async function PUT(request: NextRequest) {
+    
+    // filtered by form
+    const payload = await request.json()
+    const { location } = payload.data
+    console.log(location)
+
+    const filteredEvents = await prisma.event.findMany({
+        where: {
+            location: {
+                contains: location 
+            },
+        } 
+    })
+
+    return NextResponse.json({
+        events: filteredEvents
     })
      
 }

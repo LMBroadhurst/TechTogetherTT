@@ -1,13 +1,19 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ATTENDING_STATUS } from "@/utils/enums"
 import { User, UserEvent, Event } from "@prisma/client"
 import axios from "axios"
 
+type FilterEventFormFields = {
+    location: string
+    technologies: string[]
+    ticketsAvailable: boolean
+}
+
 export function useFilterEventForm() {
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<FilterEventFormFields>({
         location: '',
         technologies: [],
-        ticketsAvailable: undefined
+        ticketsAvailable: true
     })
 
     const handleFormChange = (formValue: any) => {
@@ -123,4 +129,31 @@ export function useGetAttendanceStatus() {
         attendanceStatus,
         getAttendanceStatus
     }
+}
+
+export function useGetEventFormFilteredEvents(form: FilterEventFormFields) {
+
+    const [events, setEvents] = useState<Event[]>([])
+
+    const filterEventsClick = async () => {
+
+        const { data, status } = await axios.put("/api/event", {
+            data: form
+        })
+
+        setEvents(data.events)
+    }
+
+    useEffect(() => {
+        filterEventsClick()
+    }, [filterEventsClick])
+
+    return {
+        events,
+        filterEventsClick
+    }
+}
+
+export type {
+    FilterEventFormFields
 }

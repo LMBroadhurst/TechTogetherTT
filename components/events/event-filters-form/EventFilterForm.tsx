@@ -1,15 +1,16 @@
 "use client"
 import React, { useState } from 'react'
-import { useFilterEventForm } from '@/hooks/events/hooks'
+import { useFilterEventForm, useGetEventFormFilteredEvents } from '@/hooks/events/hooks'
 
 const EventFilterForm = () => {
 
-    // Complete form data...
-    // 1. Build an object that holds all values
-    // 2. Have a setState value that will update the state correctly
-    // 3. Move into hook to share between components easily
+    const { form, handleFormChange } = useFilterEventForm()
+    const { filterEventsClick } = useGetEventFormFilteredEvents(form)
 
-    const { handleFormChange } = useFilterEventForm()
+    const handleFilterEventsClick = (event: any) => {
+        event.preventDefault()
+        filterEventsClick(form)
+    }
 
     return <form className='flex flex-col gap-4' onChange={handleFormChange}>
         <input type="text" placeholder='Location' name='location' className='input input-bordered'/>
@@ -25,11 +26,11 @@ const EventFilterForm = () => {
         </section>
 
         <section className='flex flex-row items-center gap-2 text-sm'>
-            <input name='ticketsAvailable' type="checkbox" defaultChecked={false} className="checkbox"  />
+            <input name='ticketsAvailable' type="checkbox" className="checkbox" defaultChecked />
             <label>Tickets Available</label>
         </section>
 
-        <button className='btn'>Filter Events</button>
+        <button className='btn' onClick={handleFilterEventsClick}>Filter Events</button>
     </form>
 }
 

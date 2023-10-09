@@ -4,25 +4,26 @@ import EventCard from '@/components/events/EventCard'
 import { Event, UserEvent } from '@prisma/client'
 import { useGetUserEvents } from '@/hooks/react-query/userEvent'
 import { useGetEvents } from '@/hooks/react-query/event'
-import { useFilterEventForm } from '@/hooks/events/hooks'
+import { useFilterEventForm, useGetEventFormFilteredEvents } from '@/hooks/events/hooks'
 
 export default function EventsSuspenseBoundaryCSR() {
 
     // Hooks
-    const { data: events } = useGetEvents()
-    const { data: userEvents } = useGetUserEvents()
     const { form } = useFilterEventForm()
+    const { events } = useGetEventFormFilteredEvents(form)
+    const { data: userEvents } = useGetUserEvents()
 
-    const eventsArray = events?.events as Event[]
     const userEventsArray = userEvents as UserEvent[]
 
     // Loading...
-    if (!eventsArray || !userEventsArray) return <>Loading...</>
+    if (!events || !userEventsArray) return <>Loading...</>
 
-    return <Suspense fallback={'Loading Events...'}>
+    console.log(events)
+
+    return <Suspense fallback={'Loading Events...'} key={"events"}>
         <section className='flex flex-row flex-wrap gap-10'>
             {
-                Boolean(eventsArray.length !== 0) ? eventsArray?.map((event: Event) => {
+                Boolean(events?.length === 0) ? events?.map((event: Event) => {
                     return <EventCard key={event.id} event={event} userEvents={userEventsArray} />
                 }) : "No events matched your search"
             }
