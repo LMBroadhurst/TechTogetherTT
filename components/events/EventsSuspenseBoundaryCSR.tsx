@@ -23,7 +23,7 @@ export default function EventsSuspenseBoundaryCSR() {
     return <Suspense fallback={'Loading Events...'} key={"events"}>
         <section className='flex flex-row flex-wrap gap-10'>
             {
-                Boolean(events?.length === 0) ? events?.map((event: Event) => {
+                Boolean(events?.length !== 0) ? events?.map((event: Event) => {
                     return <EventCard key={event.id} event={event} userEvents={userEventsArray} />
                 }) : "No events matched your search"
             }

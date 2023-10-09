@@ -9,7 +9,7 @@ const EventFilterForm = () => {
 
     const handleFilterEventsClick = (event: any) => {
         event.preventDefault()
-        filterEventsClick(form)
+        filterEventsClick()
     }
 
     return <form className='flex flex-col gap-4' onChange={handleFormChange}>

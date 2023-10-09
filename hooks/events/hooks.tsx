@@ -133,25 +133,39 @@ export function useGetAttendanceStatus() {
 
 export function useGetEventFormFilteredEvents(form: FilterEventFormFields) {
 
-    const [events, setEvents] = useState<Event[]>([])
+    const [events, setEvents] = useState<Event[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
     const filterEventsClick = async () => {
+        try {
+            setLoading(true);
+            setError(null);
 
-        const { data, status } = await axios.put("/api/event", {
-            data: form
-        })
+            const { data } = await axios.put("/api/event", {
+                data: form
+            });
 
-        setEvents(data.events)
-    }
+            console.log(data.events)
+            setEvents(data.events);
+        } catch (err) {
+            setError("An error occurred");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        filterEventsClick()
-    }, [filterEventsClick])
+        filterEventsClick();
+    }, [form]);
 
     return {
         events,
+        loading,
+        error,
         filterEventsClick
-    }
+    };
+
 }
 
 export type {

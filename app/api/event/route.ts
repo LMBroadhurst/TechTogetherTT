@@ -23,7 +23,6 @@ export async function PUT(request: NextRequest) {
     // filtered by form
     const payload = await request.json()
     const { location } = payload.data
-    console.log(location)
 
     const filteredEvents = await prisma.event.findMany({
         where: {
@@ -32,6 +31,8 @@ export async function PUT(request: NextRequest) {
             },
         } 
     })
+
+    console.log(filteredEvents)
 
     return NextResponse.json({
         events: filteredEvents
