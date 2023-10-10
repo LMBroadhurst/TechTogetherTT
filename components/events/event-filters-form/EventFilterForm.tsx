@@ -8,6 +8,8 @@ type OwnProps = {
 const EventFilterForm: FC<OwnProps> = ({ handleFormChange }) => {
 
     return <form className='flex flex-col gap-4' onChange={handleFormChange}>
+        <input type="text" placeholder='Name' name='name' className='input input-bordered'/>
+
         <input type="text" placeholder='Location' name='location' className='input input-bordered'/>
 
         <section className='flex flex-col gap-2'>

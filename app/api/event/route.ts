@@ -22,10 +22,13 @@ export async function PUT(request: NextRequest) {
     
     // filtered by form
     const payload = await request.json()
-    const { location } = payload.data
+    const { location, name } = payload.data
 
     const filteredEvents = await prisma.event.findMany({
         where: {
+            name: {
+                contains: name
+            },
             location: {
                 contains: location
             },

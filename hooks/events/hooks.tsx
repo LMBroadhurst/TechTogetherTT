@@ -4,6 +4,7 @@ import { User, UserEvent, Event } from "@prisma/client"
 import axios from "axios"
 
 type FilterEventFormFields = {
+    name: string
     location: string
     technologies: string[]
     ticketsAvailable: boolean

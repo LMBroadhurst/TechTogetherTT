@@ -9,6 +9,7 @@ import { FilterEventFormFields } from '@/hooks/events/hooks'
 export default function EventsPage() {
 
     const [form, setForm] = useState<FilterEventFormFields>({
+        name: '',
         location: '',
         technologies: [],
         ticketsAvailable: true
