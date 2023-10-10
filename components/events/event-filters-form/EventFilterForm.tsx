@@ -1,16 +1,11 @@
 "use client"
-import React, { useState } from 'react'
-import { useFilterEventForm, useGetEventFormFilteredEvents } from '@/hooks/events/hooks'
+import React, { FC, useState } from 'react'
 
-const EventFilterForm = () => {
+type OwnProps = {
+    handleFormChange: any
+}
 
-    const { form, handleFormChange } = useFilterEventForm()
-    const { filterEventsClick } = useGetEventFormFilteredEvents(form)
-
-    const handleFilterEventsClick = (event: any) => {
-        event.preventDefault()
-        filterEventsClick()
-    }
+const EventFilterForm: FC<OwnProps> = ({ handleFormChange }) => {
 
     return <form className='flex flex-col gap-4' onChange={handleFormChange}>
         <input type="text" placeholder='Location' name='location' className='input input-bordered'/>
@@ -29,8 +24,6 @@ const EventFilterForm = () => {
             <input name='ticketsAvailable' type="checkbox" className="checkbox" defaultChecked />
             <label>Tickets Available</label>
         </section>
-
-        <button className='btn' onClick={handleFilterEventsClick}>Filter Events</button>
     </form>
 }
 

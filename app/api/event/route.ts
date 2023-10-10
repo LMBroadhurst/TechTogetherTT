@@ -27,12 +27,10 @@ export async function PUT(request: NextRequest) {
     const filteredEvents = await prisma.event.findMany({
         where: {
             location: {
-                contains: location 
+                contains: location
             },
         } 
     })
-
-    console.log(filteredEvents)
 
     return NextResponse.json({
         events: filteredEvents

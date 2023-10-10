@@ -1,10 +1,34 @@
+"use client"
 import EventFilterForm from '@/components/events/event-filters-form/EventFilterForm'
 import { VContainer } from '@/components/global/Containers'
 import React, { Suspense, useCallback, useEffect, useState } from 'react'
 import EventsSuspenseBoundarySSR from '@/components/events/EventsSuspenseBoundarySSR'
 import EventsSuspenseBoundaryCSR from '@/components/events/EventsSuspenseBoundaryCSR'
+import { FilterEventFormFields } from '@/hooks/events/hooks'
 
-export default async function EventsPage() {
+export default function EventsPage() {
+
+    const [form, setForm] = useState<FilterEventFormFields>({
+        location: '',
+        technologies: [],
+        ticketsAvailable: true
+    })
+
+    const handleFormChange = (formValue: any) => {
+        const input = formValue.target.name
+        const value = formValue.target.value
+        const checked = formValue.target.checked
+
+        if (input === "ticketsAvailable") {
+            setForm({
+                ...form, ticketsAvailable: checked
+            })
+        } else {
+            setForm({
+                ...form, [input]: value
+            })
+        }
+    }
 
     return <main className='flex flex-col gap-16 px-5 py-20 md:p-20 lg:flex-row lg:mx-auto xl:w-[1300px]'>
         
@@ -14,11 +38,11 @@ export default async function EventsPage() {
                 <h3 className='text-xl font-bold text-slate-600'>Where are you going next?!</h3>
             </VContainer>
 
-            <EventFilterForm />
+            <EventFilterForm handleFormChange={handleFormChange} />
         </section>
 
         <section className='flex flex-row flex-wrap gap-6 lg:w-3/4'>
-            <EventsSuspenseBoundaryCSR />
+            <EventsSuspenseBoundaryCSR form={form} />
             {/* <EventsSuspenseBoundary /> */}
         </section>
     </main>

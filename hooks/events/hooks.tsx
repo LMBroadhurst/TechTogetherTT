@@ -9,37 +9,6 @@ type FilterEventFormFields = {
     ticketsAvailable: boolean
 }
 
-export function useFilterEventForm() {
-    const [form, setForm] = useState<FilterEventFormFields>({
-        location: '',
-        technologies: [],
-        ticketsAvailable: true
-    })
-
-    const handleFormChange = (formValue: any) => {
-        const input = formValue.target.name
-        const value = formValue.target.value
-        const checked = formValue.target.checked
-
-        if (input === "ticketsAvailable") {
-            setForm({
-                ...form, ticketsAvailable: checked
-            })
-        } else {
-            setForm({
-                ...form, [input]: value
-            })
-        }
-
-        console.log(form)
-    }
-
-    return {
-        form, handleFormChange
-    }
-}
-
-
 export function useHandleEventCardActionClick() {
 
     const [status, setStatus] = useState<string>('IDLE')
@@ -134,25 +103,14 @@ export function useGetAttendanceStatus() {
 export function useGetEventFormFilteredEvents(form: FilterEventFormFields) {
 
     const [events, setEvents] = useState<Event[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
 
     const filterEventsClick = async () => {
-        try {
-            setLoading(true);
-            setError(null);
+        
+        const { data } = await axios.put("/api/event", {
+            data: form
+        });
 
-            const { data } = await axios.put("/api/event", {
-                data: form
-            });
-
-            console.log(data.events)
-            setEvents(data.events);
-        } catch (err) {
-            setError("An error occurred");
-        } finally {
-            setLoading(false);
-        }
+        setEvents(data.events);
     };
 
     useEffect(() => {
@@ -161,8 +119,6 @@ export function useGetEventFormFilteredEvents(form: FilterEventFormFields) {
 
     return {
         events,
-        loading,
-        error,
         filterEventsClick
     };
 

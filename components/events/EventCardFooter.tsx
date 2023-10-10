@@ -21,9 +21,6 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
     const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
     const { data: user } = useGetUserByEmail()
     const router = useRouter();
-    const refreshData = () => {
-        router.refresh()
-    }
 
     const {
         id: eventId
@@ -39,7 +36,7 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
         }
 
         await postUserEvent({attendanceStatus, userEmail, eventId})
-        refreshData()
+        router.refresh()
     }
 
     const renderButtonWithAttendanceStatus = useMemo(() => {
