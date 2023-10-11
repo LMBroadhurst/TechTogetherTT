@@ -40,15 +40,13 @@ const CreateEventForm = () => {
         })
 
         if (response.status < 300) {
-            // show success toast
-            // redirect to event page
             setFormStatus("SUCCESS")
             const responseBody = await response.json()
             const newEvent = responseBody.newEvent as Event
             setNewlyCreatedEvent(newEvent)
         
-            // Show stuff for 3 seconds
-            delay(3000)
+            // Show toast for 3 seconds
+            await delay(3000)
 
             // Now redirect
             router.push(`/event/${newEvent.id}`)

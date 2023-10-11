@@ -1,19 +1,19 @@
-'use client'
+"use client"
 import { HContainer, VContainer } from '@/components/global/Containers'
 import { useGetEventById } from '@/hooks/react-query/event'
 import { Event } from '@prisma/client'
 import React, { useEffect, useState, useCallback } from 'react'
 import { useQueryClient } from 'react-query'
 
-const EventPage = ({params} : {params: {id: string}}) => {
+export default function EventPage({params} : {params: {id: string}}) {
 
     const queryClient = useQueryClient()
     const { status, data, error, isFetching } = useGetEventById(params.id)
-    const event = data.event as Event
+    const event = data?.event as Event
+    console.log(event)
+
 
     if (!event) return 'Loading...'
-
-    console.log(event.location)
 
     return <main className='flex flex-col gap-16 px-5 py-20 md:p-20 lg:flex-row lg:mx-auto xl:w-[1300px]'>
         <section className='flex flex-col gap-1 border shadow-md rounded-lg p-5 w-full'>
@@ -45,5 +45,3 @@ const EventPage = ({params} : {params: {id: string}}) => {
         </section>
     </main>
 }
-
-export default EventPage
