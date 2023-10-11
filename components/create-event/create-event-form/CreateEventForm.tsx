@@ -1,9 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import TextInput from '../../global/TextInput'
-import { defaultCreateEventFormDetails } from './defaultCreateEventFormValues'
+import { CreateEventForm, defaultCreateEventFormDetails } from './defaultCreateEventFormValues'
 import { Event } from '@prisma/client'
 import { useRouter } from 'next/navigation'
+import { HContainer } from '@/components/global/Containers'
+import moment from 'moment'
 
 const CreateEventForm = () => {
 
@@ -12,19 +14,18 @@ const CreateEventForm = () => {
 
     // Event Details Form
     const [formStatus, setFormStatus] = useState<"IDLE" | "SUCCESS" | "ERROR" | "LOADING">("IDLE")
-    const [createEventDetails, setCreateEventDetails] = useState(defaultCreateEventFormDetails)
+    const [createEventDetails, setCreateEventDetails] = useState<CreateEventForm>(defaultCreateEventFormDetails)
     const [newlyCreatedEvent, setNewlyCreatedEvent] = useState<Event>()
     const router = useRouter()
 
     const {
-        id, localDateTime, location, maxAttendance, name
-    } = createEventDetails
+        // Why are types lost here?
+        localDateTime, location, maxAttendance, name
+    } = createEventDetails as Event
 
     function handleCreateEventFormChange(event: any) {
-        event.preventDefault()
-
         const key = event.target.name
-        const value = event.target.value
+        let value = event.target.value
         setCreateEventDetails({...createEventDetails, [key]: value})
     }
 
@@ -54,16 +55,11 @@ const CreateEventForm = () => {
 
         if (response.status >= 300) {
             // error stuff
+            setFormStatus("ERROR")
         }
     }
 
-    // DateTime
-    const [dateTime, setDateTime] = useState<Date>(new Date())
-    const handleDateChange = (e: any) => {
-        const dateTime = new Date(e.target.value)
-        setDateTime(dateTime)
-    }
-
+    console.log(new Date().toISOString())
 
     return <>
         {
@@ -95,15 +91,28 @@ const CreateEventForm = () => {
                 onChange={handleCreateEventFormChange}
             />
 
-            <TextInput 
-                id="localDateTime" 
-                label='Local Date Time' 
-                type='datetime-local' 
-                // TODO: Issues with date
-                value={localDateTime.toISOString()}
-                name='localDateTime'
-                onChange={handleCreateEventFormChange}
-            />
+            <HContainer className='gap-4 flex-grow self-stretch'>
+                <TextInput 
+                    className='w=1/2'
+                    id="localDateTime" 
+                    label='Local Date Time' 
+                    type='datetime-local' 
+                    // TODO: Issues with date
+                    value={localDateTime}
+                    name='localDateTime'
+                    onChange={handleCreateEventFormChange}
+                />
+
+                {/* <TextInput 
+                    id="localDateTime" 
+                    label='Local Date Time' 
+                    type='time' 
+                    // TODO: Issues with date
+                    value={localDateTime}
+                    name='localDateTime'
+                    onChange={handleCreateEventFormChange}
+                /> */}
+            </HContainer>
 
             <TextInput 
                 id="locationEvent" 
@@ -122,6 +131,7 @@ const CreateEventForm = () => {
                 onClick={handleFormSubmit}
             >
                 {formStatus !== "LOADING" ? 'Create Event' : '...'}
+                {formStatus !== "ERROR" && ' Ah Crabz'}
             </button>
         </form>
     </>

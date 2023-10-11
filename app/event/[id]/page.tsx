@@ -1,7 +1,9 @@
 "use client"
 import { HContainer, VContainer } from '@/components/global/Containers'
+import DateParser from '@/components/global/DateParser'
 import { useGetEventById } from '@/hooks/react-query/event'
 import { Event } from '@prisma/client'
+import moment from 'moment'
 import React, { useEffect, useState, useCallback } from 'react'
 import { useQueryClient } from 'react-query'
 
@@ -10,8 +12,9 @@ export default function EventPage({params} : {params: {id: string}}) {
     const queryClient = useQueryClient()
     const { status, data, error, isFetching } = useGetEventById(params.id)
     const event = data?.event as Event
-    console.log(event)
 
+    // Still needs formatting
+    // const dateTime = moment(event.localDateTime, "dd-mm-yy hh:mm").toString()
 
     if (!event) return 'Loading...'
 
@@ -20,9 +23,8 @@ export default function EventPage({params} : {params: {id: string}}) {
             <VContainer className='flex flex-col gap-0'>
                 <h1 className='text-2xl font-semibold text-slate-500'>{event.name}</h1> 
                 <h4 className='text-sm text-slate-500'>{event.location}</h4>
+                <h4 className='text-sm text-slate-500'>{event.localDateTime.split("T")[0]} {event.localDateTime.split("T")[1]}</h4>
             </VContainer>
-
-            <h4>You&apos;re going!</h4>
 
             <div className='divider'></div>
 

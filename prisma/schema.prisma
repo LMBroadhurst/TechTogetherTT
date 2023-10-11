@@ -21,7 +21,7 @@ model UserEvent {
 model Event {
   id            String      @id @default(cuid())
   name          String
-  localDateTime DateTime
+  localDateTime String
   location      String
   maxAttendance Int
   users         UserEvent[]

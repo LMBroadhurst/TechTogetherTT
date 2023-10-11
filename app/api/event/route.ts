@@ -1,4 +1,6 @@
+import { zodCreateEventFormRequest } from "@/utils/zod";
 import { Event, PrismaClient } from "@prisma/client";
+import moment from "moment";
 import { redirect } from "next/navigation";
 import { NextResponse, NextRequest } from "next/server";
 
@@ -46,18 +48,22 @@ export async function POST(request: NextRequest) {
     const event = await request.json()
     const { name, location, localDateTime, maxAttendance } = event
 
-    // Need to validate this code with zod...
+    // Form Validation
+    const maxAttendanceParsed = parseInt(maxAttendance)
+    zodCreateEventFormRequest.parse({
+        ...event,
+        maxAttendance: maxAttendanceParsed
+    })
+
     const newEvent = await prisma.event.create({
         data: {
             name: name,
-            localDateTime: new Date(localDateTime),
+            localDateTime: localDateTime,
             location: location,
-            // @ts-ignore
-            maxAttendance: parseInt(maxAttendance)
+            maxAttendance: maxAttendanceParsed
         }
     })
 
-    console.log(newEvent)
     return NextResponse.json({
         status: 200,
         newEvent

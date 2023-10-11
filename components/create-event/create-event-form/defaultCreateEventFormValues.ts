@@ -1,13 +1,24 @@
-import { Event } from "@prisma/client";
+import { Event } from '@prisma/client'
+import moment from 'moment'
 
-const defaultCreateEventFormDetails: Event = {
-    id: '',
+type CreateEventForm = {
+    name: string
+    location: string
+    maxAttendance: number
+    localDateTime: string
+}
+
+const defaultCreateEventFormDetails: CreateEventForm = {
     name: '',
     location: '',
     maxAttendance: 0,
-    localDateTime: new Date()
+    localDateTime: ''
 }
 
 export {
     defaultCreateEventFormDetails
+}
+
+export type {
+    CreateEventForm
 }
