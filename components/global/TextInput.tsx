@@ -14,7 +14,7 @@ type OwnProps = {
 }
 
 const TextInput: FC<OwnProps & InputHTMLAttributes<HTMLInputElement>> = ({
-    id, label, icon, type, name, value,
+    id, label, icon, type, name, value, min, minLength,
     passwordStatus, isPasswordInput,
     onChange, onPasswordTextToggle
 }) => {
@@ -36,6 +36,8 @@ const TextInput: FC<OwnProps & InputHTMLAttributes<HTMLInputElement>> = ({
                     name={name} 
                     type={type} 
                     className='border rounded-lg px-4 py-2' 
+                    min={min}
+                    minLength={minLength}
                     value={value}
                     onChange={onChange} 
                 />

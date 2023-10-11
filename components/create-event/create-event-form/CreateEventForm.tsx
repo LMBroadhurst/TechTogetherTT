@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import TextInput from '../../global/TextInput'
 import { CreateEventForm, defaultCreateEventFormDetails } from './defaultCreateEventFormValues'
 import { Event } from '@prisma/client'
@@ -51,15 +51,11 @@ const CreateEventForm = () => {
 
             // Now redirect
             router.push(`/event/${newEvent.id}`)
-        }
-
-        if (response.status >= 300) {
+        } else {
             // error stuff
             setFormStatus("ERROR")
         }
     }
-
-    console.log(new Date().toISOString())
 
     return <>
         {
@@ -72,67 +68,68 @@ const CreateEventForm = () => {
             </div>
         }
 
-        <form className='flex flex-col gap-4 max-w-2xl w-full'>
+        <form className='flex flex-col gap-4 max-w-2xl w-full' onSubmit={handleFormSubmit}>
             <TextInput
+                required
                 id="nameEvent" 
                 label='Name' 
                 type='text'
                 value={name} 
+                minLength={3}
                 name='name' 
                 onChange={handleCreateEventFormChange}
             />
 
             <TextInput 
+                required
                 id="maxAttendanceEvent" 
                 label='Max Attendance' 
                 type='number' 
+                min={2}
                 value={maxAttendance}
                 name='maxAttendance'
                 onChange={handleCreateEventFormChange}
             />
 
-            <HContainer className='gap-4 flex-grow self-stretch'>
-                <TextInput 
-                    className='w=1/2'
-                    id="localDateTime" 
-                    label='Local Date Time' 
-                    type='datetime-local' 
-                    // TODO: Issues with date
-                    value={localDateTime}
-                    name='localDateTime'
-                    onChange={handleCreateEventFormChange}
-                />
-
-                {/* <TextInput 
-                    id="localDateTime" 
-                    label='Local Date Time' 
-                    type='time' 
-                    // TODO: Issues with date
-                    value={localDateTime}
-                    name='localDateTime'
-                    onChange={handleCreateEventFormChange}
-                /> */}
-            </HContainer>
+            <TextInput 
+                className='w=1/2'
+                id="localDateTime" 
+                label='Local Date Time' 
+                type='datetime-local' 
+                minLength={11}
+                required
+                // TODO: Issues with date
+                value={localDateTime}
+                name='localDateTime'
+                onChange={handleCreateEventFormChange}
+            />
 
             <TextInput 
+                required
                 id="locationEvent" 
                 label='Location' 
                 type='text'
                 value={location}
                 name='location'
+                minLength={3}
                 onChange={handleCreateEventFormChange}
             />          
-                    
 
             <button 
                 className='btn'
-                type='button'
+                type='submit'
                 disabled={formStatus === "LOADING"}
-                onClick={handleFormSubmit}
             >
                 {formStatus !== "LOADING" ? 'Create Event' : '...'}
-                {formStatus !== "ERROR" && ' Ah Crabz'}
             </button>
+
+            { 
+                formStatus === "ERROR" &&
+                <div className="alert alert-error">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>Error! Something went wrong when creating an event. Please check your inputs and try again.</span>
+                </div>
+            }
         </form>
     </>
 }

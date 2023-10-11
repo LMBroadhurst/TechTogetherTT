@@ -17,7 +17,6 @@ export async function GET() {
         status: 200,
         events: allEvents
     })
-     
 }
 
 export async function PUT(request: NextRequest) {
