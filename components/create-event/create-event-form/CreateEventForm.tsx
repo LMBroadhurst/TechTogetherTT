@@ -6,6 +6,8 @@ import { Event } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { HContainer } from '@/components/global/Containers'
 import moment from 'moment'
+import { zodCreateEventFormRequest } from '@/utils/zod'
+import { z } from 'zod'
 
 const CreateEventForm = () => {
 
@@ -35,6 +37,14 @@ const CreateEventForm = () => {
         event.preventDefault()
         setFormStatus("LOADING")
 
+        // zod parsing pre API submission
+        const coerceNumber = z.coerce.number()
+        const parsedCreateEventDetails = {
+            ...createEventDetails,
+            maxAttendance: coerceNumber.parse(maxAttendance)
+        }
+        zodCreateEventFormRequest.parse(parsedCreateEventDetails)
+        
         const response = await fetch('/api/event', {
             method: 'POST',
             body: JSON.stringify(createEventDetails),
@@ -96,8 +106,9 @@ const CreateEventForm = () => {
                 id="localDateTime" 
                 label='Local Date Time' 
                 type='datetime-local' 
-                minLength={11}
+                min={new Date().toString()}
                 required
+                
                 // TODO: Issues with date
                 value={localDateTime}
                 name='localDateTime'
