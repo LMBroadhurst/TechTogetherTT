@@ -22,7 +22,7 @@ const Header: FC<OwnProps> = ({}) => {
     <section className='flex flex-row justify-between items-center p-4 text-2xl text-slate-800 '>
       
       <Link href={"/"}>
-        <h1 className='font-extrabold'>TechTogether</h1>
+        <h1 className='text-slate-700 font-bold'>TechTogether</h1>
       </Link>
 
       {/* Burger Menu */}
@@ -30,6 +30,7 @@ const Header: FC<OwnProps> = ({}) => {
 
       <HContainer className='items-center gap-5 hidden md:flex'>
         {
+          // Maybe change so that it only says Create Event... But if not logged in must be logged in first
           session ? <Link href='/create-event' className='btn btn-sm'>Create Event</Link>
           : <Link href='/auth' className='btn btn-ghost'>Login</Link>
         }
