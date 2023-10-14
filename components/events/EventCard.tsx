@@ -12,6 +12,7 @@ type OwnProps = {
     userEvents?: UserEvent[]
 }
 
+// TODO: Fix Event Card responsiveness issues...
 const EventCard: FC<OwnProps> = (props) => {
 
     const {
