@@ -16,6 +16,7 @@ const CreateEventForm = () => {
 
     // Event Details Form
     const [formStatus, setFormStatus] = useState<"IDLE" | "SUCCESS" | "ERROR" | "LOADING">("IDLE")
+    const venue = ''
     const [createEventDetails, setCreateEventDetails] = useState<CreateEventForm>(defaultCreateEventFormDetails)
     const [newlyCreatedEvent, setNewlyCreatedEvent] = useState<Event>()
     const router = useRouter()
@@ -115,16 +116,29 @@ const CreateEventForm = () => {
                 onChange={handleCreateEventFormChange}
             />
 
-            <TextInput 
-                required
-                id="locationEvent" 
-                label='Location' 
-                type='text'
-                value={location}
-                name='location'
-                minLength={3}
-                onChange={handleCreateEventFormChange}
-            />          
+            <HContainer>
+                <TextInput 
+                    required
+                    id="locationEvent" 
+                    label='Location' 
+                    type='text'
+                    value={location}
+                    name='location'
+                    minLength={3}
+                    onChange={handleCreateEventFormChange}
+                />
+
+                <TextInput 
+                    required
+                    id="venue" 
+                    label='Venue' 
+                    type='text'
+                    value={venue}
+                    name='venue'
+                    minLength={3}
+                    onChange={handleCreateEventFormChange}
+                />       
+            </HContainer>   
 
             <button 
                 className='btn'

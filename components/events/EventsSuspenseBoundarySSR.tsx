@@ -11,15 +11,12 @@ export default async function EventsSuspenseBoundarySSR() {
     const events = await fetch("http:/localhost:3000/api/event")
     const resolvedData = await events.json()
     const eventsArray = resolvedData.events as Event[]
+    console.log(eventsArray.length)
 
     const userEvents = await fetch("http:/localhost:3000/api/userEvent")
     const resolvedUserEvents = await userEvents.json()
     const userEventsArray = resolvedUserEvents.userEvents as UserEvent[]
 
-    // No state allowed in SSR
-    // const {form} = useEventFilterForm()
-
-    // Loading...
     if (!events || !userEvents) return <>Loading...</>
 
     return <Suspense fallback={'Loading Events...'}>
@@ -30,5 +27,6 @@ export default async function EventsSuspenseBoundarySSR() {
                 })
             }
         </section>
+        
     </Suspense>   
 }
