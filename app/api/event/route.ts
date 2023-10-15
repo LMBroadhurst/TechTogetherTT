@@ -1,5 +1,5 @@
 import { zodCreateEventFormRequest } from "@/utils/zod";
-import { Event, PrismaClient } from "@prisma/client";
+import { Event, PrismaClient, User } from "@prisma/client";
 import { NextResponse, NextRequest } from "next/server";
 
 const prisma = new PrismaClient()
@@ -38,26 +38,22 @@ export async function PUT(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
 
-    console.log(request)
-    const event = request.body.json() as Event
-    const { name, cityCountry, organiserEmail, venue, localDateTime, maxAttendance } = event
+    const payload = await request.json()
+    console.log(payload)
+
+    let event = payload.createEventFormValues
+    const { maxAttendance } = event 
+
+    event = {
+        ...event,
+        maxAttendance: parseInt(maxAttendance)
+    }
 
     // Form Validation
-    const maxAttendanceParsed = parseInt(maxAttendance)
-    zodCreateEventFormRequest.parse({
-        ...event,
-        maxAttendance: maxAttendanceParsed
-    })
+    zodCreateEventFormRequest.parse(event)
 
     const newEvent = await prisma.event.create({
-        data: {
-            name: name,
-            localDateTime: localDateTime,
-            cityCountry: cityCountry,
-            venue: venue,
-            maxAttendance: maxAttendanceParsed,
-            organiserEmail: organiserEmail
-        }
+        data: event
     })
 
     return NextResponse.json({

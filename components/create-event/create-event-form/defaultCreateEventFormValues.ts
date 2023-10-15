@@ -1,23 +1,23 @@
-import { User } from '@prisma/client'
+import { User, Event } from '@prisma/client'
 
 type CreateEventForm = {
     name: string
+    localDateTime: string
     cityCountry: string
     venue: string
     maxAttendance: number
-    localDateTime: string
-    organiser?: User
+    description?: string
     organiserEmail: string
 }
 
 const defaultCreateEventFormDetails: CreateEventForm = {
     name: '',
+    localDateTime: '',
     cityCountry: '',
     venue: '',
     maxAttendance: 0,
-    localDateTime: '',
-    organiser: undefined,
-    organiserEmail: ''
+    description: '',
+    organiserEmail: '',
 }
 
 export {

@@ -26,8 +26,8 @@ model Event {
   venue           String
   maxAttendance   Int
   description     String?
-  organiser       User        @relation(fields: [organiserEmail], references: [id])
-  organiserEmail  String
+  organiserEmail  String?
+  organiser       User?        @relation(fields: [organiserEmail], references: [email])
   users           UserEvent[]
 }
 

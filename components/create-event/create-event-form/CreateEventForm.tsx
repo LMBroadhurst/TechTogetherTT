@@ -34,32 +34,29 @@ export default function CreateEventForm() {
 
     const handleFormSubmit = async (event: any) => {
         event.preventDefault()
-        setFormStatus("LOADING")
+        // setFormStatus("LOADING")
 
         // Add organiser to form 
-        if (!session?.user) throw new Error("Must be signed in to create an event")
-
-        const organiser = session.user as User
-        const organiserEmail = organiser.email ?? ''
+        // if (!session?.user?.user?.email) throw new Error("Must be signed in to create an event")
 
         setCreateEventFormValues({
             ...createEventFormValues,
-            organiser: organiser,
-            organiserEmail: organiserEmail
+            organiserEmail: "lewis1broadhurst@gmail.com",
         })
 
         // zod parsing pre API submission
-        // const coerceNumber = z.coerce.number()
-        // const parsedCreateEventDetails = {
-        //     ...createEventFormValues,
-        //     maxAttendance: coerceNumber.parse(maxAttendance)
-        // }
-        // zodCreateEventFormRequest.parse(parsedCreateEventDetails)
+        const coerceNumber = z.coerce.number()
+        const parsedCreateEventDetails = {
+            ...createEventFormValues,
+            maxAttendance: coerceNumber.parse(maxAttendance)
+        }
+        zodCreateEventFormRequest.parse(parsedCreateEventDetails)
         
         // Call to API
         // TODO: React Query?
+        console.log(createEventFormValues)
         const response = await axios.post('/api/event', {
-            createEventFormValues,
+            createEventFormValues
         })
 
         console.log(response)
