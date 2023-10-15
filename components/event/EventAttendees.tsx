@@ -4,9 +4,8 @@ import UserCard from '../global/UserCard'
 
 export default function EventAttendees() {
 
-    return <VContainer>
+    return <VContainer className='gap-1'>
         <h2 className='text-lg text-slate-600'>Currently Attending</h2>
-        <p className='text-sm text-slate-500'>Need some small member cards to go in here...</p>
         <HContainer>
             <UserCard />
         </HContainer>

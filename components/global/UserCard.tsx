@@ -16,6 +16,6 @@ export default function UserCard({user} : {user?: User}) {
             />
         </figure>
 
-        <span className='text-xs text-slate-500'>{user?.name ?? 'Person A'}</span>
+        <span className='text-xs font-bold text-slate-500'>{user?.name ?? 'Person A'}</span>
     </article>
 }

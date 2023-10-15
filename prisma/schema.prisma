@@ -22,9 +22,13 @@ model Event {
   id            String      @id @default(cuid())
   name          String
   localDateTime String
-  location      String
+  cityCountry   String
+  venue         String
   maxAttendance Int
-  users         UserEvent[]
+  description   String?
+  organiser       User        @relation(fields: [organiserEmail], references: [id])
+  organiserEmail  String
+  users           UserEvent[]
 }
 
 model Account {
@@ -62,6 +66,7 @@ model User {
   joinDate      DateTime    @default(now())
   location      String?
   dob           DateTime?
+  organisedEvents Event[]
   accounts      Account[]
   sessions      Session[]
   events        UserEvent[]

@@ -26,10 +26,11 @@ export default function EventPage({params} : {params: {id: string}}) {
 
             <div className='divider'></div>
 
-            <EventAbout event={event} />
+            <VContainer className='gap-8'>
+                <EventAbout event={event} />
 
-            <EventAttendees />
-
+                <EventAttendees />
+            </VContainer>
         </section>
     </main>
 }
