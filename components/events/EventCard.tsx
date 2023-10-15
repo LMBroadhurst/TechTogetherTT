@@ -30,7 +30,7 @@ const EventCard: FC<OwnProps> = (props) => {
         return eventSpecificUserEvents?.length
     }
     
-    return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:-translate-y-2">
+    return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:-translate-y-1">
         
         <figure className='max-h-56'>
             <Image 

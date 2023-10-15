@@ -21,7 +21,7 @@ export default async function EventsSuspenseBoundarySSR() {
 
     if (!events || !userEvents) return <Spinner />
 
-    return <section className='flex flex-row flex-wrap gap-10'>
+    return <section className='flex flex-row flex-wrap gap-4'>
         {
             eventsArray?.length !== 0 ? eventsArray?.slice(0, 19).map((event: Event) => {
                 return <EventCard key={event.id} event={event} userEvents={userEventsArray} />
