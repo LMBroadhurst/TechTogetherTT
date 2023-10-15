@@ -7,7 +7,7 @@ const zodCreateEventFormRequest = z.object({
     venue: z.string(),
     maxAttendance: z.number(),
     description: z.string() || z.undefined(),
-    organiserEmail: z.any(),
+    organiserEmail: z.string(),
 })
 
 export {

@@ -15,6 +15,7 @@ export default function CreateEventForm() {
 
     const router = useRouter()
     const { data: session } = useSession()
+    console.log(session)
 
     // Event Details Form
     const [createEventFormValues, setCreateEventFormValues] = useState<CreateEventForm>(defaultCreateEventFormDetails)
@@ -34,14 +35,15 @@ export default function CreateEventForm() {
 
     const handleFormSubmit = async (event: any) => {
         event.preventDefault()
-        // setFormStatus("LOADING")
+        setFormStatus("LOADING")
 
         // Add organiser to form 
-        // if (!session?.user?.user?.email) throw new Error("Must be signed in to create an event")
+        if (!session?.user?.email) throw new Error("Must be signed in to create an event")
+        const email = session.user.email
 
         setCreateEventFormValues({
             ...createEventFormValues,
-            organiserEmail: "lewis1broadhurst@gmail.com",
+            organiserEmail: email,
         })
 
         // zod parsing pre API submission
@@ -54,14 +56,17 @@ export default function CreateEventForm() {
         
         // Call to API
         // TODO: React Query?
-        console.log(createEventFormValues)
-        const response = await axios.post('/api/event', {
-            createEventFormValues
-        })
+        let response;
+        try {
+            response = await axios.post('/api/event', {
+                createEventFormValues
+            })
+            console.log(response)
+        } catch {
+            setFormStatus("ERROR")
+        }
 
-        console.log(response)
-
-        if (response.status < 300) {
+        if (response?.status && response.status < 300) {
             setFormStatus("SUCCESS")
         
             // Show toast for 3 seconds

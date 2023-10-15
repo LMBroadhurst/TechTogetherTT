@@ -7,6 +7,11 @@ import { PrismaClient, User } from "@prisma/client";
 
 const prisma = new PrismaClient()
 
+const CustomPrismaAdapter = () => {
+  
+  return PrismaAdapter(prisma)
+}
+
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
@@ -42,12 +47,14 @@ export const authOptions: AuthOptions = {
     // For Client Components
     async session({session, user}) {
 
-      // session.user.id = user.id
-      // session.user.dob = user.dob
-      // session.user.events = user.events
-      // session.user.joinDate = user.joinDate
-      // session.user.location = user.location
-      // session.user.role = user.role
+      // if (session) {
+      //   session.id = user.id
+      //   session.dob = user.dob
+      //   session.events = user.events
+      //   session.joinDate = user.joinDate
+      //   session.location = user.location
+      //   session.role = user.role
+      // }
 
       return session
     }

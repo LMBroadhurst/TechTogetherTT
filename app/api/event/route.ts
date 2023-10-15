@@ -46,7 +46,8 @@ export async function POST(request: NextRequest) {
 
     event = {
         ...event,
-        maxAttendance: parseInt(maxAttendance)
+        maxAttendance: parseInt(maxAttendance),
+        organiserEmail: 'lewis1broadhurst@gmail.com'
     }
 
     // Form Validation
