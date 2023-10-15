@@ -19,13 +19,13 @@ model UserEvent {
 }
 
 model Event {
-  id            String      @id @default(cuid())
-  name          String
-  localDateTime String
-  cityCountry   String
-  venue         String
-  maxAttendance Int
-  description   String?
+  id              String      @id @default(cuid())
+  name            String
+  localDateTime   String
+  cityCountry     String
+  venue           String
+  maxAttendance   Int
+  description     String?
   organiser       User        @relation(fields: [organiserEmail], references: [id])
   organiserEmail  String
   users           UserEvent[]
