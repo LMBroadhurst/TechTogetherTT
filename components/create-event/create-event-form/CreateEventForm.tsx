@@ -15,7 +15,6 @@ export default function CreateEventForm() {
 
     const router = useRouter()
     const { data: session } = useSession()
-    console.log(session)
 
     // Event Details Form
     const [createEventFormValues, setCreateEventFormValues] = useState<CreateEventForm>(defaultCreateEventFormDetails)

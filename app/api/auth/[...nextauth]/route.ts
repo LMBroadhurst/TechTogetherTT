@@ -3,12 +3,12 @@ import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import { useRouter } from "next/router"
 import { PrismaAdapter } from "@next-auth/prisma-adapter" 
-import { PrismaClient, User } from "@prisma/client";
+import { PrismaClient, Session, User } from "@prisma/client";
 
 const prisma = new PrismaClient()
 
 const CustomPrismaAdapter = () => {
-  
+
   return PrismaAdapter(prisma)
 }
 
@@ -32,31 +32,28 @@ export const authOptions: AuthOptions = {
   callbacks: {
 
     async jwt({ token, user }) {
-      // if (user) {
-      //   token.id = user.id
-      //   token.dob = user.dob
-      //   token.events = user.events
-      //   token.joinDate = user.joinDate
-      //   token.location = user.location
-      //   token.role = user.role
-      // }
+      
+      if (user) {
+        token.id = user?.id
+        token.dob = user?.dob
+        token.events = user?.events
+        token.joinDate = user?.joinDate
+        token.location = user?.location
+        token.role = user?.role
+      }
 
       return token
     },
 
     // For Client Components
-    async session({session, user}) {
+    async session({session, user, token}) {
 
-      // if (session) {
-      //   session.id = user.id
-      //   session.dob = user.dob
-      //   session.events = user.events
-      //   session.joinDate = user.joinDate
-      //   session.location = user.location
-      //   session.role = user.role
-      // }
+      const fullSession = {
+        ...session,
+        ...token
+      }
 
-      return session
+      return fullSession
     }
   }
 }
