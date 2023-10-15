@@ -1,17 +1,11 @@
 import { zodCreateEventFormRequest } from "@/utils/zod";
-import { Event, PrismaClient } from "@prisma/client";
-import moment from "moment";
-import { redirect } from "next/navigation";
+import { Event, PrismaClient, User } from "@prisma/client";
 import { NextResponse, NextRequest } from "next/server";
 
 const prisma = new PrismaClient()
 
-// TODO: Zod form data type checking
-
-// get requests inherently cannot accept a payload
 export async function GET() {
     
-    // no filtration
     const allEvents = await prisma.event.findMany()
     return NextResponse.json({
         status: 200,
@@ -23,15 +17,15 @@ export async function PUT(request: NextRequest) {
     
     // filtered by form
     const payload = await request.json()
-    const { location, name } = payload.data
+    const { cityCountry, name } = payload.data
 
     const filteredEvents = await prisma.event.findMany({
         where: {
             name: {
                 contains: name
             },
-            location: {
-                contains: location
+            cityCountry: {
+                contains: cityCountry
             },
         } 
     })
@@ -44,23 +38,22 @@ export async function PUT(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
 
-    const event = await request.json()
-    const { name, location, localDateTime, maxAttendance } = event
+    const payload = await request.json()
+    console.log(payload)
+
+    let event = payload.createEventFormValues
+    const { maxAttendance } = event 
+
+    event = {
+        ...event,
+        maxAttendance: parseInt(maxAttendance)
+    }
 
     // Form Validation
-    const maxAttendanceParsed = parseInt(maxAttendance)
-    zodCreateEventFormRequest.parse({
-        ...event,
-        maxAttendance: maxAttendanceParsed
-    })
+    zodCreateEventFormRequest.parse(event)
 
     const newEvent = await prisma.event.create({
-        data: {
-            name: name,
-            localDateTime: localDateTime,
-            location: location,
-            maxAttendance: maxAttendanceParsed
-        }
+        data: event
     })
 
     return NextResponse.json({

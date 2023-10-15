@@ -2,70 +2,79 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import TextInput from '../../global/TextInput'
 import { CreateEventForm, defaultCreateEventFormDetails } from './defaultCreateEventFormValues'
-import { Event } from '@prisma/client'
+import { Event, User } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { HContainer } from '@/components/global/Containers'
-import moment from 'moment'
 import { zodCreateEventFormRequest } from '@/utils/zod'
 import { z } from 'zod'
+import { delay } from '@/utils/delay'
+import { useSession, signOut } from 'next-auth/react'
+import axios from 'axios'
 
-const CreateEventForm = () => {
+export default function CreateEventForm() {
 
-    // delay
-    const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+    const router = useRouter()
+    const { data: session } = useSession()
 
     // Event Details Form
+    const [createEventFormValues, setCreateEventFormValues] = useState<CreateEventForm>(defaultCreateEventFormDetails)
     const [formStatus, setFormStatus] = useState<"IDLE" | "SUCCESS" | "ERROR" | "LOADING">("IDLE")
-    const venue = ''
-    const [createEventDetails, setCreateEventDetails] = useState<CreateEventForm>(defaultCreateEventFormDetails)
-    const [newlyCreatedEvent, setNewlyCreatedEvent] = useState<Event>()
-    const router = useRouter()
 
     const {
-        // Why are types lost here?
-        localDateTime, location, maxAttendance, name
-    } = createEventDetails as Event
+        localDateTime, cityCountry, venue, maxAttendance, name
+    } = createEventFormValues as Event
 
     function handleCreateEventFormChange(event: any) {
         const key = event.target.name
         let value = event.target.value
-        setCreateEventDetails({...createEventDetails, [key]: value})
+        setCreateEventFormValues({...createEventFormValues, [key]: value})
     }
 
     // Form Submission
 
     const handleFormSubmit = async (event: any) => {
         event.preventDefault()
-        setFormStatus("LOADING")
+        // setFormStatus("LOADING")
+
+        // Add organiser to form 
+        // if (!session?.user?.user?.email) throw new Error("Must be signed in to create an event")
+
+        setCreateEventFormValues({
+            ...createEventFormValues,
+            organiserEmail: "lewis1broadhurst@gmail.com",
+        })
 
         // zod parsing pre API submission
         const coerceNumber = z.coerce.number()
         const parsedCreateEventDetails = {
-            ...createEventDetails,
+            ...createEventFormValues,
             maxAttendance: coerceNumber.parse(maxAttendance)
         }
         zodCreateEventFormRequest.parse(parsedCreateEventDetails)
         
-        const response = await fetch('/api/event', {
-            method: 'POST',
-            body: JSON.stringify(createEventDetails),
+        // Call to API
+        // TODO: React Query?
+        console.log(createEventFormValues)
+        const response = await axios.post('/api/event', {
+            createEventFormValues
         })
+
+        console.log(response)
 
         if (response.status < 300) {
             setFormStatus("SUCCESS")
-            const responseBody = await response.json()
-            const newEvent = responseBody.newEvent as Event
-            setNewlyCreatedEvent(newEvent)
         
             // Show toast for 3 seconds
             await delay(3000)
 
             // Now redirect
-            router.push(`/event/${newEvent.id}`)
+            // router.push(`/event/${newEvent.id}`)
         } else {
             // error stuff
             setFormStatus("ERROR")
         }
+
+        setFormStatus("IDLE")
     }
 
     return <>
@@ -116,14 +125,14 @@ const CreateEventForm = () => {
                 onChange={handleCreateEventFormChange}
             />
 
-            <HContainer>
+            <HContainer className='gap-2'>
                 <TextInput 
                     required
-                    id="locationEvent" 
-                    label='Location' 
+                    id="cityCountry" 
+                    label='City, Country' 
                     type='text'
-                    value={location}
-                    name='location'
+                    value={cityCountry}
+                    name='cityCountry'
                     minLength={3}
                     onChange={handleCreateEventFormChange}
                 />
@@ -158,5 +167,3 @@ const CreateEventForm = () => {
         </form>
     </>
 }
-
-export default CreateEventForm

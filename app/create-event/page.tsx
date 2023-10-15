@@ -5,7 +5,7 @@ import React from "react"
 
 const CreateEventPage = () => {
 
-    return <main className="flex flex-col justify-center items-center gap-10 p-20">
+    return <main className="flex flex-col justify-center items-center p-20 max-w-[800px] mx-auto">
         <CreateEventHero />
         <div className="divider"></div>
         <CreateEventForm />
