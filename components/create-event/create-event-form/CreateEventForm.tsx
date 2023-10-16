@@ -72,7 +72,7 @@ export default function CreateEventForm() {
             await delay(3000)
 
             // Now redirect
-            // router.push(`/event/${newEvent.id}`)
+            router.push(`/event/${response.data.newEvent.id}`)
         } else {
             // error stuff
             setFormStatus("ERROR")
