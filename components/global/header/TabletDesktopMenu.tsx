@@ -10,18 +10,18 @@ import Image from 'next/image'
 import { Button } from "flowbite-react";
 
 
-export default function TabletDesktopMenu({setOpenModal}: {setOpenModal: any}) {
+export default function TabletDesktopMenu() {
 
     // Authentication
     const {data: session} = useSession()
     const handleClickLogout = () => signOut()
-    const handleToggleCreateEventModal = () => setOpenModal('dismissible')
 
     return <HContainer className='items-center gap-5 hidden md:flex'>
         {
-        // Maybe change so that it only says Create Event... But if not logged in must be logged in first
-        session ? <Button onClick={handleToggleCreateEventModal} className='btn btn-sm'>Create Event</Button>
-        : <Link href='/auth' className='btn btn-ghost'>Login</Link>
+            // Maybe change so that it only says Create Event... But if not logged in must be logged in first
+            // @ts-ignore
+            session ? <button className="btn btn-sm" onClick={()=>document?.getElementById('create_event_modal')?.showModal()}>Create Event</button>
+            : <Link href='/auth' className='btn btn-ghost'>Login</Link>
         }
 
         <section className='join'>

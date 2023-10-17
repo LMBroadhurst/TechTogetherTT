@@ -72,6 +72,8 @@ export default function CreateEventForm() {
             await delay(3000)
 
             // Now redirect
+            // @ts-ignore
+            document?.getElementById('create_event_modal')?.close()
             router.push(`/event/${response.data.newEvent.id}`)
         } else {
             // error stuff
@@ -92,7 +94,7 @@ export default function CreateEventForm() {
             </div>
         }
 
-        <form className='flex flex-col gap-4 max-w-2xl w-full' onSubmit={handleFormSubmit}>
+        <form className='flex flex-col gap-4' onSubmit={handleFormSubmit}>
             <TextInput
                 required
                 id="nameEvent" 
@@ -129,29 +131,27 @@ export default function CreateEventForm() {
                 onChange={handleCreateEventFormChange}
             />
 
-            <HContainer className='gap-2'>
-                <TextInput 
-                    required
-                    id="cityCountry" 
-                    label='City, Country' 
-                    type='text'
-                    value={cityCountry}
-                    name='cityCountry'
-                    minLength={3}
-                    onChange={handleCreateEventFormChange}
-                />
+            <TextInput 
+                required
+                id="cityCountry" 
+                label='City, Country' 
+                type='text'
+                value={cityCountry}
+                name='cityCountry'
+                minLength={3}
+                onChange={handleCreateEventFormChange}
+            />
 
-                <TextInput 
-                    required
-                    id="venue" 
-                    label='Venue' 
-                    type='text'
-                    value={venue}
-                    name='venue'
-                    minLength={3}
-                    onChange={handleCreateEventFormChange}
-                />       
-            </HContainer>   
+            <TextInput 
+                required
+                id="venue" 
+                label='Venue' 
+                type='text'
+                value={venue}
+                name='venue'
+                minLength={3}
+                onChange={handleCreateEventFormChange}
+            />       
 
             <button 
                 className='btn'

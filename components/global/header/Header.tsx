@@ -9,10 +9,8 @@ type OwnProps = {};
 
 const Header: FC<OwnProps> = ({}) => {
 
-  const [openModal, setOpenModal] = useState<string | undefined>();
-
   return <header className='border-b w-full shadow-md sticky top-0 z-10 bg-base-100'>
-    <CreateEventModal openModal={openModal} setOpenModal={setOpenModal} />
+    <CreateEventModal />
 
     <section className='flex flex-row justify-between items-center p-4 text-2xl text-slate-800 '>
       
@@ -23,7 +21,7 @@ const Header: FC<OwnProps> = ({}) => {
       {/* Burger Menu */}
       <BurgerMenu className='md:hidden' />
 
-      <TabletDesktopMenu setOpenModal={setOpenModal} />
+      <TabletDesktopMenu />
     </section>
   </header>
 }
