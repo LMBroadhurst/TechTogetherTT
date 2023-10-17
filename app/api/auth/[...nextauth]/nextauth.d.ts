@@ -7,34 +7,31 @@ import { JWT, DefaultJWT } from "next-auth/jwt"
 
 declare module "next-auth" {
   
-    interface Session {
-      user: {
-        id: string;
-        role: string;
-        joinDate: Date;
-        location: string;    
-        dob: Date        
-        events: UserEvent[]
-      } & DefaultSession
-    }
+  interface Session extends DefaultSession {
+    id: string;
+    role: string;
+    joinDate: Date;
+    location: string;    
+    dob: Date        
+    events: UserEvent[]
+  }
 
-    interface User extends DefaultUser {
-        id: string;
-        role: string;
-        joinDate: Date;
-        location: string;    
-        dob: Date        
-        events: UserEvent[]
-    }
+  interface User extends DefaultUser {
+    role: string;
+    joinDate: Date;
+    location: string;    
+    dob: Date        
+    events: UserEvent[]
+  }
 }
 
 declare module "next-auth/jwt" {
-    interface JWT extends DefaultJWT{
-        id: string;
-        role: string;
-        joinDate: Date;
-        location: string;    
-        dob: Date        
-        events: UserEvent[]
-    }
+  interface JWT extends DefaultJWT {
+    id: string;
+    role: string;
+    joinDate: Date;
+    location: string;    
+    dob: Date        
+    events: UserEvent[]
+  }
 }

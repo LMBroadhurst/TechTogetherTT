@@ -34,14 +34,15 @@ export default function CreateEventForm() {
 
     const handleFormSubmit = async (event: any) => {
         event.preventDefault()
-        // setFormStatus("LOADING")
+        setFormStatus("LOADING")
 
         // Add organiser to form 
-        // if (!session?.user?.user?.email) throw new Error("Must be signed in to create an event")
+        if (!session?.user?.email) throw new Error("Must be signed in to create an event")
+        const email = session.user.email
 
         setCreateEventFormValues({
             ...createEventFormValues,
-            organiserEmail: "lewis1broadhurst@gmail.com",
+            organiserEmail: email,
         })
 
         // zod parsing pre API submission
@@ -54,21 +55,25 @@ export default function CreateEventForm() {
         
         // Call to API
         // TODO: React Query?
-        console.log(createEventFormValues)
-        const response = await axios.post('/api/event', {
-            createEventFormValues
-        })
+        let response;
+        try {
+            response = await axios.post('/api/event', {
+                createEventFormValues
+            })
+        } catch {
+            setFormStatus("ERROR")
+        }
 
-        console.log(response)
-
-        if (response.status < 300) {
+        if (response?.status && response.status < 300) {
             setFormStatus("SUCCESS")
         
             // Show toast for 3 seconds
             await delay(3000)
 
             // Now redirect
-            // router.push(`/event/${newEvent.id}`)
+            // @ts-ignore
+            document?.getElementById('create_event_modal')?.close()
+            router.push(`/event/${response.data.newEvent.id}`)
         } else {
             // error stuff
             setFormStatus("ERROR")
@@ -80,7 +85,7 @@ export default function CreateEventForm() {
     return <>
         {
             formStatus === "SUCCESS" && 
-            <div className="toast">
+            <div className="toast-center">
                 <div className="alert alert-info flex flex-col items-start">
                     <span>Success!</span>
                     <span>Redirecting you to your new event =D</span>
@@ -88,7 +93,7 @@ export default function CreateEventForm() {
             </div>
         }
 
-        <form className='flex flex-col gap-4 max-w-2xl w-full' onSubmit={handleFormSubmit}>
+        <form className='flex flex-col gap-4' onSubmit={handleFormSubmit}>
             <TextInput
                 required
                 id="nameEvent" 
@@ -125,29 +130,27 @@ export default function CreateEventForm() {
                 onChange={handleCreateEventFormChange}
             />
 
-            <HContainer className='gap-2'>
-                <TextInput 
-                    required
-                    id="cityCountry" 
-                    label='City, Country' 
-                    type='text'
-                    value={cityCountry}
-                    name='cityCountry'
-                    minLength={3}
-                    onChange={handleCreateEventFormChange}
-                />
+            <TextInput 
+                required
+                id="cityCountry" 
+                label='City, Country' 
+                type='text'
+                value={cityCountry}
+                name='cityCountry'
+                minLength={3}
+                onChange={handleCreateEventFormChange}
+            />
 
-                <TextInput 
-                    required
-                    id="venue" 
-                    label='Venue' 
-                    type='text'
-                    value={venue}
-                    name='venue'
-                    minLength={3}
-                    onChange={handleCreateEventFormChange}
-                />       
-            </HContainer>   
+            <TextInput 
+                required
+                id="venue" 
+                label='Venue' 
+                type='text'
+                value={venue}
+                name='venue'
+                minLength={3}
+                onChange={handleCreateEventFormChange}
+            />       
 
             <button 
                 className='btn'
