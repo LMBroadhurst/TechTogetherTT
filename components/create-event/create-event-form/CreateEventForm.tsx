@@ -60,7 +60,6 @@ export default function CreateEventForm() {
             response = await axios.post('/api/event', {
                 createEventFormValues
             })
-            console.log(response)
         } catch {
             setFormStatus("ERROR")
         }
@@ -86,7 +85,7 @@ export default function CreateEventForm() {
     return <>
         {
             formStatus === "SUCCESS" && 
-            <div className="toast">
+            <div className="toast-center">
                 <div className="alert alert-info flex flex-col items-start">
                     <span>Success!</span>
                     <span>Redirecting you to your new event =D</span>

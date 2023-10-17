@@ -62,15 +62,6 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
     return <HContainer className='justify-between'>
         <HContainer className='gap-2'>
             <button className='btn btn-ghost btn-square btn-sm m-0 p-0'>{false ? bookmarkFilled : bookmark}</button>
-
-            <section className='dropdown dropdown-top'>
-                <button className='btn btn-square btn-ghost btn-sm m-0 p-0' tabIndex={0}>{share}</button>
-
-                <ul tabIndex={0} className='dropdown-content menu bg-base-100 z-10 rounded-box border-[0.5px] shadow'>
-                    <h3 className='menu-title'>Share</h3>
-                    <li>LinkedIn</li>
-                </ul>
-            </section>
         </HContainer>
 
         <HContainer className='gap-2'>
