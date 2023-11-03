@@ -13,7 +13,7 @@ import moment from 'moment'
 import React, { useEffect, useState, useCallback } from 'react'
 import { useQueryClient } from 'react-query'
 
-export default function EventPage({params} : {params: {id: string}}) {
+export default function EventPage({ params }: { params: { id: string } }) {
 
     const queryClient = useQueryClient()
     const { status, data, error, isFetching } = useGetEventById(params.id)
@@ -22,7 +22,7 @@ export default function EventPage({params} : {params: {id: string}}) {
     if (!event) return <Spinner />
 
     return <main className='flex flex-col gap-16 px-5 py-20 md:p-20 lg:flex-row lg:mx-auto xl:w-[1300px]'>
-        <section className='flex flex-col gap-1 border shadow-md rounded-lg p-5 w-full'>
+        <section className='flex flex-col gap-1 w-full'>
             <EventHeader event={event} />
 
             <div className='divider'></div>
