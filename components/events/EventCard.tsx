@@ -19,8 +19,6 @@ const EventCard: FC<OwnProps> = (props) => {
         event, userEvents
     } = props
 
-    const queryClient = useQueryClient()
-
     const {
         id: eventId
     } = event

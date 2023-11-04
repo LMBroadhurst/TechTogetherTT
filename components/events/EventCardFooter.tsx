@@ -49,7 +49,10 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
         if (!user || !userEvents) return router.push('/auth')
 
         const userEventForUserAndEvent = userEvents.find((ue) => ue.eventId === eventId && ue.userId === user.id)
-        if (!userEventForUserAndEvent) throw new Error("UserEvent not found")
+        
+        if (!userEventForUserAndEvent) {
+            await postUserEvent({userEmail: user.user.email, eventId})
+        }
 
         // Need to send through userEventId & userId
         const userEventId = userEventForUserAndEvent.id

@@ -19,6 +19,9 @@ export function useGetUserEvents(): UseQueryResult<UserEvent[]> {
 }
 
 
+// This needs to be reworked...
+// This function is actually postUserEvent AND toggle the attendance status
+// re-write with RTK =D
 export function usePostUserEvent() {
 
     const queryClient = useQueryClient()
