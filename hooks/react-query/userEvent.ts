@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient, UseQueryResult, QueryClient } fr
 import axios from 'axios'
 import { User, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
+import { BOOKMARK_ROUTE } from '@/app/api/userEvent/bookmark/route'
 
 export function useGetUserEvents(): UseQueryResult<UserEvent[]> {
 
@@ -61,16 +62,16 @@ export function useToggleBookmark() {
     const queryClient = new QueryClient()
 
     return useMutation({
-        mutationFn: async ({isBookmarked, userId}: any) => {
+        mutationFn: async (bookmarkRoute: BOOKMARK_ROUTE) => {
 
-            if (isBookmarked) {
-                return await axios.post('', {
+            // if (isBookmarked) {
+            //     return await axios.post('', {
 
-                })
-            }
+            //     })
+            // }
 
-            return await axios.post('', {
-
+            return await axios.post('/api/userEvent/bookmark', {
+                type: bookmarkRoute
             })
 
         },

@@ -3,11 +3,12 @@ import { HContainer } from '../global/Containers'
 import { bookmark, bookmarkFilled, share } from '@/utils/icons'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
-import { usePostUserEvent } from '@/hooks/react-query/userEvent'
+import { usePostUserEvent, useToggleBookmark } from '@/hooks/react-query/userEvent'
 import { useGetUserByEmail } from '@/hooks/react-query/user'
 import { useRouter } from 'next/navigation'
 import { Event, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
+import { BOOKMARK_ROUTE } from '@/app/api/userEvent/bookmark/route'
 
 type OwnProps = {
     event: Event
@@ -22,6 +23,7 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
     // hooks
     const { data: user } = useSession()
     const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
+    const { data: isBookmarked, mutateAsync: toggleEventCardBookmark } = useToggleBookmark()
     const router = useRouter();
 
     const {
@@ -42,7 +44,8 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
     }
 
     async function handleBookmarkButtonClick() {
-        
+        const response = await toggleEventCardBookmark(BOOKMARK_ROUTE.TOGGLE_BOOKMARKED_STATUS)
+        console.log(response)
     }
 
     const renderButtonWithAttendanceStatus = useMemo(() => {
@@ -80,7 +83,10 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
 
     return <HContainer className='justify-between'>
         <HContainer className='gap-2'>
-            <button className='btn btn-ghost btn-square btn-sm m-0 p-0'>
+            <button 
+                className='btn btn-ghost btn-square btn-sm m-0 p-0'
+                onClick={handleBookmarkButtonClick}
+            >
                 {renderBookmarkedButton()}
             </button>
         </HContainer>
