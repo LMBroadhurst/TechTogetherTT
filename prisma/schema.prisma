@@ -14,6 +14,7 @@ model UserEvent {
   attendanceStatus String
   rating           String?
   review           String?
+  isBookmarked     Boolean
   user             User    @relation(fields: [userId], references: [id])
   event            Event   @relation(fields: [eventId], references: [id])
 }

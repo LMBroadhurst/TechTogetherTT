@@ -14,12 +14,14 @@ type OwnProps = {
     userEvents?: UserEvent[]
 }
 
+// THINK: How can I make the db retrieval far easier for the things I need?
+// i.e. Can I get the attendance status, isBookmarked, etc without having to do complex code in the view
+
 const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
 
     // hooks
-    const { data } = useSession()
+    const { data: user } = useSession()
     const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
-    const { data: user } = useGetUserByEmail()
     const router = useRouter();
 
     const {
@@ -27,7 +29,7 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
     } = event
 
     const handleOnActionButtonClick = async () => {
-        const userEmail = data?.user?.email
+        const userEmail = user?.user?.email
         const eventId = event.id
 
         let attendanceStatus = undefined
@@ -41,9 +43,10 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
 
     const renderButtonWithAttendanceStatus = useMemo(() => {
         
-        const userId: string = user?.id 
-        if (!userId || !userEvents) return "Attend"
+        if (!user || !userEvents) return "Attend"
 
+        // Probably shouldn't have this logic inside the EventCard, do it on the BE
+        const userId: string = user.id
         const userSpecificUserEvent = userEvents.find((userEvent) => (userEvent.userId === userId) && (userEvent.eventId === eventId))
         const attendanceStatus = userSpecificUserEvent?.attendanceStatus
 
@@ -59,16 +62,30 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
         }
     }, [eventId, user?.id, userEvents]);
 
+    const renderBookmarkedButton = () => {
+        if (!user || !userEvents) return bookmark
+
+        const userId: string = user.id
+        const userSpecificUserEvent = userEvents.find((userEvent) => (userEvent.userId === userId) && (userEvent.eventId === eventId))
+        const attendanceStatus = userSpecificUserEvent?.isBookmarked
+
+        if (attendanceStatus) return bookmarkFilled
+
+        return bookmark
+    }
+
     return <HContainer className='justify-between'>
         <HContainer className='gap-2'>
-            <button className='btn btn-ghost btn-square btn-sm m-0 p-0'>{false ? bookmarkFilled : bookmark}</button>
+            <button className='btn btn-ghost btn-square btn-sm m-0 p-0'>
+                {renderBookmarkedButton()}
+            </button>
         </HContainer>
 
         <HContainer className='gap-2'>
             <Link className='btn btn-sm' href={`/event/${event.id}`}>More</Link>
             <button 
                 className='btn btn-sm'
-                disabled={!data?.user ? true : false} 
+                disabled={!user ? true : false} 
                 onClick={handleOnActionButtonClick}
             >   
                 {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus}
