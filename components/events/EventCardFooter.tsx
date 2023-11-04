@@ -4,7 +4,7 @@ import { HContainer } from '../global/Containers'
 import { bookmark, bookmarkFilled, share } from '@/utils/icons'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
-import { usePostUserEvent, useToggleBookmark } from '@/react-query/userEvent'
+import { usePostUserEvent, usePostToggleBookmark, usePostAttendanceStatus } from '@/react-query/userEvent'
 import { useGetUserByEmail } from '@/react-query/user'
 import { useRouter } from 'next/navigation'
 import { Event, UserEvent } from '@prisma/client'
@@ -24,7 +24,8 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
     // hooks
     const { data: user } = useSession()
     const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
-    const { data: isBookmarked, mutateAsync: toggleEventCardBookmark } = useToggleBookmark()
+    const { data: attendanceStatus, mutateAsync: toggleAttendanceStatus} = usePostAttendanceStatus()
+    const { data: isBookmarked, mutateAsync: toggleEventCardBookmark } = usePostToggleBookmark()
     const router = useRouter();
 
     const {
@@ -32,37 +33,49 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
     } = event
 
     // Need a generic function to post a new userEvent which can then add optional properties via { ...userEvent, ...optionalProperties }
-    async function handleOnActionButtonClick() {
-        const userEmail = user?.user?.email
-        const eventId = event.id
+    async function handleAttendanceButtonClick() {
 
-        let attendanceStatus = undefined
-        if (userEvents) {
-            attendanceStatus = userEvents.find((ue) => ue.eventId === eventId && ue.userId === user?.id)?.attendanceStatus
+        if (!user || !user.user || !userEvents) throw new Error('User not logged in')
+
+        const userId = user.id
+        const eventId = event.id
+        
+        // check if userEvent exists
+        let userEvent = userEvents.find((ue) => ue.eventId === eventId && ue.userId === userId)
+
+        if (!userEvent) {
+            const { status, userEventResponse } = await postUserEvent({userId, eventId})
+            userEvent = userEventResponse
         }
 
-        await postUserEvent({attendanceStatus, userEmail, eventId})
+        if (!userEvent) throw new Error('UserEvent not found')
+
+        const userEventId = userEvent.id
+        const response2 = await toggleAttendanceStatus({userEventId})
+        console.log(response2)
+
+        // Definitely need a better way to do this... react query cache should be invalidated
         router.refresh()
     }
 
-    async function handleBookmarkButtonClick() {
-        // Double check this routing - if it works would need to reroute afterwards somehow...
+    // async function handleBookmarkButtonClick() {
+    //     // Double check this routing - if it works would need to reroute afterwards somehow...
 
-        if (!user || !user.user || !userEvents) return router.push('/auth')
+    //     if (!user || !user.user || !userEvents) return router.push('/auth')
 
-        const userEventForUserAndEvent = userEvents.find((ue) => ue.eventId === eventId && ue.userId === user.id)
+    //     const userEventForUserAndEvent = userEvents.find((ue) => ue.eventId === eventId && ue.userId === user.id)
         
-        if (!userEventForUserAndEvent) {
-            await postUserEvent({userEmail: user.user.email, eventId})
-        }
+    //     if (!userEventForUserAndEvent) {
+    //         await postUserEvent({userEmail: user.user.email, eventId})
+    //     }
 
-        // Need to send through userEventId & userId
-        const userEventId = userEventForUserAndEvent.id
-        const userId = user.id
+    //     // Need to send through userEventId & userId
+    //     const userEventId = userEventForUserAndEvent.id
+    //     const userId = user.id
 
-        const response = await toggleEventCardBookmark({userEventId, eventId, userId})
-        console.log(response)
-    }
+    //     const response = await toggleEventCardBookmark({userEventId, eventId, userId})
+    //     console.log(response)
+    // }
 
     const renderButtonWithAttendanceStatus = useMemo(() => {
         
@@ -101,7 +114,7 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
         <HContainer className='gap-2'>
             <button 
                 className='btn btn-ghost btn-square btn-sm m-0 p-0'
-                onClick={handleBookmarkButtonClick}
+                // onClick={handleBookmarkButtonClick}
             >
                 {renderBookmarkedButton()}
             </button>
@@ -112,7 +125,7 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
             <button 
                 className='btn btn-sm'
                 disabled={!user ? true : false} 
-                onClick={handleOnActionButtonClick}
+                onClick={handleAttendanceButtonClick}
             >   
                 {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus}
             </button>

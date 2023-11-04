@@ -3,6 +3,7 @@ import axios from 'axios'
 import { User, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
 import { BOOKMARK_ROUTE } from '@/app/api/userEvent/bookmark/route'
+import { ATTENDANCE_ROUTE } from '@/app/api/userEvent/attendance/route'
 
 export function useGetUserEvents(): UseQueryResult<UserEvent[]> {
 
@@ -42,28 +43,13 @@ export function usePostAttendanceStatus() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({attendanceStatus, userId, eventId, userEventId}: 
-            {attendanceStatus: ATTENDING_STATUS, userId: string, eventId: string, userEventId: string}) => {
+        mutationFn: async ({ userEventId }: { userEventId: string }) => {
             
-            if (attendanceStatus === ATTENDING_STATUS.NOT_ATTENDING) {
-                return await axios.post("/api/userEvent", {
-                    userEventId,
-                    userId,
-                    eventId,
-                    attendanceStatus: ATTENDING_STATUS.ATTENDING
-                })
-            }
-
-            if (attendanceStatus === ATTENDING_STATUS.ATTENDING) {
-                return await axios.delete("/api/userEvent", {
-                    data: {
-                        userEventId,
-                        userId,
-                        eventId,
-                        attendanceStatus: ATTENDING_STATUS.NOT_ATTENDING
-                    }
-                })
-            }
+            // This is where we need the type, can add in what we want to do and overload the API
+            return await axios.post("/api/userEvent/attendance", {
+                type: ATTENDANCE_ROUTE.TOGGLE_ATTENDING_STATUS,
+                userEventId
+            })
 
         },
         onSuccess: () => queryClient.invalidateQueries(["event", "userEvent", "user"])
