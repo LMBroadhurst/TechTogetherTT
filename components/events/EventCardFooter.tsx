@@ -44,7 +44,18 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
     }
 
     async function handleBookmarkButtonClick() {
-        const response = await toggleEventCardBookmark(BOOKMARK_ROUTE.TOGGLE_BOOKMARKED_STATUS)
+        // Double check this routing - if it works would need to reroute afterwards somehow...
+
+        if (!user || !userEvents) return router.push('/auth')
+
+        const userEventForUserAndEvent = userEvents.find((ue) => ue.eventId === eventId && ue.userId === user.id)
+        if (!userEventForUserAndEvent) throw new Error("UserEvent not found")
+
+        // Need to send through userEventId & userId
+        const userEventId = userEventForUserAndEvent.id
+        const userId = user.id
+
+        const response = await toggleEventCardBookmark({userEventId, eventId, userId})
         console.log(response)
     }
 

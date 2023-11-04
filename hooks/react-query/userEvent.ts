@@ -62,16 +62,13 @@ export function useToggleBookmark() {
     const queryClient = new QueryClient()
 
     return useMutation({
-        mutationFn: async (bookmarkRoute: BOOKMARK_ROUTE) => {
-
-            // if (isBookmarked) {
-            //     return await axios.post('', {
-
-            //     })
-            // }
+        mutationFn: async ({userEventId, eventId, userId}: any) => {
 
             return await axios.post('/api/userEvent/bookmark', {
-                type: bookmarkRoute
+                type: BOOKMARK_ROUTE.TOGGLE_BOOKMARKED_STATUS,
+                userEventId,
+                eventId,    
+                userId
             })
 
         },
