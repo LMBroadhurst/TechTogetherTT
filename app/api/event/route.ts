@@ -1,8 +1,6 @@
+import prisma from "@/prisma/db";
 import { zodCreateEventFormRequest } from "@/utils/zod";
-import { Event, PrismaClient, User } from "@prisma/client";
 import { NextResponse, NextRequest } from "next/server";
-
-const prisma = new PrismaClient()
 
 export async function GET() {
     

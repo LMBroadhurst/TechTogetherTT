@@ -1,7 +1,6 @@
-import { Event, PrismaClient } from "@prisma/client";
+import prisma from "@/prisma/db";
+import { Event } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-
-const prisma = new PrismaClient()
 
 export async function GET(request: NextRequest) {
 

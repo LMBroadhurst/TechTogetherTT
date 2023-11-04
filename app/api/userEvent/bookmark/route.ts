@@ -1,4 +1,3 @@
-import { UserEvent } from "@prisma/client";
 import prisma from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
 

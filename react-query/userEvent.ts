@@ -18,54 +18,64 @@ export function useGetUserEvents(): UseQueryResult<UserEvent[]> {
     })
 }
 
+// Do we need the useQueryClient for each mutation?
 
-// This needs to be reworked...
-// This function is actually postUserEvent AND toggle the attendance status
-// re-write with RTK =D
 export function usePostUserEvent() {
-
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({attendanceStatus, userEmail, eventId}: any) => {
-            const { data, status } = await axios.get(`/api/user/${userEmail}`)
+        mutationFn: async ({userId, eventId}: any) => {
+            const { data, status } = await axios.post(`/api/userEvent`, {
+                userId,
+                eventId
+            })
+
+            if (status !== 200) throw new Error("Failed to create userEvent")
+
+            return data
+        },
+        onSuccess: () => queryClient.invalidateQueries(["event", "userEvent", "user"])
+    })
+}
+
+export function usePostAttendanceStatus() {
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: async ({attendanceStatus, userId, eventId, userEventId}: 
+            {attendanceStatus: ATTENDING_STATUS, userId: string, eventId: string, userEventId: string}) => {
             
-            if (status !== 200) throw new Error("Failed to find a user with the email: ...")
-
-            const typedData = data as User
-            const userId = typedData.id
-
-            if (!attendanceStatus || attendanceStatus === ATTENDING_STATUS.NOT_ATTENDING) {
-
+            if (attendanceStatus === ATTENDING_STATUS.NOT_ATTENDING) {
                 return await axios.post("/api/userEvent", {
+                    userEventId,
                     userId,
-                    eventId
+                    eventId,
+                    attendanceStatus: ATTENDING_STATUS.ATTENDING
                 })
             }
 
             if (attendanceStatus === ATTENDING_STATUS.ATTENDING) {
-
                 return await axios.delete("/api/userEvent", {
                     data: {
+                        userEventId,
                         userId,
-                        eventId
+                        eventId,
+                        attendanceStatus: ATTENDING_STATUS.NOT_ATTENDING
                     }
                 })
             }
 
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries(["event", "userEvent", "user"])
-        }
+        onSuccess: () => queryClient.invalidateQueries(["event", "userEvent", "user"])
     })
 }
 
-export function useToggleBookmark() {
+export function usePostToggleBookmark() {
 
     const queryClient = new QueryClient()
 
     return useMutation({
-        mutationFn: async ({userEventId, eventId, userId}: any) => {
+        mutationFn: async ({userEventId, eventId, userId}: {userEventId: string, eventId: string, userId: string}) => {
 
             return await axios.post('/api/userEvent/bookmark', {
                 type: BOOKMARK_ROUTE.TOGGLE_BOOKMARKED_STATUS,

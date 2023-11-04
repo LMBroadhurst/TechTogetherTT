@@ -1,12 +1,8 @@
+import prisma from "@/prisma/db";
 import { ATTENDING_STATUS } from "@/utils/enums";
-import { PrismaClient, UserEvent } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-const prisma = new PrismaClient()
-
 export async function POST(request: NextRequest) {
-
-    // if (!request.bodyUsed) throw new Error ("Request needs to include a body")
 
     const {userId, eventId} = await request.json()
 
@@ -14,7 +10,7 @@ export async function POST(request: NextRequest) {
         data: {
             userId: userId,
             eventId: eventId,
-            attendanceStatus: ATTENDING_STATUS.ATTENDING,
+            attendanceStatus: ATTENDING_STATUS.NOT_ATTENDING,
             isBookmarked: false
         }
     })
