@@ -1,10 +1,11 @@
+'use client'
 import React, { FC, useMemo } from 'react'
 import { HContainer } from '../global/Containers'
 import { bookmark, bookmarkFilled, share } from '@/utils/icons'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
-import { usePostUserEvent, useToggleBookmark } from '@/hooks/react-query/userEvent'
-import { useGetUserByEmail } from '@/hooks/react-query/user'
+import { usePostUserEvent, useToggleBookmark } from '@/react-query/userEvent'
+import { useGetUserByEmail } from '@/react-query/user'
 import { useRouter } from 'next/navigation'
 import { Event, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
@@ -30,6 +31,7 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
         id: eventId
     } = event
 
+    // Need a generic function to post a new userEvent which can then add optional properties via { ...userEvent, ...optionalProperties }
     async function handleOnActionButtonClick() {
         const userEmail = user?.user?.email
         const eventId = event.id
@@ -46,7 +48,7 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
     async function handleBookmarkButtonClick() {
         // Double check this routing - if it works would need to reroute afterwards somehow...
 
-        if (!user || !userEvents) return router.push('/auth')
+        if (!user || !user.user || !userEvents) return router.push('/auth')
 
         const userEventForUserAndEvent = userEvents.find((ue) => ue.eventId === eventId && ue.userId === user.id)
         
