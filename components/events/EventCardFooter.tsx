@@ -28,7 +28,7 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
         id: eventId
     } = event
 
-    const handleOnActionButtonClick = async () => {
+    async function handleOnActionButtonClick() {
         const userEmail = user?.user?.email
         const eventId = event.id
 
@@ -39,6 +39,10 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
 
         await postUserEvent({attendanceStatus, userEmail, eventId})
         router.refresh()
+    }
+
+    async function handleBookmarkButtonClick() {
+        
     }
 
     const renderButtonWithAttendanceStatus = useMemo(() => {

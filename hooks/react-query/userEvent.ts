@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient, UseQueryResult } from 'react-query'
+import { useQuery, useMutation, useQueryClient, UseQueryResult, QueryClient } from 'react-query'
 import axios from 'axios'
 import { User, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
@@ -53,5 +53,27 @@ export function usePostUserEvent() {
         onSuccess: () => {
             queryClient.invalidateQueries(["event", "userEvent", "user"])
         }
+    })
+}
+
+export function useToggleBookmark() {
+
+    const queryClient = new QueryClient()
+
+    return useMutation({
+        mutationFn: async ({isBookmarked, userId}: any) => {
+
+            if (isBookmarked) {
+                return await axios.post('', {
+
+                })
+            }
+
+            return await axios.post('', {
+
+            })
+
+        },
+        onSuccess: () => queryClient.invalidateQueries(["event", "userEvent", "user"])
     })
 }

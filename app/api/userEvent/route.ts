@@ -14,7 +14,8 @@ export async function POST(request: NextRequest) {
         data: {
             userId: userId,
             eventId: eventId,
-            attendanceStatus: ATTENDING_STATUS.ATTENDING
+            attendanceStatus: ATTENDING_STATUS.ATTENDING,
+            isBookmarked: false
         }
     })
 
