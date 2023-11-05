@@ -28,7 +28,7 @@ export default function EventCardFooter({ event, userEvents }: { event: Event, u
     const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
 
     const { attendanceStatusUpdateLoading, postUserEventAttendanceLoading, handleAttendanceButtonClick } = useToggleAttendanceStatus(userEvents[0])
-    const { handleBookmarkButtonClick } = useToggleBookmark()
+    const { postUserEventBookmarkLoading, bookmarkStatusUpdateLoading, handleBookmarkButtonClick } = useToggleBookmark()
 
     const renderButtonWithAttendanceStatus = useMemo(() => {
 
@@ -49,14 +49,22 @@ export default function EventCardFooter({ event, userEvents }: { event: Event, u
 
     const renderBookmarkedButton = () => {
 
-        return bookmark
+        if (bookmarkStatusUpdateLoading || postUserEventBookmarkLoading) return <Spinner />
+
+        switch (userEvents[0].isBookmarked) {
+            case (true):
+                return bookmarkFilled
+
+            default:
+                return bookmark
+        }
     }
 
 
     return <HContainer className='justify-between'>
         <HContainer className='gap-2'>
             <button
-                disabled={attendanceStatusUpdateLoading || postUserEventAttendanceLoading}
+                disabled={postUserEventBookmarkLoading || bookmarkStatusUpdateLoading}
                 className='btn btn-ghost btn-square btn-sm m-0 p-0'
                 onClick={userEvents && user ? () => handleBookmarkButtonClick(user, userEvents, event) : undefined}
             >
@@ -68,7 +76,7 @@ export default function EventCardFooter({ event, userEvents }: { event: Event, u
             <Link className='btn btn-sm' href={`/event/${event.id}`}>More</Link>
             <button
                 className='btn btn-sm'
-                disabled={!user ? true : false}
+                disabled={attendanceStatusUpdateLoading || postUserEventAttendanceLoading}
                 onClick={userEvents && user ? () => handleAttendanceButtonClick(user, userEvents, event) : undefined}
             >
                 {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus}

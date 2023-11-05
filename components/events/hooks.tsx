@@ -34,7 +34,7 @@ export function useToggleAttendanceStatus(userEvent: UserEvent) {
 export function useToggleBookmark() {
 
     const router = useRouter()
-    const { data: newUserEvent, isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
+    const { data: newUserEvent, isLoading: postUserEventBookmarkLoading, mutateAsync: postUserEvent } = usePostUserEvent()
     const { data: updatedUserEvent, isLoading: bookmarkStatusUpdateLoading, mutateAsync: toggleEventCardBookmark } = usePostToggleBookmark()
 
     async function handleBookmarkButtonClick(user: any, userEvents: UserEvent[], event: Event) {
@@ -48,7 +48,7 @@ export function useToggleBookmark() {
 
     return {
         updatedUserEvent,
-        postUserEventLoading,
+        postUserEventBookmarkLoading,
         bookmarkStatusUpdateLoading,
         handleBookmarkButtonClick
     }
