@@ -1,47 +1,35 @@
-'use client'
 import React, { FC } from 'react'
 import Image from 'next/image'
 import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
 import { VContainer } from '../global/Containers'
 import { Event, UserEvent } from '@prisma/client'
-import { useQueryClient } from 'react-query'
 import EventCardFooter from './EventCardFooter'
 
 type OwnProps = {
     event: Event
-    userEvents?: UserEvent[]
+    relatedUserEvents?: UserEvent[]
 }
 
 // TODO: Fix Event Card responsiveness issues...
-const EventCard: FC<OwnProps> = (props) => {
+export default async function EventCard({ event, relatedUserEvents }: any) {
 
-    const {
-        event, userEvents
-    } = props
-
-    const queryClient = useQueryClient()
-
-    const {
-        id: eventId
-    } = event
-    
     const renderNumberOfAttendees = () => {
-        const eventSpecificUserEvents = userEvents?.filter((userEvent) => userEvent.eventId === eventId)
-        return eventSpecificUserEvents?.length
+        return relatedUserEvents?.length
     }
-    
+
     return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:-translate-y-1">
-        
+
         <figure className='max-h-56'>
-            <Image 
-                src={TECHDEFAULT.src} 
+            <Image
+                src={TECHDEFAULT.src}
                 alt="Shoes"
                 width='350'
                 height='350'
             />
         </figure>
-        
+
         <VContainer className='p-5 gap-2'>
+
             <VContainer className='gap-1'>
                 <h2 className='text-lg font-bold'>{event?.name ?? 'Next.JS is super cool'}</h2>
 
@@ -57,10 +45,12 @@ const EventCard: FC<OwnProps> = (props) => {
 
             <div className='divider my-0 py-0'></div>
 
-            
-            <EventCardFooter {...props} />
+
+            <EventCardFooter
+                event={event}
+                userEvents={relatedUserEvents}
+            />
+
         </VContainer>
     </article>
 }
-
-export default EventCard

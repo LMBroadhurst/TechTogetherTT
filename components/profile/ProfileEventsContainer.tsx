@@ -1,5 +1,5 @@
-import { useGetEventsRelatedToUser } from '@/hooks/react-query/event'
-import { useGetUserEvents } from '@/hooks/react-query/userEvent'
+import { useGetEventsRelatedToUser } from '@/react-query/event'
+import { useGetUserEvents } from '@/react-query/userEvent'
 import React from 'react'
 import EventCard from '../events/EventCard'
 import { isArrayEmpty } from '@/utils/arrayUtils'
