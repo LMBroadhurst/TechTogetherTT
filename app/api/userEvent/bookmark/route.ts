@@ -8,17 +8,12 @@ export enum BOOKMARK_ROUTE {
 
 export async function POST(request: NextRequest) {
 
-    // Basically get a 'type' of what function we should run
     const body = await request.json()
-    const { type } = body
-    console.log(body)
+    const { type, userEventId } = body
 
     switch (type) {
-        case BOOKMARK_ROUTE.GET_BOOKMARKED_STATUS:
-            return getBookmarkedStatus()
-
         case BOOKMARK_ROUTE.TOGGLE_BOOKMARKED_STATUS:
-            return toggleBookmarkedStatus()
+            return toggleBookmarkedStatus(userEventId)
 
         default:
             return NextResponse.json({
@@ -28,41 +23,25 @@ export async function POST(request: NextRequest) {
     }
 }
 
-async function getBookmarkedStatus() {
+
+async function toggleBookmarkedStatus(userEventId: string) {
 
     const userEvent = await prisma.userEvent.findUnique({
         where: {
-            id: '',
-            userId: '',
-            eventId: ''
+            id: userEventId
         }
     })
 
-    const isBookmarked = userEvent?.isBookmarked
-
-    return NextResponse.json({
-        status: 200,
-        isBookmarked
-    })
-}
-
-async function toggleBookmarkedStatus() {
-
-    const userEvent = await prisma.userEvent.findUnique({
+    const updatedUserEvent = await prisma.userEvent.update({
         where: {
-            id: '',
-            userId: '',
-            eventId: ''
+            id: userEventId
+        },
+        data: {
+            isBookmarked: !userEvent?.isBookmarked
         }
     })
 
-    // Parse the isBookmarked status into a boolean with zod...
-    // Flip the boolean with !
-    // Set the value of the isBookmarked status to !isBookmarked
-    const isBookmarked = userEvent?.isBookmarked
-
     return NextResponse.json({
-        status: 200,
-        isBookmarked: 'Yes sirrrreeeee'
+        updatedUserEvent
     })
 }

@@ -25,7 +25,7 @@ export function usePostUserEvent() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({userId, eventId}: any) => {
+        mutationFn: async ({ userId, eventId }: any) => {
             const { data, status } = await axios.post(`/api/userEvent`, {
                 userId,
                 eventId
@@ -44,7 +44,7 @@ export function usePostAttendanceStatus() {
 
     return useMutation({
         mutationFn: async ({ userEventId }: { userEventId: string }) => {
-            
+
             // This is where we need the type, can add in what we want to do and overload the API
             return await axios.post("/api/userEvent/attendance", {
                 type: ATTENDANCE_ROUTE.TOGGLE_ATTENDING_STATUS,
@@ -61,13 +61,11 @@ export function usePostToggleBookmark() {
     const queryClient = new QueryClient()
 
     return useMutation({
-        mutationFn: async ({userEventId, eventId, userId}: {userEventId: string, eventId: string, userId: string}) => {
+        mutationFn: async ({ userEventId }: { userEventId: string }) => {
 
             return await axios.post('/api/userEvent/bookmark', {
                 type: BOOKMARK_ROUTE.TOGGLE_BOOKMARKED_STATUS,
                 userEventId,
-                eventId,    
-                userId
             })
 
         },

@@ -1,112 +1,64 @@
 import { useEffect, useState } from "react"
-import { ATTENDING_STATUS } from "@/utils/enums"
-import { User, UserEvent, Event } from "@prisma/client"
+import { UserEvent, Event } from "@prisma/client"
 import axios from "axios"
+import { usePostAttendanceStatus, usePostToggleBookmark, usePostUserEvent } from "@/react-query/userEvent"
+import { FilterEventFormFields, authAndUserEventCheck } from "./helpers"
 
-type FilterEventFormFields = {
-    name: string
-    location: string
-    technologies: string[]
-    ticketsAvailable: boolean
-}
 
-export function useHandleEventCardActionClick() {
+export function useToggleAttendanceStatus() {
 
-    const [status, setStatus] = useState<string>('IDLE')
-    
-    async function handleEventCardActionClick(currentUser: any, attendanceStatus: string, event: Event) {
-        // Setup
-        setStatus('PENDING')
-        console.log(attendanceStatus)
+    const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
+    const { data: updatedUserEvent, mutateAsync: toggleAttendanceStatus } = usePostAttendanceStatus()
 
-        // Get User and check validity
-        if (!currentUser) {
-            setStatus('ERROR')
-            throw new Error("No user found")
-        }
+    async function handleAttendanceButtonClick(user: any, userEvents: UserEvent[], event: Event) {
 
-        const {user}: {user: User} = await fetch(`/api/user/${currentUser.email}`).then(res => res.json())
+        const userEvent = await authAndUserEventCheck(user, userEvents, event, postUserEvent)
+        const userEventId = userEvent.id
+        const { data, status } = await toggleAttendanceStatus({ userEventId })
 
-        if (!user) {
-            setStatus('ERROR')
-            throw new Error(`Could not find a user with the email ${currentUser.email}`)
-        }
-
-        // Not currently attending OR no userEvent attendanceStatus
-        if (!attendanceStatus || attendanceStatus === ATTENDING_STATUS.NOT_ATTENDING) {
-            
-            const response = await axios.post("/api/userEvent", {
-                userId: user.id,
-                eventId: event.id,
-            })
-
-            console.log(response)
-            setStatus("SUCCESSFUL")
-            return response
-        }
-
-        // Already Attending or on waiting list
-        if (attendanceStatus === ATTENDING_STATUS.ATTENDING || attendanceStatus === ATTENDING_STATUS.WAITING_LIST) {
-            
-            const response = await fetch('/api/userEvent', {
-                method: 'DELETE',
-                body: JSON.stringify({
-                    eventId: event.id, 
-                    userId: user.id
-                })
-            })
-
-            setStatus("SUCCESS")
-            return response
-        }
     }
+
+    useEffect(() => {
+        console.log(updatedUserEvent)
+    }, [updatedUserEvent])
 
     return {
-        status,
-        handleEventCardActionClick,
+        updatedUserEvent,
+        handleAttendanceButtonClick
     }
+
 }
 
+export function useToggleBookmark() {
 
-export function useGetAttendanceStatus() {
+    const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
+    const { data: isBookmarked, mutateAsync: toggleEventCardBookmark } = usePostToggleBookmark()
 
-    const [status, setStatus] = useState('')
-    const [attendanceStatus, setAttendanceStatus] = useState('')
+    async function handleBookmarkButtonClick(user: any, userEvents: UserEvent[], event: Event) {
 
-    async function getAttendanceStatus(currentUser: any, userEvents: UserEvent[]){
+        const userEvent = await authAndUserEventCheck(user, userEvents, event, postUserEvent)
+        const userEventId = userEvent.id
 
-        if(currentUser) {
-            const {user}: {user: User} = await fetch(`/api/user/${currentUser.email}`).then(res => res.json())
-
-            const userEvent: UserEvent | undefined = userEvents?.find(userEvent => userEvent.userId === user.id)
-
-            if (!userEvent) {
-                setStatus("ERROR")
-                return null
-            }
-
-            setStatus("SUCCESS")
-            setAttendanceStatus(userEvent?.attendanceStatus)
-            return userEvent?.attendanceStatus
-        }
-
-        setStatus("ERROR")
-        return null
+        const { data, status } = await toggleEventCardBookmark({ userEventId })
     }
+
+    useEffect(() => {
+        console.log(isBookmarked)
+    }, [isBookmarked])
 
     return {
-        status,
-        attendanceStatus,
-        getAttendanceStatus
+        isBookmarked,
+        handleBookmarkButtonClick
     }
 }
+
 
 export function useGetEventFormFilteredEvents(form: FilterEventFormFields) {
 
     const [events, setEvents] = useState<Event[]>([]);
 
     const filterEventsClick = async () => {
-        
+
         const { data } = await axios.put("/api/event", {
             data: form
         });
