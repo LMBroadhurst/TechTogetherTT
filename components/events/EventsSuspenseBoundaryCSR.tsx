@@ -2,8 +2,8 @@
 import React, { Suspense } from 'react'
 import EventCard from '@/components/events/EventCard'
 import { Event, UserEvent } from '@prisma/client'
-import { useGetUserEvents } from '@/hooks/react-query/userEvent'
-import { useGetEventFormFilteredEvents } from '@/hooks/events/hooks'
+import { useGetUserEvents } from '@/react-query/userEvent'
+import { useGetEventFormFilteredEvents } from '@/components/events/hooks'
 
 export default function EventsSuspenseBoundaryCSR({ form } : { form: any}) {
 

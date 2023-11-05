@@ -1,11 +1,7 @@
 import NextAuth, { AuthOptions } from "next-auth"
-import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
-import { useRouter } from "next/router"
 import { PrismaAdapter } from "@next-auth/prisma-adapter" 
-import { PrismaClient, Session, User } from "@prisma/client";
-
-const prisma = new PrismaClient()
+import prisma from "@/prisma/db"
 
 const CustomPrismaAdapter = () => {
 
