@@ -33,7 +33,8 @@ export function usePostUserEvent() {
 
             if (status !== 200) throw new Error("Failed to create userEvent")
 
-            return data
+            console.log('here', data.userEvent)
+            return data.userEvent as UserEvent
         },
         onSuccess: () => queryClient.invalidateQueries(["event", "userEvent", "user"])
     })
@@ -52,7 +53,7 @@ export function usePostAttendanceStatus() {
             })
 
         },
-        onSuccess: () => queryClient.invalidateQueries(["event", "userEvent", "user"])
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["userEvent"] })
     })
 }
 
@@ -69,6 +70,6 @@ export function usePostToggleBookmark() {
             })
 
         },
-        onSuccess: () => queryClient.invalidateQueries(["event", "userEvent", "user"])
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["userEvent"] })
     })
 }

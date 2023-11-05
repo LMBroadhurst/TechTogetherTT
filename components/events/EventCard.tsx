@@ -3,9 +3,7 @@ import Image from 'next/image'
 import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
 import { VContainer } from '../global/Containers'
 import { Event, UserEvent } from '@prisma/client'
-import { useQueryClient } from 'react-query'
 import EventCardFooter from './EventCardFooter'
-import { userAgent } from 'next/server'
 
 type OwnProps = {
     event: Event
@@ -13,23 +11,23 @@ type OwnProps = {
 }
 
 // TODO: Fix Event Card responsiveness issues...
-export default async function EventCard({event, relatedUserEvents}: any) {
-    
+export default async function EventCard({ event, relatedUserEvents }: any) {
+
     const renderNumberOfAttendees = () => {
         return relatedUserEvents?.length
     }
-    
+
     return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:-translate-y-1">
-        
+
         <figure className='max-h-56'>
-            <Image 
-                src={TECHDEFAULT.src} 
+            <Image
+                src={TECHDEFAULT.src}
                 alt="Shoes"
                 width='350'
                 height='350'
             />
         </figure>
-        
+
         <VContainer className='p-5 gap-2'>
 
             <VContainer className='gap-1'>
@@ -47,10 +45,10 @@ export default async function EventCard({event, relatedUserEvents}: any) {
 
             <div className='divider my-0 py-0'></div>
 
-            
+
             <EventCardFooter
                 event={event}
-                userEvents={relatedUserEvents} 
+                userEvents={relatedUserEvents}
             />
 
         </VContainer>

@@ -11,6 +11,7 @@ import { Event, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
 import { BOOKMARK_ROUTE } from '@/app/api/userEvent/bookmark/route'
 import { useToggleAttendanceStatus, useToggleBookmark } from './hooks'
+import { Spinner } from 'flowbite-react'
 
 type OwnProps = {
     event: Event
@@ -20,56 +21,42 @@ type OwnProps = {
 // THINK: How can I make the db retrieval far easier for the things I need?
 // i.e. Can I get the attendance status, isBookmarked, etc without having to do complex code in the view
 
-const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
+export default function EventCardFooter({ event, userEvents }: { event: Event, userEvents: UserEvent[] }) {
 
     // hooks
     const { data: user } = useSession()
     const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
 
-    const { handleAttendanceButtonClick } = useToggleAttendanceStatus()
+    const { attendanceStatusUpdateLoading, postUserEventAttendanceLoading, handleAttendanceButtonClick } = useToggleAttendanceStatus(userEvents[0])
     const { handleBookmarkButtonClick } = useToggleBookmark()
-
-
-    const {
-        id: eventId
-    } = event
 
     const renderButtonWithAttendanceStatus = useMemo(() => {
 
-        if (!user || !userEvents) return "Attend"
+        if (attendanceStatusUpdateLoading || postUserEventAttendanceLoading) return <Spinner />
 
-        // Probably shouldn't have this logic inside the EventCard, do it on the BE
-        const userId: string = user.id
-        const userSpecificUserEvent = userEvents.find((userEvent) => (userEvent.userId === userId) && (userEvent.eventId === eventId))
-        const attendanceStatus = userSpecificUserEvent?.attendanceStatus
-
-        switch (attendanceStatus) {
+        switch (userEvents[0].attendanceStatus) {
             case (ATTENDING_STATUS.ATTENDING):
                 return "Attending"
 
-            case (ATTENDING_STATUS.WAITING_LIST):
-                return "Waiting List"
+            case (ATTENDING_STATUS.NOT_ATTENDING):
+                return "Attend"
 
             default:
                 return "Attend"
         }
-    }, [eventId, user, userEvents]);
+
+    }, [userEvents, attendanceStatusUpdateLoading, postUserEventAttendanceLoading])
 
     const renderBookmarkedButton = () => {
-        if (!user || !userEvents) return bookmark
-
-        const userId: string = user.id
-        const userSpecificUserEvent = userEvents.find((userEvent) => (userEvent.userId === userId) && (userEvent.eventId === eventId))
-        const attendanceStatus = userSpecificUserEvent?.isBookmarked
-
-        if (attendanceStatus) return bookmarkFilled
 
         return bookmark
     }
 
+
     return <HContainer className='justify-between'>
         <HContainer className='gap-2'>
             <button
+                disabled={attendanceStatusUpdateLoading || postUserEventAttendanceLoading}
                 className='btn btn-ghost btn-square btn-sm m-0 p-0'
                 onClick={userEvents && user ? () => handleBookmarkButtonClick(user, userEvents, event) : undefined}
             >
@@ -89,5 +76,3 @@ const EventCardFooter: FC<OwnProps> = ({ event, userEvents }) => {
         </HContainer>
     </HContainer>
 }
-
-export default EventCardFooter

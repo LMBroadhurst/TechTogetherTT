@@ -3,51 +3,53 @@ import { UserEvent, Event } from "@prisma/client"
 import axios from "axios"
 import { usePostAttendanceStatus, usePostToggleBookmark, usePostUserEvent } from "@/react-query/userEvent"
 import { FilterEventFormFields, authAndUserEventCheck } from "./helpers"
+import { ATTENDING_STATUS } from "@/utils/enums"
+import { useRouter } from 'next/navigation'
+
+export function useToggleAttendanceStatus(userEvent: UserEvent) {
 
 
-export function useToggleAttendanceStatus() {
-
-    const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
-    const { data: updatedUserEvent, mutateAsync: toggleAttendanceStatus } = usePostAttendanceStatus()
+    const router = useRouter()
+    const { data: newUserEvent, isLoading: postUserEventAttendanceLoading, mutateAsync: postUserEvent } = usePostUserEvent()
+    const { data: updatedUserEvent, isLoading: attendanceStatusUpdateLoading, mutateAsync: toggleAttendanceStatus } = usePostAttendanceStatus()
 
     async function handleAttendanceButtonClick(user: any, userEvents: UserEvent[], event: Event) {
 
         const userEvent = await authAndUserEventCheck(user, userEvents, event, postUserEvent)
         const userEventId = userEvent.id
         const { data, status } = await toggleAttendanceStatus({ userEventId })
+        router.refresh()
 
     }
-
-    useEffect(() => {
-        console.log(updatedUserEvent)
-    }, [updatedUserEvent])
 
     return {
+        // attendanceStatus,
         updatedUserEvent,
+        postUserEventAttendanceLoading,
+        attendanceStatusUpdateLoading,
         handleAttendanceButtonClick
     }
-
 }
 
 export function useToggleBookmark() {
 
-    const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
-    const { data: isBookmarked, mutateAsync: toggleEventCardBookmark } = usePostToggleBookmark()
+    const router = useRouter()
+    const { data: newUserEvent, isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
+    const { data: updatedUserEvent, isLoading: bookmarkStatusUpdateLoading, mutateAsync: toggleEventCardBookmark } = usePostToggleBookmark()
 
     async function handleBookmarkButtonClick(user: any, userEvents: UserEvent[], event: Event) {
 
         const userEvent = await authAndUserEventCheck(user, userEvents, event, postUserEvent)
         const userEventId = userEvent.id
-
         const { data, status } = await toggleEventCardBookmark({ userEventId })
+        router.refresh()
+
     }
 
-    useEffect(() => {
-        console.log(isBookmarked)
-    }, [isBookmarked])
-
     return {
-        isBookmarked,
+        updatedUserEvent,
+        postUserEventLoading,
+        bookmarkStatusUpdateLoading,
         handleBookmarkButtonClick
     }
 }

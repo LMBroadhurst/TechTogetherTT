@@ -1,7 +1,7 @@
 import { Event, UserEvent } from "@prisma/client"
 import { UseMutateAsyncFunction } from "react-query"
 
-export async function authAndUserEventCheck(user: any, userEvents: UserEvent[], event: Event, postUserEvent: UseMutateAsyncFunction<any, unknown, any, unknown>): Promise<UserEvent> {
+export async function authAndUserEventCheck(user: any, userEvents: UserEvent[], event: Event, postUserEvent: any): Promise<UserEvent> {
 
     if (!user || !user.user || !userEvents) throw new Error('User not logged in')
 
@@ -12,8 +12,9 @@ export async function authAndUserEventCheck(user: any, userEvents: UserEvent[], 
     let userEvent = userEvents.find((ue) => ue.eventId === eventId && ue.userId === userId)
 
     if (!userEvent) {
-        const { status, userEventResponse } = await postUserEvent({ userId, eventId })
-        userEvent = userEventResponse
+        const { status, data } = await postUserEvent({ userId, eventId })
+        userEvent = data
+        console.log(status, data)
     }
 
     if (!userEvent) throw new Error('UserEvent not found')
