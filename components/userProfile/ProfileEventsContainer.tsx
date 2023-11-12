@@ -1,19 +1,13 @@
 "use client"
 import React from 'react'
-import { isArrayEmpty } from '@/utils/arrayUtils'
 import { useGetEventsRelatedToUser } from '@/react-query/event'
-import { useGetUserEvents } from '@/react-query/userEvent'
+import { useGetUserEventsRelatedToUser } from '@/react-query/userEvent'
 import EventCardCSR from '../events/EventCard/EventCardCSR'
 
 export default function RelevantEventsContainer() {
 
-    // Get all userEvents
-    // filter for the user
-    // return array of event cards
-
     const { data: events } = useGetEventsRelatedToUser()
-    const { data: userEvents } = useGetUserEvents()
-
+    const { data: userEvents } = useGetUserEventsRelatedToUser()
 
     return <section className='flex flex-col gap-2'>
 
@@ -22,7 +16,11 @@ export default function RelevantEventsContainer() {
         </section>
 
         <section className='flex flex-row gap-10'>
-            {!isArrayEmpty(events) ? events?.map((event) => <EventCardCSR event={event} userEvents={userEvents} key={event.id} />) : "You're currently not attending any events. Check out the events page for some inspiration!"}
+            {
+                events && events?.length > 0 && userEvents && userEvents?.length > 0
+                    ? events?.map((event) => <EventCardCSR event={event} relatedUserEvents={userEvents} key={event.id} />)
+                    : "You're currently not attending any events. Check out the events page for some inspiration!"
+            }
         </section>
 
     </section>

@@ -4,17 +4,39 @@ import { User, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
 import { BOOKMARK_ROUTE } from '@/app/api/userEvent/bookmark/route'
 import { ATTENDANCE_ROUTE } from '@/app/api/userEvent/attendance/route'
+import { useSession } from 'next-auth/react'
 
 export function useGetUserEvents(): UseQueryResult<UserEvent[]> {
 
     return useQuery({
-        queryKey: ["userEvent"],
+        queryKey: "userEvent",
         queryFn: async () => {
             const { data, status } = await axios.get(`/api/userEvent`)
             if (status !== 200) throw new Error("Failed to find userEvents")
             const typedUserEvents = data.userEvents as UserEvent[]
 
             return typedUserEvents
+        },
+    })
+}
+
+export function useGetUserEventsRelatedToUser(): UseQueryResult<UserEvent[]> {
+
+    const { data: session } = useSession()
+
+
+    return useQuery({
+        queryKey: "userEvent",
+        queryFn: async () => {
+            if (!session) throw new Error("Must be logged in to view userEvents that are related to a user.")
+
+            const { data, status } = await axios.get(`/api/userEvent`)
+            if (status !== 200) throw new Error("Failed to find userEvents")
+            const typedUserEvents = data.userEvents as UserEvent[]
+
+            const userFilteredUserEvents = typedUserEvents.filter((ue) => ue.userId === session.id)
+
+            return userFilteredUserEvents
         },
     })
 }

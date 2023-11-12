@@ -4,16 +4,10 @@ import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
 import { VContainer } from '../../global/Containers'
 import { Event, UserEvent } from '@prisma/client'
 import EventCardFooter from './EventCardFooter'
-import { useRenderNumberOfAttendees } from './hooks'
 import AttendeesRenderer from './AttendeesRenderer'
 
-type OwnProps = {
-    event: Event
-    relatedUserEvents?: UserEvent[]
-}
-
 // TODO: Fix Event Card responsiveness issues...
-export default async function EventCardSSR({ event, relatedUserEvents }: any) {
+export default async function EventCardSSR({ event, relatedUserEvents }: { event: Event, relatedUserEvents?: UserEvent[] }) {
 
     return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:-translate-y-1">
 
@@ -38,6 +32,7 @@ export default async function EventCardSSR({ event, relatedUserEvents }: any) {
 
             <VContainer className='text-sm'>
                 <span>{event?.cityCountry}</span>
+                {/* @ts-ignore */}
                 <AttendeesRenderer relatedUserEvents={relatedUserEvents} />
             </VContainer>
 
@@ -46,6 +41,7 @@ export default async function EventCardSSR({ event, relatedUserEvents }: any) {
 
             <EventCardFooter
                 event={event}
+                // @ts-ignore
                 userEvents={relatedUserEvents}
             />
 

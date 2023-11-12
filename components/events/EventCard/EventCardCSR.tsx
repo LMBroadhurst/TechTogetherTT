@@ -4,17 +4,13 @@ import Image from 'next/image'
 import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
 import { VContainer } from '../../global/Containers'
 import { Event, UserEvent } from '@prisma/client'
-import EventCardFooter from './EventCardFooter'
-import { useRenderNumberOfAttendees } from './hooks'
 import AttendeesRenderer from './AttendeesRenderer'
-
-type OwnProps = {
-    event: Event
-    relatedUserEvents?: UserEvent[]
-}
+import EventCardFooterCSR from './EventCardFooterCSR'
 
 // TODO: Fix Event Card responsiveness issues...
-export default function EventCardCSR({ event, relatedUserEvents }: any) {
+export default function EventCardCSR({ event, relatedUserEvents }: { event: Event, relatedUserEvents: UserEvent[] }) {
+
+    console.log(relatedUserEvents, event)
 
     return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:-translate-y-1">
 
@@ -45,10 +41,14 @@ export default function EventCardCSR({ event, relatedUserEvents }: any) {
             <div className='divider my-0 py-0'></div>
 
 
-            <EventCardFooter
-                event={event}
-                userEvents={relatedUserEvents}
-            />
+            {
+                event && relatedUserEvents && relatedUserEvents?.length > 0 &&
+                <EventCardFooterCSR
+                    event={event}
+                    userEvents={relatedUserEvents}
+                />
+
+            }
 
         </VContainer>
     </article>
