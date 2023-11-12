@@ -5,7 +5,7 @@ export function useRenderNumberOfAttendees(userEvents: UserEvent[]) {
     let attendeesString: string = ''
     let numberOfAttendees: number = 0
 
-    const usersAttendingEvent = userEvents?.filter((userEvent: UserEvent) => userEvent.attendanceStatus === 'ATTENDING')
+    const usersAttendingEvent = userEvents.filter((userEvent: UserEvent) => userEvent.attendanceStatus === 'ATTENDING')
     numberOfAttendees = usersAttendingEvent?.length ?? 0
 
     if (numberOfAttendees === 0) {

@@ -16,21 +16,20 @@ import { Spinner } from 'flowbite-react'
 
 // THINK: How can I make the db retrieval far easier for the things I need?
 // i.e. Can I get the attendance status, isBookmarked, etc without having to do complex code in the view
-
-export default function EventCardFooter({ event, userEvents }: { event: Event, userEvents: UserEvent[] }) {
+export default function EventCardFooter({ event, userEvent }: { event: Event, userEvent: UserEvent }) {
 
     // hooks
     const { data: user } = useSession()
     const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
 
-    const { attendanceStatusUpdateLoading, postUserEventAttendanceLoading, handleAttendanceButtonClick } = useToggleAttendanceStatus(userEvents[0])
+    const { attendanceStatusUpdateLoading, postUserEventAttendanceLoading, handleAttendanceButtonClick } = useToggleAttendanceStatus(userEvent)
     const { postUserEventBookmarkLoading, bookmarkStatusUpdateLoading, handleBookmarkButtonClick } = useToggleBookmark()
 
     const renderButtonWithAttendanceStatus = useMemo(() => {
 
         if (attendanceStatusUpdateLoading || postUserEventAttendanceLoading) return <Spinner />
 
-        switch (userEvents[0].attendanceStatus) {
+        switch (userEvent.attendanceStatus) {
             case (ATTENDING_STATUS.ATTENDING):
                 return "Attending"
 
@@ -41,13 +40,13 @@ export default function EventCardFooter({ event, userEvents }: { event: Event, u
                 return "Attend"
         }
 
-    }, [userEvents, attendanceStatusUpdateLoading, postUserEventAttendanceLoading])
+    }, [userEvent, attendanceStatusUpdateLoading, postUserEventAttendanceLoading])
 
     const renderBookmarkedButton = () => {
 
         if (bookmarkStatusUpdateLoading || postUserEventBookmarkLoading) return <Spinner />
 
-        switch (userEvents[0].isBookmarked) {
+        switch (userEvent.isBookmarked) {
             case (true):
                 return bookmarkFilled
 
@@ -62,7 +61,7 @@ export default function EventCardFooter({ event, userEvents }: { event: Event, u
             <button
                 disabled={postUserEventBookmarkLoading || bookmarkStatusUpdateLoading}
                 className='btn btn-ghost btn-square btn-sm m-0 p-0'
-                onClick={userEvents && user ? () => handleBookmarkButtonClick(user, userEvents, event) : undefined}
+                onClick={userEvent && user ? () => handleBookmarkButtonClick(user, userEvent, event) : undefined}
             >
                 {renderBookmarkedButton()}
             </button>
@@ -73,7 +72,7 @@ export default function EventCardFooter({ event, userEvents }: { event: Event, u
             <button
                 className='btn btn-sm'
                 disabled={attendanceStatusUpdateLoading || postUserEventAttendanceLoading}
-                onClick={userEvents && user ? () => handleAttendanceButtonClick(user, userEvents, event) : undefined}
+                onClick={userEvent && user ? () => handleAttendanceButtonClick(user, userEvent, event) : undefined}
             >
                 {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus}
             </button>

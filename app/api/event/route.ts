@@ -3,8 +3,8 @@ import { zodCreateEventFormRequest } from "@/utils/zod";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function GET() {
-    
-    const allEvents = await prisma.event.findMany()
+
+    const allEvents = await prisma.event.findMany({})
     return NextResponse.json({
         status: 200,
         events: allEvents
@@ -12,7 +12,7 @@ export async function GET() {
 }
 
 export async function PUT(request: NextRequest) {
-    
+
     // filtered by form
     const payload = await request.json()
     const { cityCountry, name } = payload.data
@@ -25,13 +25,13 @@ export async function PUT(request: NextRequest) {
             cityCountry: {
                 contains: cityCountry
             },
-        } 
+        }
     })
 
     return NextResponse.json({
         events: filteredEvents
     })
-     
+
 }
 
 export async function POST(request: NextRequest) {
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     console.log(payload)
 
     let event = payload.createEventFormValues
-    const { maxAttendance } = event 
+    const { maxAttendance } = event
 
     event = {
         ...event,

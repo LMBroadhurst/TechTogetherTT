@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
 export async function GET() {
     const userEvents = await prisma.userEvent.findMany({})
     return NextResponse.json({
+        status: 200,
         userEvents: userEvents
     })
 }

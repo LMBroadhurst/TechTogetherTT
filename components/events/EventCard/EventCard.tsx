@@ -1,3 +1,4 @@
+"use client"
 import React, { FC } from 'react'
 import Image from 'next/image'
 import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
@@ -5,9 +6,12 @@ import { VContainer } from '../../global/Containers'
 import { Event, UserEvent } from '@prisma/client'
 import EventCardFooter from './EventCardFooter'
 import AttendeesRenderer from './AttendeesRenderer'
+import { useFilteredUserEventsAndEventsForUser } from '@/components/userProfile/hooks'
 
 // TODO: Fix Event Card responsiveness issues...
-export default function EventCardSSR({ event, relatedUserEvents }: { event: Event, relatedUserEvents: UserEvent[] }) {
+export default function EventCard({ event, userEvents }: { event: Event, userEvents: UserEvent[] }) {
+
+    const userEvent = useFilteredUserEventsAndEventsForUser(event, userEvents)
 
     return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:-translate-y-1">
 
@@ -32,15 +36,14 @@ export default function EventCardSSR({ event, relatedUserEvents }: { event: Even
 
             <VContainer className='text-sm'>
                 <span>{event?.cityCountry}</span>
-                <AttendeesRenderer relatedUserEvents={relatedUserEvents} />
+                {/* <AttendeesRenderer userEvent={userEvent} /> */}
             </VContainer>
 
             <div className='divider my-0 py-0'></div>
 
-
             <EventCardFooter
                 event={event}
-                userEvents={relatedUserEvents}
+                userEvent={userEvent}
             />
         </VContainer>
     </article>

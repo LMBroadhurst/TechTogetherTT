@@ -13,9 +13,9 @@ export function useToggleAttendanceStatus(userEvent: UserEvent) {
     const { data: newUserEvent, isLoading: postUserEventAttendanceLoading, mutateAsync: postUserEvent } = usePostUserEvent()
     const { data: updatedUserEvent, isLoading: attendanceStatusUpdateLoading, mutateAsync: toggleAttendanceStatus } = usePostAttendanceStatus()
 
-    async function handleAttendanceButtonClick(user: any, userEvents: UserEvent[], event: Event) {
+    async function handleAttendanceButtonClick(user: any, userEvent: UserEvent, event: Event) {
 
-        const userEvent = await authAndUserEventCheck(user, userEvents, event, postUserEvent)
+        const userEvent = await authAndUserEventCheck(user, userEvent, event, postUserEvent)
         const userEventId = userEvent.id
         const { data, status } = await toggleAttendanceStatus({ userEventId })
         router.refresh()
@@ -37,9 +37,9 @@ export function useToggleBookmark() {
     const { data: newUserEvent, isLoading: postUserEventBookmarkLoading, mutateAsync: postUserEvent } = usePostUserEvent()
     const { data: updatedUserEvent, isLoading: bookmarkStatusUpdateLoading, mutateAsync: toggleEventCardBookmark } = usePostToggleBookmark()
 
-    async function handleBookmarkButtonClick(user: any, userEvents: UserEvent[], event: Event) {
+    async function handleBookmarkButtonClick(user: any, userEvent: UserEvent, event: Event) {
 
-        const userEvent = await authAndUserEventCheck(user, userEvents, event, postUserEvent)
+        const userEvent = await authAndUserEventCheck(user, userEvent, event, postUserEvent)
         const userEventId = userEvent.id
         const { data, status } = await toggleEventCardBookmark({ userEventId })
         router.refresh()

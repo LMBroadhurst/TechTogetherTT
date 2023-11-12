@@ -13,6 +13,8 @@ export default async function ProfilePage() {
     const { data: eventData, status: eventStatus } = await axios.get('http://localhost:3000/api/event')
     const { data: userEventData, status: userEventStatus } = await axios.get(' http://localhost:3000/api/userEvent')
 
+    console.log('hi', eventData, 'hi', userEventData)
+
     if (eventStatus !== 200 || userEventStatus !== 200) {
         return <Spinner />
     }
@@ -34,9 +36,9 @@ export default async function ProfilePage() {
             userEventData={userEventData.userEvents}
         />
 
-        <FavouritedEvents
+        {/* <FavouritedEvents
             eventData={eventData.events}
             userEventData={userEventData.userEvents}
-        />
+        /> */}
     </main>
 }

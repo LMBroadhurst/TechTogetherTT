@@ -1,7 +1,7 @@
 "use client"
 import { Event, UserEvent } from '@prisma/client'
 import React from 'react'
-import EventCardSSR from '../events/EventCard/EventCardSSR'
+import EventCardSSR from '../events/EventCard/EventCard'
 import { useFilteredUserEventsAndEventsForUser } from './hooks'
 
 export default function FavouritedEvents({ eventData, userEventData }: { eventData: Event[], userEventData: UserEvent[] }) {
@@ -14,12 +14,12 @@ export default function FavouritedEvents({ eventData, userEventData }: { eventDa
 
         <section className='flex flex-row gap-10'>
             {
-                eventData && eventData?.length > 0
-                    ? eventData?.map((event: Event) => {
+                events && events?.length > 0
+                    ? events?.map((event: Event) => {
                         return <EventCardSSR
                             key={event.id}
                             event={event}
-                            relatedUserEvents={userEventData}
+                            relatedUserEvents={userEvents}
                         />
                     })
                     : null

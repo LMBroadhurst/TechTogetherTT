@@ -1,8 +1,8 @@
 import React from 'react'
 import { Event, UserEvent } from '@prisma/client'
-import EventCardSSR from '../events/EventCard/EventCardSSR'
+import EventCardSSR from '../events/EventCard/EventCard'
 
-export default function ProfileEventsContainer({ eventData, userEventData }: { eventData: Event[], userEventData: UserEvent[] }) {
+export default function ProfileEventsContainer({ eventData, userEventData }: { eventData: Event[], userEventData: any }) {
 
     return <section className='flex flex-col gap-2'>
 
@@ -16,7 +16,7 @@ export default function ProfileEventsContainer({ eventData, userEventData }: { e
                     ? eventData?.map((event: Event) => {
                         return <EventCardSSR
                             event={event}
-                            relatedUserEvents={userEventData}
+                            userEvents={userEventData}
                             key={event.id}
                         />
                     })
