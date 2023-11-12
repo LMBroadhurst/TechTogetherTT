@@ -1,5 +1,5 @@
 import React from 'react'
-import EventCard from '@/components/events/EventCard/EventCard'
+import EventCard from '@/components/events/EventCard/EventCardSSR'
 import { Event, UserEvent } from '@prisma/client'
 import Spinner from '@/components/global/Spinner'
 import NoEventsFallback from './NoEventsFallback'

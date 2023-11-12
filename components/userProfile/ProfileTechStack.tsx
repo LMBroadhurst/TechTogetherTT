@@ -1,12 +1,6 @@
-"use client"
-import { useGetEventsRelatedToUser } from '@/react-query/event'
-import { useGetUserEvents } from '@/react-query/userEvent'
 import React from 'react'
-import EventCard from '../events/EventCard/EventCard'
 
-const ProfileTechStack = () => {
-
-
+export default function ProfileTechStack() {
 
     return <section className='flex flex-col gap-2'>
         <section className='flex flex-row'>
@@ -19,9 +13,5 @@ const ProfileTechStack = () => {
             hic quia fugiat tempore? Similique qui eligendi consectetur pariatur ad minima veritatis, illo laudantium excepturi.
         </p>
         <p className='text-sm'>Typescript -- Redux -- Java -- React -- etc.</p>
-
-
     </section>
 }
-
-export default ProfileTechStack

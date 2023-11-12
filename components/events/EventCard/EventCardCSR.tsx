@@ -1,3 +1,4 @@
+"use client"
 import React, { FC } from 'react'
 import Image from 'next/image'
 import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
@@ -13,7 +14,7 @@ type OwnProps = {
 }
 
 // TODO: Fix Event Card responsiveness issues...
-export default async function EventCard({ event, relatedUserEvents }: any) {
+export default function EventCardCSR({ event, relatedUserEvents }: any) {
 
     return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:-translate-y-1">
 

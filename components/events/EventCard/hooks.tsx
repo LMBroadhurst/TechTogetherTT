@@ -1,5 +1,4 @@
 import { UserEvent } from "@prisma/client";
-import React from "react";
 
 export function useRenderNumberOfAttendees(userEvents: UserEvent[]) {
 

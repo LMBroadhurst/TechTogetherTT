@@ -1,5 +1,5 @@
 "use client"
-import EventFilterForm from '@/components/events/EventFilterForm'
+import EventFilterForm from '@/components/events/EventForm/EventFilterForm'
 import { VContainer } from '@/components/global/Containers'
 import React, { Suspense, useCallback, useEffect, useState } from 'react'
 import EventsSuspenseBoundarySSR from '@/components/events/EventGetters/EventsSSR'

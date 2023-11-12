@@ -1,9 +1,10 @@
+"use client"
 import { useSession } from 'next-auth/react'
 import React from 'react'
 
-const ProfileAboutMe = () => {
+export default function ProfileAboutMe() {
 
-    const {data: session} = useSession()
+    const { data: session } = useSession()
 
     return <section className='flex flex-row justify-between gap-20 items-center'>
         <section className='flex flex-col gap-2'>
@@ -12,9 +13,9 @@ const ProfileAboutMe = () => {
                 <></>
             </section>
             <p className='text-sm'>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio placeat dolorum nostrum, minima quas cupiditate 
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio placeat dolorum nostrum, minima quas cupiditate
                 hic quia fugiat tempore? Similique qui eligendi consectetur pariatur ad minima veritatis, illo laudantium excepturi.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio placeat dolorum nostrum, minima quas cupiditate 
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio placeat dolorum nostrum, minima quas cupiditate
                 hic quia fugiat tempore? Similique qui eligendi consectetur pariatur ad minima veritatis, illo laudantium excepturi.
             </p>
         </section>
@@ -25,5 +26,3 @@ const ProfileAboutMe = () => {
         </section>
     </section>
 }
-
-export default ProfileAboutMe
