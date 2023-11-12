@@ -1,7 +1,7 @@
 "use client"
-import EventAbout from '@/components/event/EventAbout'
-import EventAttendees from '@/components/event/EventAttendees'
-import EventHeader from '@/components/event/EventHeader'
+import EventAbout from '@/components/events/EventPage/EventAbout'
+import EventAttendees from '@/components/events/EventPage/EventAttendees'
+import EventHeader from '@/components/events/EventPage/EventHeader'
 import { HContainer, VContainer } from '@/components/global/Containers'
 import DateParser from '@/components/global/DateParser'
 import Spinner from '@/components/global/Spinner'

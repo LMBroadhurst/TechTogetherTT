@@ -1,6 +1,6 @@
 'use client'
-import CreateEventForm from "@/components/create-event/create-event-form/CreateEventForm"
-import CreateEventHero from "@/components/create-event/CreateEventHero"
+import CreateEventForm from "@/components/events/CreateEvent/CreateEventForm/CreateEventForm"
+import CreateEventHero from "@/components/events/CreateEvent/CreateEventHero"
 import React from "react"
 
 const CreateEventPage = () => {

@@ -1,6 +1,6 @@
 'use client'
 import React, { FC, useMemo } from 'react'
-import { HContainer } from '../global/Containers'
+import { HContainer } from '../../global/Containers'
 import { bookmark, bookmarkFilled, share } from '@/utils/icons'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation'
 import { Event, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
 import { BOOKMARK_ROUTE } from '@/app/api/userEvent/bookmark/route'
-import { useToggleAttendanceStatus, useToggleBookmark } from './hooks'
+import { useToggleAttendanceStatus, useToggleBookmark } from '../hooks'
 import { Spinner } from 'flowbite-react'
 
 type OwnProps = {

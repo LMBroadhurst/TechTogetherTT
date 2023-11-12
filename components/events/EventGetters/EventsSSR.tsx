@@ -1,10 +1,10 @@
 import React from 'react'
-import EventCard from '@/components/events/EventCard'
+import EventCard from '@/components/events/EventCard/EventCard'
 import { Event, UserEvent } from '@prisma/client'
 import Spinner from '@/components/global/Spinner'
 import NoEventsFallback from './NoEventsFallback'
 
-export default async function EventsSuspenseBoundarySSR() {
+export default async function EventsSSR() {
 
     // SSR rendering
     // TODO: Surely can abstract this code into a simpler format...

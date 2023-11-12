@@ -2,17 +2,17 @@
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import EventsSuspenseBoundary from '@/components/events/EventsSuspenseBoundarySSR'
-import RelevantEventsContainer from '@/components/profile/ProfileEventsContainer'
-import ProfileTechStack from '@/components/profile/ProfileTechStack'
-import ProfileHeader from '@/components/profile/ProfileHeader'
-import ProfileAboutMe from '@/components/profile/ProfileAboutMe'
+import EventsSuspenseBoundary from '@/components/events/EventGetters/EventsSSR'
+import RelevantEventsContainer from '@/components/userProfile/ProfileEventsContainer'
+import ProfileTechStack from '@/components/userProfile/ProfileTechStack'
+import ProfileHeader from '@/components/userProfile/ProfileHeader'
+import ProfileAboutMe from '@/components/userProfile/ProfileAboutMe'
 
 const Profile = () => {
 
     // Authentication
     const router = useRouter()
-    const {data: session} = useSession()
+    const { data: session } = useSession()
 
     if (!session) {
         router.push('/auth')
@@ -23,7 +23,7 @@ const Profile = () => {
         <ProfileHeader />
 
         <ProfileAboutMe />
-        
+
         <ProfileTechStack />
 
         <RelevantEventsContainer />

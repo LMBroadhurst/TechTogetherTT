@@ -3,27 +3,27 @@ import Link from 'next/link'
 import React, { FC, useEffect, useState } from 'react'
 import BurgerMenu from './BurgerMenu'
 import TabletDesktopMenu from './TabletDesktopMenu'
-import CreateEventModal from '@/components/create-event/CreateEventModal';
+import CreateEventModal from '@/components/events/CreateEvent/CreateEventModal';
 
 type OwnProps = {};
 
-const Header: FC<OwnProps> = ({}) => {
+const Header: FC<OwnProps> = ({ }) => {
 
-  return <header className='border-b w-full shadow-md sticky top-0 z-10 bg-base-100'>
-    <CreateEventModal />
+    return <header className='border-b w-full shadow-md sticky top-0 z-10 bg-base-100'>
+        <CreateEventModal />
 
-    <section className='flex flex-row justify-between items-center p-4 text-2xl text-slate-800 '>
-      
-      <Link href={"/"}>
-        <h1 className='text-slate-700 font-bold'>TechTogether</h1>
-      </Link>
+        <section className='flex flex-row justify-between items-center p-4 text-2xl text-slate-800 '>
 
-      {/* Burger Menu */}
-      <BurgerMenu className='md:hidden' />
+            <Link href={"/"}>
+                <h1 className='text-slate-700 font-bold'>TechTogether</h1>
+            </Link>
 
-      <TabletDesktopMenu />
-    </section>
-  </header>
+            {/* Burger Menu */}
+            <BurgerMenu className='md:hidden' />
+
+            <TabletDesktopMenu />
+        </section>
+    </header>
 }
 
 export default Header

@@ -1,11 +1,11 @@
 "use client"
 import React, { Suspense } from 'react'
-import EventCard from '@/components/events/EventCard'
+import EventCard from '@/components/events/EventCard/EventCard'
 import { Event, UserEvent } from '@prisma/client'
 import { useGetUserEvents } from '@/react-query/userEvent'
 import { useGetEventFormFilteredEvents } from '@/components/events/hooks'
 
-export default function EventsSuspenseBoundaryCSR({ form } : { form: any}) {
+export default function EventsSuspenseBoundaryCSR({ form }: { form: any }) {
 
     // Hooks
     const { events } = useGetEventFormFilteredEvents(form)

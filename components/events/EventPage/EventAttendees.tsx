@@ -1,6 +1,6 @@
 import React from 'react'
-import { HContainer, VContainer } from '../global/Containers'
-import UserCard from '../global/UserCard'
+import { HContainer, VContainer } from '../../global/Containers'
+import UserCard from '../../global/UserCard'
 
 export default function EventAttendees() {
 

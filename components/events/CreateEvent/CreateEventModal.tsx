@@ -1,5 +1,5 @@
 import React from "react";
-import CreateEventForm from "./create-event-form/CreateEventForm";
+import CreateEventForm from "./CreateEventForm/CreateEventForm";
 import CreateEventHero from "./CreateEventHero";
 
 export default function CreateEventModal() {

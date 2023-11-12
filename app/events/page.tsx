@@ -2,8 +2,8 @@
 import EventFilterForm from '@/components/events/EventFilterForm'
 import { VContainer } from '@/components/global/Containers'
 import React, { Suspense, useCallback, useEffect, useState } from 'react'
-import EventsSuspenseBoundarySSR from '@/components/events/EventsSuspenseBoundarySSR'
-import EventsSuspenseBoundaryCSR from '@/components/events/EventsSuspenseBoundaryCSR'
+import EventsSuspenseBoundarySSR from '@/components/events/EventGetters/EventsSSR'
+import EventsSuspenseBoundaryCSR from '@/components/events/EventGetters/EventsSuspenseBoundaryCSR'
 import { FilterEventFormFields } from '@/components/events/hooks'
 
 export default function EventsPage() {

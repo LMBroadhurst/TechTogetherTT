@@ -4,20 +4,20 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
 
-    const {userId, eventId} = await request.json()
+    const { userId, eventId } = await request.json()
 
     const userEvent = await prisma.userEvent.create({
         data: {
             userId: userId,
             eventId: eventId,
             attendanceStatus: ATTENDING_STATUS.NOT_ATTENDING,
-            isBookmarked: false
+            isBookmarked: false,
         }
     })
 
     return NextResponse.json({
         status: 200,
-        userEvent: userEvent, 
+        userEvent: userEvent,
     })
 }
 
@@ -30,7 +30,7 @@ export async function GET() {
 
 export async function DELETE(request: NextRequest) {
 
-    const {userId, eventId} = await request.json()
+    const { userId, eventId } = await request.json()
 
     const userEvents = await prisma.userEvent.deleteMany({
         where: {

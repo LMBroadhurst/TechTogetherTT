@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useMemo, useState } from 'react'
-import TextInput from '../../global/TextInput'
+import TextInput from '../../../global/TextInput'
 import { CreateEventForm, defaultCreateEventFormDetails } from './defaultCreateEventFormValues'
 import { Event, User } from '@prisma/client'
 import { useRouter } from 'next/navigation'
@@ -27,7 +27,7 @@ export default function CreateEventForm() {
     function handleCreateEventFormChange(event: any) {
         const key = event.target.name
         let value = event.target.value
-        setCreateEventFormValues({...createEventFormValues, [key]: value})
+        setCreateEventFormValues({ ...createEventFormValues, [key]: value })
     }
 
     // Form Submission
@@ -52,7 +52,7 @@ export default function CreateEventForm() {
             maxAttendance: coerceNumber.parse(maxAttendance)
         }
         zodCreateEventFormRequest.parse(parsedCreateEventDetails)
-        
+
         // Call to API
         // TODO: React Query?
         let response;
@@ -66,7 +66,7 @@ export default function CreateEventForm() {
 
         if (response?.status && response.status < 300) {
             setFormStatus("SUCCESS")
-        
+
             // Show toast for 3 seconds
             await delay(3000)
 
@@ -84,7 +84,7 @@ export default function CreateEventForm() {
 
     return <>
         {
-            formStatus === "SUCCESS" && 
+            formStatus === "SUCCESS" &&
             <div className="toast-center">
                 <div className="alert alert-info flex flex-col items-start">
                     <span>Success!</span>
@@ -96,44 +96,44 @@ export default function CreateEventForm() {
         <form className='flex flex-col gap-4' onSubmit={handleFormSubmit}>
             <TextInput
                 required
-                id="nameEvent" 
-                label='Name' 
+                id="nameEvent"
+                label='Name'
                 type='text'
-                value={name} 
+                value={name}
                 minLength={3}
-                name='name' 
+                name='name'
                 onChange={handleCreateEventFormChange}
             />
 
-            <TextInput 
+            <TextInput
                 required
-                id="maxAttendanceEvent" 
-                label='Max Attendance' 
-                type='number' 
+                id="maxAttendanceEvent"
+                label='Max Attendance'
+                type='number'
                 min={2}
                 value={maxAttendance}
                 name='maxAttendance'
                 onChange={handleCreateEventFormChange}
             />
 
-            <TextInput 
+            <TextInput
                 className='w=1/2'
-                id="localDateTime" 
-                label='Local Date Time' 
-                type='datetime-local' 
+                id="localDateTime"
+                label='Local Date Time'
+                type='datetime-local'
                 min={new Date().toString()}
                 required
-                
+
                 // TODO: Issues with date
                 value={localDateTime}
                 name='localDateTime'
                 onChange={handleCreateEventFormChange}
             />
 
-            <TextInput 
+            <TextInput
                 required
-                id="cityCountry" 
-                label='City, Country' 
+                id="cityCountry"
+                label='City, Country'
                 type='text'
                 value={cityCountry}
                 name='cityCountry'
@@ -141,18 +141,18 @@ export default function CreateEventForm() {
                 onChange={handleCreateEventFormChange}
             />
 
-            <TextInput 
+            <TextInput
                 required
-                id="venue" 
-                label='Venue' 
+                id="venue"
+                label='Venue'
                 type='text'
                 value={venue}
                 name='venue'
                 minLength={3}
                 onChange={handleCreateEventFormChange}
-            />       
+            />
 
-            <button 
+            <button
                 className='btn'
                 type='submit'
                 disabled={formStatus === "LOADING"}
@@ -160,7 +160,7 @@ export default function CreateEventForm() {
                 {formStatus !== "LOADING" ? 'Create Event' : '...'}
             </button>
 
-            { 
+            {
                 formStatus === "ERROR" &&
                 <div className="alert alert-error">
                     <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
