@@ -1,13 +1,8 @@
-"use client"
 import React from 'react'
-import { useGetEventsRelatedToUser } from '@/react-query/event'
-import { useGetUserEventsRelatedToUser } from '@/react-query/userEvent'
-import EventCardCSR from '../events/EventCard/EventCardCSR'
+import { Event, UserEvent } from '@prisma/client'
+import EventCardSSR from '../events/EventCard/EventCardSSR'
 
-export default function RelevantEventsContainer() {
-
-    const { data: events } = useGetEventsRelatedToUser()
-    const { data: userEvents } = useGetUserEventsRelatedToUser()
+export default function ProfileEventsContainer({ eventData, userEventData }: { eventData: Event[], userEventData: UserEvent[] }) {
 
     return <section className='flex flex-col gap-2'>
 
@@ -17,8 +12,14 @@ export default function RelevantEventsContainer() {
 
         <section className='flex flex-row gap-10'>
             {
-                events && events?.length > 0 && userEvents && userEvents?.length > 0
-                    ? events?.map((event) => <EventCardCSR event={event} relatedUserEvents={userEvents} key={event.id} />)
+                eventData && eventData?.length > 0 && userEventData && userEventData?.length > 0
+                    ? eventData?.map((event: Event) => {
+                        return <EventCardSSR
+                            event={event}
+                            relatedUserEvents={userEventData}
+                            key={event.id}
+                        />
+                    })
                     : "You're currently not attending any events. Check out the events page for some inspiration!"
             }
         </section>

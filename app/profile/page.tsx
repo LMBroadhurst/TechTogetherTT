@@ -1,5 +1,5 @@
 import React from 'react'
-import RelevantEventsContainer from '@/components/userProfile/ProfileEventsContainer'
+import ProfileEventsContainer from '@/components/userProfile/ProfileEventsContainer'
 import ProfileTechStack from '@/components/userProfile/ProfileTechStack'
 import ProfileHeader from '@/components/userProfile/ProfileHeader'
 import ProfileAboutMe from '@/components/userProfile/ProfileAboutMe'
@@ -29,11 +29,14 @@ export default async function ProfilePage() {
 
         <ProfileTechStack />
 
-        <RelevantEventsContainer />
+        <ProfileEventsContainer
+            eventData={eventData.events}
+            userEventData={userEventData.userEvents}
+        />
 
         <FavouritedEvents
-            eventData={eventData}
-            userEventData={userEventData}
+            eventData={eventData.events}
+            userEventData={userEventData.userEvents}
         />
     </main>
 }

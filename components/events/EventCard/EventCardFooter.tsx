@@ -13,23 +13,17 @@ import { BOOKMARK_ROUTE } from '@/app/api/userEvent/bookmark/route'
 import { useToggleAttendanceStatus, useToggleBookmark } from '../hooks'
 import { Spinner } from 'flowbite-react'
 
-type OwnProps = {
-    event: Event
-    userEvents?: UserEvent[]
-}
 
 // THINK: How can I make the db retrieval far easier for the things I need?
 // i.e. Can I get the attendance status, isBookmarked, etc without having to do complex code in the view
 
 export default function EventCardFooter({ event, userEvents }: { event: Event, userEvents: UserEvent[] }) {
 
-    const relatedUserEvents = userEvents.filter((userEvent: UserEvent) => userEvent.eventId === event.id)
-
     // hooks
     const { data: user } = useSession()
     const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
 
-    const { attendanceStatusUpdateLoading, postUserEventAttendanceLoading, handleAttendanceButtonClick } = useToggleAttendanceStatus(relatedUserEvents[0])
+    const { attendanceStatusUpdateLoading, postUserEventAttendanceLoading, handleAttendanceButtonClick } = useToggleAttendanceStatus(userEvents[0])
     const { postUserEventBookmarkLoading, bookmarkStatusUpdateLoading, handleBookmarkButtonClick } = useToggleBookmark()
 
     const renderButtonWithAttendanceStatus = useMemo(() => {
@@ -68,7 +62,7 @@ export default function EventCardFooter({ event, userEvents }: { event: Event, u
             <button
                 disabled={postUserEventBookmarkLoading || bookmarkStatusUpdateLoading}
                 className='btn btn-ghost btn-square btn-sm m-0 p-0'
-                onClick={relatedUserEvents && user ? () => handleBookmarkButtonClick(user, relatedUserEvents, event) : undefined}
+                onClick={userEvents && user ? () => handleBookmarkButtonClick(user, userEvents, event) : undefined}
             >
                 {renderBookmarkedButton()}
             </button>
@@ -79,7 +73,7 @@ export default function EventCardFooter({ event, userEvents }: { event: Event, u
             <button
                 className='btn btn-sm'
                 disabled={attendanceStatusUpdateLoading || postUserEventAttendanceLoading}
-                onClick={relatedUserEvents && user ? () => handleAttendanceButtonClick(user, relatedUserEvents, event) : undefined}
+                onClick={userEvents && user ? () => handleAttendanceButtonClick(user, userEvents, event) : undefined}
             >
                 {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus}
             </button>

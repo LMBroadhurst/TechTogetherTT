@@ -7,7 +7,7 @@ import EventCardFooter from './EventCardFooter'
 import AttendeesRenderer from './AttendeesRenderer'
 
 // TODO: Fix Event Card responsiveness issues...
-export default async function EventCardSSR({ event, relatedUserEvents }: { event: Event, relatedUserEvents: UserEvent[] }) {
+export default function EventCardSSR({ event, relatedUserEvents }: { event: Event, relatedUserEvents: UserEvent[] }) {
 
     return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:-translate-y-1">
 

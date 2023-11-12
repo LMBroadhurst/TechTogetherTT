@@ -24,7 +24,6 @@ export function useGetUserEventsRelatedToUser(): UseQueryResult<UserEvent[]> {
 
     const { data: session } = useSession()
 
-
     return useQuery({
         queryKey: "userEvent",
         queryFn: async () => {
