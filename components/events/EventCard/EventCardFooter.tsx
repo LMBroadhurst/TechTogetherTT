@@ -4,7 +4,7 @@ import { HContainer } from '../../global/Containers'
 import { bookmark, bookmarkFilled, share } from '@/utils/icons'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
-import { usePostUserEvent, usePostToggleBookmark, usePostAttendanceStatus } from '@/react-query/userEvent'
+import { usePostUserEvent, usePostToggleBookmark, usePostAttendanceStatus, useGetUserEventsRelatedToUser } from '@/react-query/userEvent'
 import { useGetUserByEmail } from '@/react-query/user'
 import { useRouter } from 'next/navigation'
 import { Event, UserEvent } from '@prisma/client'
@@ -23,11 +23,13 @@ type OwnProps = {
 
 export default function EventCardFooter({ event, userEvents }: { event: Event, userEvents: UserEvent[] }) {
 
+    const relatedUserEvents = userEvents.filter((userEvent: UserEvent) => userEvent.eventId === event.id)
+
     // hooks
     const { data: user } = useSession()
     const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
 
-    const { attendanceStatusUpdateLoading, postUserEventAttendanceLoading, handleAttendanceButtonClick } = useToggleAttendanceStatus(userEvents[0])
+    const { attendanceStatusUpdateLoading, postUserEventAttendanceLoading, handleAttendanceButtonClick } = useToggleAttendanceStatus(relatedUserEvents[0])
     const { postUserEventBookmarkLoading, bookmarkStatusUpdateLoading, handleBookmarkButtonClick } = useToggleBookmark()
 
     const renderButtonWithAttendanceStatus = useMemo(() => {
@@ -66,7 +68,7 @@ export default function EventCardFooter({ event, userEvents }: { event: Event, u
             <button
                 disabled={postUserEventBookmarkLoading || bookmarkStatusUpdateLoading}
                 className='btn btn-ghost btn-square btn-sm m-0 p-0'
-                onClick={userEvents && user ? () => handleBookmarkButtonClick(user, userEvents, event) : undefined}
+                onClick={relatedUserEvents && user ? () => handleBookmarkButtonClick(user, relatedUserEvents, event) : undefined}
             >
                 {renderBookmarkedButton()}
             </button>
@@ -77,7 +79,7 @@ export default function EventCardFooter({ event, userEvents }: { event: Event, u
             <button
                 className='btn btn-sm'
                 disabled={attendanceStatusUpdateLoading || postUserEventAttendanceLoading}
-                onClick={userEvents && user ? () => handleAttendanceButtonClick(user, userEvents, event) : undefined}
+                onClick={relatedUserEvents && user ? () => handleAttendanceButtonClick(user, relatedUserEvents, event) : undefined}
             >
                 {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus}
             </button>

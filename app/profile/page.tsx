@@ -7,7 +7,7 @@ import FavouritedEvents from '@/components/userProfile/FavouritedEvents'
 import axios from 'axios'
 import Spinner from '@/components/global/Spinner'
 
-export default async function Profile() {
+export default async function ProfilePage() {
 
     // Get events and userEvents
     const { data: eventData, status: eventStatus } = await axios.get('http://localhost:3000/api/event')
