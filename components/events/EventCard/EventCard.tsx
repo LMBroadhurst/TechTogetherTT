@@ -13,6 +13,8 @@ export default function EventCard({ event, userEvents }: { event: Event, userEve
 
     const userEvent = useFilteredUserEventsAndEventsForUser(event, userEvents)
 
+    if (!userEvent) return null
+
     return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:-translate-y-1">
 
         <figure className='max-h-56'>

@@ -67,7 +67,7 @@ export default function EventCardFooter({ event, userEvent }: { event: Event, us
             </button>
         </HContainer>
 
-        <HContainer className='gap-2'>
+        {/* <HContainer className='gap-2'>
             <Link className='btn btn-sm' href={`/event/${event.id}`}>More</Link>
             <button
                 className='btn btn-sm'
@@ -76,6 +76,6 @@ export default function EventCardFooter({ event, userEvent }: { event: Event, us
             >
                 {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus}
             </button>
-        </HContainer>
+        </HContainer> */}
     </HContainer>
 }

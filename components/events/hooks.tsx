@@ -15,8 +15,10 @@ export function useToggleAttendanceStatus(userEvent: UserEvent) {
 
     async function handleAttendanceButtonClick(user: any, userEvent: UserEvent, event: Event) {
 
-        const userEvent = await authAndUserEventCheck(user, userEvent, event, postUserEvent)
-        const userEventId = userEvent.id
+        if (!userEvent || !event) throw new Error('UserEvent or Event not found')
+
+        const userEventAuthed = await authAndUserEventCheck(user, event, postUserEvent, userEvent)
+        const userEventId = userEventAuthed.id
         const { data, status } = await toggleAttendanceStatus({ userEventId })
         router.refresh()
 
@@ -39,8 +41,8 @@ export function useToggleBookmark() {
 
     async function handleBookmarkButtonClick(user: any, userEvent: UserEvent, event: Event) {
 
-        const userEvent = await authAndUserEventCheck(user, userEvent, event, postUserEvent)
-        const userEventId = userEvent.id
+        const userEventAuth = await authAndUserEventCheck(user, event, postUserEvent, userEvent)
+        const userEventId = userEventAuth.id
         const { data, status } = await toggleEventCardBookmark({ userEventId })
         router.refresh()
 
