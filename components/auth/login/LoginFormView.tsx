@@ -1,6 +1,6 @@
 'use client'
 import React, { FC, useState } from 'react'
-import { LoginCredentials } from '@/types/person'
+// import { LoginCredentials } from '@/types/person'
 import LoginFormHeader from './LoginFormHeader'
 import { defaultLoginForm } from './defaultLoginFormValues'
 import { VContainer } from '../../global/Containers'
@@ -28,39 +28,38 @@ const LoginFormView: FC = () => {
 
     // Form Related Code
     // TODO: Think how I can further abstract forms. Think password code can easily be moved to TextInput
-    const [loginDetails, setLoginDetails] = useState<LoginCredentials>(defaultLoginForm)
+    const [loginDetails, setLoginDetails] = useState(defaultLoginForm)
     const { email, password } = loginDetails
-    
+
     const handleLoginFormChange = (event: any) => {
         const key = event.target.name
         const value = event.target.value
-        setLoginDetails({...loginDetails, [key]: value})
+        setLoginDetails({ ...loginDetails, [key]: value })
     }
 
     const [isPassword, setIsPassword] = useState<boolean>(true)
     const handlePasswordToggleClick = () => setIsPassword(!isPassword)
-    
+
     return <section className='flex flex-col gap-4 max-w-lg my-1 m-auto'>
         <LoginFormHeader />
 
         <VContainer className='gap-4'>
             <form className='flex flex-col gap-4'>
-                <TextInput 
-                    id="loginEmail" label='Email' inputType='text' value={email} 
-                    apiProperty='email' onChange={handleLoginFormChange}
+                <TextInput
+                    id="loginEmail" label='Email' type='text' value={email}
+                    onChange={handleLoginFormChange}
                 />
 
-                <TextInput 
-                    id="loginPassword" label='Password' inputType={isPassword ? 'password' : 'text'} value={password}
-                    isPasswordInput 
-                    apiProperty='password'
+                <TextInput
+                    id="loginPassword" label='Password' type={isPassword ? 'password' : 'text'} value={password}
+                    isPasswordInput
                     passwordStatus={isPassword}
                     onChange={handleLoginFormChange}
                     onPasswordTextToggle={handlePasswordToggleClick}
                 />
-                
 
-                <button 
+
+                <button
                     className='btn'
                     type='button'
                     onClick={handleClickGoogleLogin}
@@ -69,14 +68,14 @@ const LoginFormView: FC = () => {
                     Login
                 </button>
                 <div className='divider'></div>
-                <button 
+                <button
                     className='btn'
                     type='button'
                     onClick={handleClickGoogleLogin}
                 >
                     Login with Google
                 </button>
-                <button 
+                <button
                     className='btn'
                     type='button'
                     onClick={handleClickGoogleLogin}
@@ -85,7 +84,7 @@ const LoginFormView: FC = () => {
                 </button>
             </form>
 
-            <button 
+            <button
                 className='btn btn-link text-center -mt-1 text-neutral'
                 onClick={handleOpenModal}
             >
