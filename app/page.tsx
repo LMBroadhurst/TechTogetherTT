@@ -1,7 +1,8 @@
 import { VContainer } from '@/components/global/Containers'
 import HomeTitle from '@/components/home/HomeTitle'
 import React from 'react'
-import EventsSuspenseBoundarySSR from '@/components/events/EventGetters/EventsSSR'
+import EventsSSR from '@/components/events/EventGetters/EventsSSR'
+import HomeEventsContainer from '@/components/home/HomeEventsContainer'
 
 
 export default function Home() {
@@ -11,7 +12,9 @@ export default function Home() {
 
         <VContainer className='gap-4'>
             <h2 className='text-2xl font-bold'>Recently Created Events</h2>
-            <EventsSuspenseBoundarySSR />
+            {/* <EventsSSR /> */}
+
+            <HomeEventsContainer />
         </VContainer>
     </main>
 }
