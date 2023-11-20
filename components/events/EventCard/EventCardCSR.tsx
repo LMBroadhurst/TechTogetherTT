@@ -35,7 +35,6 @@ export default function EventCardCSR({ event, relatedUserEvents }: { event: Even
 
             <VContainer className='text-sm'>
                 <span>{event?.cityCountry}</span>
-                <AttendeesRenderer relatedUserEvents={relatedUserEvents} />
             </VContainer>
 
             <div className='divider my-0 py-0'></div>
