@@ -1,4 +1,3 @@
-import { Person } from "@/types/person";
 
 type DefaultSignupForm = {
     firstName: string;
@@ -7,7 +6,7 @@ type DefaultSignupForm = {
     password: string;
 }
 
-const defaultSignupForm: Person = {
+const defaultSignupForm = {
     personId: 0,
     firstName: "",
     lastName: "",
