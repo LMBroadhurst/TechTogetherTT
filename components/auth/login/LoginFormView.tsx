@@ -13,6 +13,13 @@ import { useRouter } from 'next/navigation'
 const LoginFormView: FC = () => {
 
     // Hooks
+    // Authentication Redirect
+    const router = useRouter()
+    const { data: session } = useSession()
+
+    if (session) {
+        router.push('/')
+    }
 
     // LoginForm API Code
     const handleClickGoogleLogin: React.MouseEventHandler<HTMLButtonElement> = async (event) => {

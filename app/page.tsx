@@ -1,7 +1,6 @@
 import { VContainer } from '@/components/global/Containers'
 import HomeTitle from '@/components/home/HomeTitle'
 import React from 'react'
-import EventsSSR from '@/components/events/EventGetters/EventsSSR'
 import HomeEventsContainer from '@/components/home/HomeEventsContainer'
 
 
