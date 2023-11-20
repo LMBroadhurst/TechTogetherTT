@@ -2,8 +2,8 @@ import { useQuery, useMutation, useQueryClient, UseQueryResult, QueryClient } fr
 import axios from 'axios'
 import { Event, User, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
-import { BOOKMARK_ROUTE } from '@/app/api/userEvent/bookmark/model'
-import { ATTENDANCE_ROUTE } from '@/app/api/userEvent/attendance/model'
+import { BOOKMARK_ROUTE } from '@/utils/model'
+import { ATTENDANCE_ROUTE } from '@/utils/model'
 import { useSession } from 'next-auth/react'
 
 export function useGetUserEvents(): UseQueryResult<UserEvent[]> {

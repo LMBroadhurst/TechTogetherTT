@@ -9,7 +9,7 @@ import { useGetUserByEmail } from '@/react-query/user'
 import { useRouter } from 'next/navigation'
 import { Event, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
-import { BOOKMARK_ROUTE } from '@/app/api/userEvent/bookmark/route'
+import { BOOKMARK_ROUTE } from '@/utils/model'
 import { useToggleAttendanceStatus, useToggleBookmark } from '../hooks'
 import { Spinner } from 'flowbite-react'
 
@@ -23,7 +23,7 @@ export default function EventCardFooterCSR({ event, userEvents }: { event: Event
     const { data: user } = useSession()
     const { isLoading: postUserEventLoading, mutateAsync: postUserEvent } = usePostUserEvent()
 
-    const { attendanceStatusUpdateLoading, postUserEventAttendanceLoading, handleAttendanceButtonClick } = useToggleAttendanceStatus(userEvents[0])
+    const { attendanceStatusUpdateLoading, postUserEventAttendanceLoading, handleAttendanceButtonClick } = useToggleAttendanceStatus()
     const { postUserEventBookmarkLoading, bookmarkStatusUpdateLoading, handleBookmarkButtonClick } = useToggleBookmark()
 
     const renderButtonWithAttendanceStatus = useMemo(() => {
@@ -62,7 +62,7 @@ export default function EventCardFooterCSR({ event, userEvents }: { event: Event
             <button
                 disabled={postUserEventBookmarkLoading || bookmarkStatusUpdateLoading}
                 className='btn btn-ghost btn-square btn-sm m-0 p-0'
-                onClick={userEvents && user ? () => handleBookmarkButtonClick(user, userEvents, event) : undefined}
+            // onClick={userEvents && user ? () => handleBookmarkButtonClick(userEvents, event) : undefined}
             >
                 {renderBookmarkedButton()}
             </button>
@@ -73,7 +73,7 @@ export default function EventCardFooterCSR({ event, userEvents }: { event: Event
             <button
                 className='btn btn-sm'
                 disabled={attendanceStatusUpdateLoading || postUserEventAttendanceLoading}
-                onClick={userEvents && user ? () => handleAttendanceButtonClick(user, userEvents, event) : undefined}
+            // onClick={userEvents && user ? () => handleAttendanceButtonClick(userEvents, event) : undefined}
             >
                 {postUserEventLoading ? "..." : renderButtonWithAttendanceStatus}
             </button>
