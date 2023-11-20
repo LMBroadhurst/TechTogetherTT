@@ -1,7 +1,10 @@
 import prisma from "@/prisma/db"
 import { ATTENDING_STATUS } from "@/utils/enums"
 import { NextRequest, NextResponse } from "next/server"
-import { ATTENDANCE_ROUTE } from "./model"
+
+enum ATTENDANCE_ROUTE {
+    TOGGLE_ATTENDING_STATUS = 'TOGGLE_ATTENDING_STATUS',
+}
 
 export async function POST(request: NextRequest) {
 
