@@ -5,7 +5,9 @@ import { UserEvent } from '@prisma/client'
 
 export default function AttendeesRenderer({ relatedUserEvents }: { relatedUserEvents: UserEvent }) {
 
-    const { numberOfAttendees, attendeesString } = useRenderNumberOfAttendees(relatedUserEvents)
+    // const { numberOfAttendees, attendeesString } = useRenderNumberOfAttendees(relatedUserEvents)
 
-    return <span>{attendeesString}</span>
+    // return <span>{attendeesString}</span>
+
+    return <></>
 }
