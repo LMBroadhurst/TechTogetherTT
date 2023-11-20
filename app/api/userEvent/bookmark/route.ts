@@ -1,10 +1,6 @@
 import prisma from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
-
-export enum BOOKMARK_ROUTE {
-    GET_BOOKMARKED_STATUS = 'GET_BOOKMARKED_STATUS',
-    TOGGLE_BOOKMARKED_STATUS = 'TOGGLE_BOOKMARKED_STATUS'
-}
+import { BOOKMARK_ROUTE } from "./model";
 
 export async function POST(request: NextRequest) {
 
