@@ -1,16 +1,23 @@
-import axios from "axios"
+import { Event, UserEvent } from "@prisma/client"
+import EventCardCSR from "./EventCard"
 
 export default async function HomeEventsContainer() {
 
     const eventResponse = await fetch("http:/localhost:3000/api/event")
     const resolvedData = await eventResponse.json()
-    console.log(resolvedData)
+    const events = resolvedData.events as Event[]
 
-    // const userEventResponse = await fetch("http:/localhost:3000/api/userEvent")
-    // const resolvedUserEvents = await userEvents.json()
+    const userEventResponse = await fetch("http:/localhost:3000/api/userEvent")
+    const resolvedUserEvents = await userEventResponse.json()
+    const userEvents = resolvedUserEvents.userEvents as UserEvent[]
 
-    // const userEventsArray = resolvedUserEvents.userEvents as UserEvent[]
-    // console.log(eventsArray, userEventsArray)
+    console.log(events, userEvents)
 
-    return <></>
+    return <section className="flex flex-row gap-10">
+        {
+            events && events.length > 0 && events.map((event) => {
+                return <EventCardCSR key={event.id} event={event} userEvents={userEvents} />
+            })
+        }
+    </section>
 }

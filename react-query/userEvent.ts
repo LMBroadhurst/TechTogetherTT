@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient, UseQueryResult, QueryClient } from 'react-query'
 import axios from 'axios'
-import { User, UserEvent } from '@prisma/client'
+import { Event, User, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
 import { BOOKMARK_ROUTE } from '@/app/api/userEvent/bookmark/route'
 import { ATTENDANCE_ROUTE } from '@/app/api/userEvent/attendance/route'
@@ -20,7 +20,7 @@ export function useGetUserEvents(): UseQueryResult<UserEvent[]> {
     })
 }
 
-export function useGetUserEventsRelatedToUser(): UseQueryResult<UserEvent[]> {
+export function useGetUserEventsRelatedToUser(event: Event): UseQueryResult<UserEvent[]> {
 
     const { data: session } = useSession()
 
