@@ -1,10 +1,7 @@
 import prisma from "@/prisma/db"
 import { ATTENDING_STATUS } from "@/utils/enums"
 import { NextRequest, NextResponse } from "next/server"
-
-export enum ATTENDANCE_ROUTE {
-    TOGGLE_ATTENDING_STATUS = 'TOGGLE_ATTENDING_STATUS',
-}
+import { ATTENDANCE_ROUTE } from "./model"
 
 export async function POST(request: NextRequest) {
 
@@ -26,7 +23,7 @@ export async function POST(request: NextRequest) {
 }
 
 async function toggleAttendingStatus(userEventId: string) {
-    
+
     const userEvent = await prisma.userEvent.findUnique({
         where: {
             id: userEventId

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Event, User, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
 import { BOOKMARK_ROUTE } from '@/app/api/userEvent/bookmark/route'
-import { ATTENDANCE_ROUTE } from '@/app/api/userEvent/attendance/route'
+import { ATTENDANCE_ROUTE } from '@/app/api/userEvent/attendance/model'
 import { useSession } from 'next-auth/react'
 
 export function useGetUserEvents(): UseQueryResult<UserEvent[]> {
