@@ -11,8 +11,6 @@ export default async function HomeEventsContainer() {
     const resolvedUserEvents = await userEventResponse.json()
     const userEvents = resolvedUserEvents.userEvents as UserEvent[]
 
-    console.log(events, userEvents)
-
     return <section className="flex flex-row gap-10">
         {
             events && events.length > 0 && events.map((event) => {

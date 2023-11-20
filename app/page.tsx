@@ -12,7 +12,6 @@ export default function Home() {
 
         <VContainer className='gap-4'>
             <h2 className='text-2xl font-bold'>Recently Created Events</h2>
-            {/* <EventsSSR /> */}
 
             <HomeEventsContainer />
         </VContainer>

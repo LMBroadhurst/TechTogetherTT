@@ -6,7 +6,7 @@ import { VContainer } from '../../global/Containers'
 import { Event, UserEvent } from '@prisma/client'
 import EventCardFooter from './EventCardFooter'
 import AttendeesRenderer from './AttendeesRenderer'
-import { useFilteredUserEventsAndEventsForUser } from '@/components/userProfile/hooks'
+import { useFilteredUserEventsAndEventsForUser } from '@/components/profile/hooks'
 
 // TODO: Fix Event Card responsiveness issues...
 export default function EventCard({ event, userEvents }: { event: Event, userEvents: UserEvent[] }) {

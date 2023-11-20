@@ -7,9 +7,11 @@ export function useGetEvents() {
     return useQuery({
         queryKey: ["event"],
         queryFn: async () => {
-            const { data } = await axios.get("/api/event")
-            console.log(data)
-            return data
+            const { data, status } = await axios.get("/api/event")
+            if (status !== 200) throw new Error("Failed to find events")
+            const typedEvents = data.events as Event[]
+
+            return typedEvents
         }
     })
 }
