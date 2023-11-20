@@ -25,10 +25,5 @@ export default function ProfilePage() {
             events={events}
             userEvents={userEvents}
         />
-
-        {/* <FavouritedEvents
-            eventData={eventData.events}
-            userEventData={userEventData.userEvents}
-        /> */}
     </main>
 }
