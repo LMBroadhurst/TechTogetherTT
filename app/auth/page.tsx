@@ -7,3 +7,5 @@ export default function Auth() {
         <LoginFormView />
     </main>
 }
+
+export const dynamic = 'force-dynamic'

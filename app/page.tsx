@@ -16,3 +16,5 @@ export default function Home() {
         </VContainer>
     </main>
 }
+
+export const dynamic = 'force-dynamic'
