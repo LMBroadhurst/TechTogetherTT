@@ -8,8 +8,8 @@ export default async function HomeEventsContainer() {
 
     try {
 
-        eventResponse = await fetch(process.env.URL + "/api/event")
-        userEventResponse = await fetch(process.env.URL + "/api/userEvent")
+        eventResponse = await fetch(process.env.NEXTAUTH_URL + "/api/event")
+        userEventResponse = await fetch(process.env.NEXTAUTH_URL + "/api/userEvent")
 
     } catch (error) {
         console.log(error)
