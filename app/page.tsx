@@ -1,4 +1,3 @@
-"use client"
 import { VContainer } from '@/components/global/Containers'
 import HomeTitle from '@/components/home/HomeTitle'
 import React from 'react'
