@@ -3,14 +3,9 @@ import { Inter } from 'next/font/google'
 import Header from '@/components/global/header/Header'
 import Providers from './Providers'
 import { getServerSession } from 'next-auth'
-import { authOptions } from './api/auth/[...nextauth]/route'
+import { authOptions } from './api/auth/[...nextauth]/authOptions'
 
 const inter = Inter({ subsets: ['latin'] })
-
-// export const metadata: Metadata = {
-//   title: 'TechTogether',
-//   description: 'TechTogether',
-// }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 
