@@ -4,7 +4,6 @@ import ProfileEventsContainer from '@/components/profile/ProfileEventsContainer'
 import ProfileTechStack from '@/components/profile/ProfileTechStack'
 import ProfileHeader from '@/components/profile/ProfileHeader'
 import ProfileAboutMe from '@/components/profile/ProfileAboutMe'
-import { Event, UserEvent } from '@prisma/client'
 import { useGetEvents } from '@/react-query/event'
 import { useGetUserEvents } from '@/react-query/userEvent'
 

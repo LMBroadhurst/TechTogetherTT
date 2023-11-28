@@ -3,11 +3,11 @@ import EventCardCSR from "./EventCard"
 
 export default async function HomeEventsContainer() {
 
-    const eventResponse = await fetch("http:/localhost:3000/api/event")
+    const eventResponse = await fetch(process.env.URL + "/api/event")
     const resolvedData = await eventResponse.json()
     const events = resolvedData.events as Event[]
 
-    const userEventResponse = await fetch("http:/localhost:3000/api/userEvent")
+    const userEventResponse = await fetch(process.env.URL + "/api/userEvent")
     const resolvedUserEvents = await userEventResponse.json()
     const userEvents = resolvedUserEvents.userEvents as UserEvent[]
 
