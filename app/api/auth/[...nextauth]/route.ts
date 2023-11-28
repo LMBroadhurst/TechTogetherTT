@@ -20,6 +20,7 @@ export const authOptions: AuthOptions = {
 
 
     ],
+    cookies: {},
     callbacks: {
 
         async jwt({ token, user }) {
