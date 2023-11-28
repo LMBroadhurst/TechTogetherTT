@@ -8,18 +8,18 @@ export default async function HomeEventsContainer() {
 
     try {
 
-        eventResponse = await fetch(process.env.NEXTAUTH_URL + "/api/event")
-        userEventResponse = await fetch(process.env.NEXTAUTH_URL + "/api/userEvent")
+        eventResponse = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/event")
+        userEventResponse = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/userEvent")
 
     } catch (error) {
         console.log(error)
     }
 
     const resolvedData = await eventResponse?.json()
-    const events = resolvedData.events as Event[]
+    const events = resolvedData?.events as Event[]
 
     const resolvedUserEvents = await userEventResponse?.json()
-    const userEvents = resolvedUserEvents.userEvents as UserEvent[]
+    const userEvents = resolvedUserEvents?.userEvents as UserEvent[]
 
     return <section className="flex flex-row gap-10">
         {
