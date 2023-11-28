@@ -12,13 +12,13 @@ export default async function HomeEventsContainer() {
         userEventResponse = await fetch(process.env.URL + "/api/userEvent")
 
     } catch (error) {
-        return null;
+        console.log(error)
     }
 
-    const resolvedData = await eventResponse.json()
+    const resolvedData = await eventResponse?.json()
     const events = resolvedData.events as Event[]
 
-    const resolvedUserEvents = await userEventResponse.json()
+    const resolvedUserEvents = await userEventResponse?.json()
     const userEvents = resolvedUserEvents.userEvents as UserEvent[]
 
     return <section className="flex flex-row gap-10">
