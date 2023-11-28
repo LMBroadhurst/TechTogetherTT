@@ -1,3 +1,4 @@
+"use client"
 import { VContainer } from '@/components/global/Containers'
 import HomeTitle from '@/components/home/HomeTitle'
 import React from 'react'
@@ -16,5 +17,3 @@ export default function Home() {
         </VContainer>
     </main>
 }
-
-export const dynamic = 'force-dynamic'
