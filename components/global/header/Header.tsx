@@ -10,17 +10,19 @@ type OwnProps = {};
 const Header: FC<OwnProps> = ({ }) => {
 
     return <header className='border-b w-full shadow-md sticky top-0 z-10 bg-base-100'>
+        <section className='w-[1000px] mx-auto'>
 
-        <section className='flex flex-row justify-between items-center p-4 text-2xl text-slate-800 '>
+            <section className='flex flex-row justify-between items-center p-4 text-2xl text-slate-800 '>
+                <Link href={"/"}>
+                    <h1 className='text-slate-700 font-bold'>TechTogether</h1>
+                </Link>
 
-            <Link href={"/"}>
-                <h1 className='text-slate-700 font-bold'>TechTogether</h1>
-            </Link>
+                {/* Burger Menu */}
+                <BurgerMenu className='md:hidden' />
 
-            {/* Burger Menu */}
-            <BurgerMenu className='md:hidden' />
+                <TabletDesktopMenu />
+            </section>
 
-            <TabletDesktopMenu />
         </section>
     </header>
 }

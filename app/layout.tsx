@@ -12,7 +12,6 @@ export const dynamic = 'force-dynamic'
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 
     const headersList = headers();
-
     const session = getServerSession(authOptions)
 
     return <html lang="en">
