@@ -16,13 +16,15 @@ export default function TabletDesktopMenu() {
     const { data: session } = useSession()
     const handleClickLogout = () => signOut()
 
+
+
     return <HContainer className='items-center gap-5 hidden md:flex'>
-        {/* {
+        {
             // Maybe change so that it only says Create Event... But if not logged in must be logged in first
             // @ts-ignore
-            session ? <button className="btn btn-sm" onClick={()=>document?.getElementById('create_event_modal')?.showModal()}>Create Event</button>
-            : <Link href='/auth' className='btn btn-ghost'>Login</Link>
-        } */}
+            session?.id ? <button className="btn btn-sm" onClick={() => document?.getElementById('create_event_modal')?.showModal()}>Create Event</button>
+                : <Link href='/auth' className='btn btn-ghost'>Login</Link>
+        }
 
         <section className='join'>
             <input type="text" placeholder="Search for Events" className="input input-bordered w-full max-w-xs input-sm join-item" />
@@ -55,7 +57,7 @@ export default function TabletDesktopMenu() {
                 </li>
 
                 <li>
-                    {session ? <button onClick={handleClickLogout}>Logout</button> : <Link href='/auth'>Login</Link>}
+                    {session?.id ? <button onClick={handleClickLogout}>Logout</button> : <Link href='/auth'>Login</Link>}
                 </li>
             </ul>
         </details>
