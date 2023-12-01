@@ -1,11 +1,9 @@
 'use client'
 import React, { FC, useState } from 'react'
-// import { LoginCredentials } from '@/types/person'
 import LoginFormHeader from './LoginFormHeader'
 import { defaultLoginForm } from './defaultLoginFormValues'
 import { VContainer } from '../../global/Containers'
 import TextInput from '../../global/TextInput'
-import SignupFormView from '../signup/SignupFormView'
 import { useSession, signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
@@ -17,7 +15,9 @@ const LoginFormView: FC = () => {
     const router = useRouter()
     const { data: session } = useSession()
 
-    if (session) {
+    console.log(session?.user?.name)
+
+    if (session?.user?.name) {
         router.push('/')
     }
 
@@ -52,7 +52,7 @@ const LoginFormView: FC = () => {
 
         <VContainer className='gap-4'>
             <form className='flex flex-col gap-4'>
-                <TextInput
+                {/* <TextInput
                     id="loginEmail" label='Email' type='text' value={email}
                     onChange={handleLoginFormChange}
                 />
@@ -63,40 +63,42 @@ const LoginFormView: FC = () => {
                     passwordStatus={isPassword}
                     onChange={handleLoginFormChange}
                     onPasswordTextToggle={handlePasswordToggleClick}
-                />
+                /> */}
 
 
-                <button
+                {/* <button
                     className='btn'
                     type='button'
                     onClick={handleClickGoogleLogin}
                 >
-                    {/* {!isError ? (isLoading ? "..." : "Login") : "Something went wrong :("} */}
                     Login
-                </button>
+                </button> */}
+
                 <div className='divider'></div>
+
                 <button
                     className='btn'
                     type='button'
                     onClick={handleClickGoogleLogin}
                 >
-                    Login with Google
+                    Login/Register with Google
                 </button>
-                <button
+
+                {/* <button
                     className='btn'
                     type='button'
                     onClick={handleClickGoogleLogin}
                 >
                     Login with GitHub
-                </button>
+                </button> */}
             </form>
 
-            <button
+            {/* <button
                 className='btn btn-link text-center -mt-1 text-neutral'
                 onClick={handleOpenModal}
             >
                 I don&apos;t have a login yet...
-            </button>
+            </button> */}
         </VContainer>
 
         {/* <dialog id="signupModal" className="modal">
