@@ -15,11 +15,9 @@ const LoginFormView: FC = () => {
     const router = useRouter()
     const { data: session } = useSession()
 
-    console.log(session?.user?.name)
-
-    if (session?.user?.name) {
-        router.push('/')
-    }
+    // if (session?.user?.name) {
+    //     router.push('/')
+    // }
 
     // LoginForm API Code
     const handleClickGoogleLogin: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
