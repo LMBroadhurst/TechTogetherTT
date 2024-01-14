@@ -6,9 +6,7 @@ import { useSession } from 'next-auth/react'
 import { usePostUserEvent } from '@/react-query/userEvent'
 import { Event, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
-import { BOOKMARK_ROUTE } from '@/utils/model'
 import { useToggleAttendanceStatus, useToggleBookmark } from '../hooks'
-import { Spinner } from 'flowbite-react'
 
 
 // THINK: How can I make the db retrieval far easier for the things I need?
@@ -24,7 +22,7 @@ export default function EventCardFooter({ event, userEvent }: { event: Event, us
 
     const renderButtonWithAttendanceStatus = useMemo(() => {
 
-        if (attendanceStatusUpdateLoading || postUserEventAttendanceLoading) return <Spinner />
+        if (attendanceStatusUpdateLoading || postUserEventAttendanceLoading) return <>Loading...</>
 
         switch (userEvent.attendanceStatus) {
             case (ATTENDING_STATUS.ATTENDING):
@@ -41,7 +39,7 @@ export default function EventCardFooter({ event, userEvent }: { event: Event, us
 
     const renderBookmarkedButton = () => {
 
-        if (bookmarkStatusUpdateLoading || postUserEventBookmarkLoading) return <Spinner />
+        if (bookmarkStatusUpdateLoading || postUserEventBookmarkLoading) return <>loading...</>
 
         switch (userEvent.isBookmarked) {
             case (true):
