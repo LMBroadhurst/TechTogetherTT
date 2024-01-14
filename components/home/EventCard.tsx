@@ -1,3 +1,4 @@
+"use client"
 import React, { FC } from 'react'
 import Image from 'next/image'
 import TECHDEFAULT from '@/assets/TECHDEFAULT.jpg'
@@ -9,7 +10,7 @@ import EventCardFooterCSR from './EventCardFooterCSR'
 // This is a CSR rendered EventCard.
 // Here we need to send in the Event but there may not be a UserEvent, as it is on the homepage of the website.
 // I think we can keep it as SSR until getting to the Footer or AttendeesRenderer.
-export default function EventCard({ event, userEvents }: { event: Event, userEvents: UserEvent[] }) {
+export default function EventCard({ event, userEvents }: { event: Event, userEvents?: any }) {
 
     return <article className="card w-[350px] bg-base-100 shadow-lg duration-500 flex-grow-0 hover:-translate-y-1">
 

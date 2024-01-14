@@ -9,7 +9,7 @@ const HomeTitle = () => {
 
     return <section className='flex flex-col gap-6 py-32'>
         <section>
-            <h2 className='text-2xl font-semibold text-slate-500'>{`${session?.user?.name ? session?.user?.name : 'Hey Stranger'}`},</h2>
+            <h2 className='text-2xl font-semibold text-slate-500'>{`${session?.user?.name ? session?.user?.name : 'Hey'}`},</h2>
             <h3 className='text-5xl font-bold text-slate-600'>Let&apos;s connect you with the TechTogether community</h3>
         </section>
 

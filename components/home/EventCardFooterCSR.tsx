@@ -17,7 +17,7 @@ import { useFilterToRelevantUserEvent } from './hooks'
 
 // THINK: How can I make the db retrieval far easier for the things I need?
 // i.e. Can I get the attendance status, isBookmarked, etc without having to do complex code in the view
-export default function EventCardFooterCSR({ event, userEvents }: { event: Event, userEvents: UserEvent[] }) {
+export default function EventCardFooterCSR({ event, userEvents }: { event: Event, userEvents?: UserEvent[] }) {
 
     // hooks
     const { data: user } = useSession()

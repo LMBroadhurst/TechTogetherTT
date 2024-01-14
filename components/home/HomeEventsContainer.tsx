@@ -1,25 +1,14 @@
+"use client"
 import { Event, UserEvent } from "@prisma/client"
 import EventCardCSR from "./EventCard"
+import { useSession } from "next-auth/react"
+import { useGetEvents, useGetEventsRelatedToUser } from "@/react-query/event"
 
-export default async function HomeEventsContainer() {
+export default function HomeEventsContainer() {
 
-    let eventResponse;
-    let userEventResponse;
-
-    try {
-
-        eventResponse = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/event")
-        userEventResponse = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/userEvent")
-
-    } catch (error) {
-        console.log(error)
-    }
-
-    const resolvedData = await eventResponse?.json()
-    const events = resolvedData?.events as Event[]
-
-    const resolvedUserEvents = await userEventResponse?.json()
-    const userEvents = resolvedUserEvents?.userEvents as UserEvent[]
+    const { data: session } = useSession()
+    const { data: events } = useGetEvents()
+    const { data: userEvents } = useGetEventsRelatedToUser()
 
     return <section className="flex flex-col md:flex-row gap-10 flex-wrap">
         {
