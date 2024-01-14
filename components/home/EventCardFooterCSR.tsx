@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation'
 import { Event, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
 import { BOOKMARK_ROUTE } from '@/utils/model'
-import { Spinner } from 'flowbite-react'
 import { useToggleAttendanceStatus, useToggleBookmark } from '../events/hooks'
 import { HContainer } from '../global/Containers'
 import { useFilterToRelevantUserEvent } from './hooks'
@@ -28,7 +27,7 @@ export default function EventCardFooterCSR({ event, userEvents }: { event: Event
 
     const renderButtonWithAttendanceStatus = useMemo(() => {
 
-        if (attendanceStatusUpdateLoading || postUserEventAttendanceLoading) return <Spinner />
+        if (attendanceStatusUpdateLoading || postUserEventAttendanceLoading) return <>loading...</>
 
         switch (userEvent?.attendanceStatus) {
             case (ATTENDING_STATUS.ATTENDING):

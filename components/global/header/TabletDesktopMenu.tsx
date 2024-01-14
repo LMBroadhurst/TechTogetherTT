@@ -7,8 +7,6 @@ import { BiCog } from 'react-icons/bi'
 import { smallMagnifyingGlass } from '@/utils/icons'
 import DEFAULT from '@/assets/TECHDEFAULT.jpg'
 import Image from 'next/image'
-import { Button } from "flowbite-react";
-
 
 export default function TabletDesktopMenu() {
 
@@ -21,9 +19,15 @@ export default function TabletDesktopMenu() {
     return <HContainer className='items-center gap-5 hidden md:flex'>
         {
             // Maybe change so that it only says Create Event... But if not logged in must be logged in first
-            // @ts-ignore
-            session?.id ? <button className="btn btn-sm" onClick={() => document?.getElementById('create_event_modal')?.showModal()}>Create Event</button>
-                : <Link href='/auth' className='btn btn-ghost'>Login</Link>
+            session?.id ? (
+                <button
+                    className="btn btn-sm"
+                    // @ts-ignore
+                    onClick={() => document.getElementById('create_event_modal').checked = true}
+                >
+                    Create Event
+                </button>
+            ) : <Link href='/auth' className='btn btn-ghost'>Login</Link>
         }
 
         <section className='join'>
