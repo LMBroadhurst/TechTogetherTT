@@ -1,3 +1,4 @@
+"use client"
 import LoginFormView from '@/components/auth/login/LoginFormView'
 import React from 'react'
 
