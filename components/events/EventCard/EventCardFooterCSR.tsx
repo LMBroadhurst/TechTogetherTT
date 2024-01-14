@@ -5,13 +5,9 @@ import { bookmark, bookmarkFilled, share } from '@/utils/icons'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { usePostUserEvent, usePostToggleBookmark, usePostAttendanceStatus } from '@/react-query/userEvent'
-import { useGetUserByEmail } from '@/react-query/user'
-import { useRouter } from 'next/navigation'
 import { Event, UserEvent } from '@prisma/client'
 import { ATTENDING_STATUS } from '@/utils/enums'
-import { BOOKMARK_ROUTE } from '@/utils/model'
 import { useToggleAttendanceStatus, useToggleBookmark } from '../hooks'
-import { Spinner } from 'flowbite-react'
 
 
 // THINK: How can I make the db retrieval far easier for the things I need?
@@ -28,7 +24,7 @@ export default function EventCardFooterCSR({ event, userEvents }: { event: Event
 
     const renderButtonWithAttendanceStatus = useMemo(() => {
 
-        if (attendanceStatusUpdateLoading || postUserEventAttendanceLoading) return <Spinner />
+        if (attendanceStatusUpdateLoading || postUserEventAttendanceLoading) return <>loading...</>
 
         switch (userEvents[0].attendanceStatus) {
             case (ATTENDING_STATUS.ATTENDING):
@@ -45,7 +41,7 @@ export default function EventCardFooterCSR({ event, userEvents }: { event: Event
 
     const renderBookmarkedButton = () => {
 
-        if (bookmarkStatusUpdateLoading || postUserEventBookmarkLoading) return <Spinner />
+        if (bookmarkStatusUpdateLoading || postUserEventBookmarkLoading) return <>loading...</>
 
         switch (userEvents[0].isBookmarked) {
             case (true):
